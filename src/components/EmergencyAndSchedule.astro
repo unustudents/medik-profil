@@ -1,0 +1,211 @@
+---
+
+---
+
+<section
+    class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-24 relative z-10 pb-16"
+>
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <!-- Card 1: Dokter Darurat -->
+        <!-- Removed fixed h-[350px]. Added flex-col to handle internal spacing. -->
+        <div
+            class="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-xl flex flex-col"
+        >
+            <h3
+                class="text-lg font-bold mb-4 border-l-4 border-primary pl-4 shrink-0"
+            >
+                Dokter Darurat
+            </h3>
+            <!-- Constrained height to approx 2 items (original count) to trigger scroll for extra items -->
+            <!-- Estimated height of one item ~73px (40px img + padding + borders). 2 items ~ 150px-180px. -->
+            <div
+                class="space-y-4 overflow-y-auto pr-2 custom-scrollbar max-h-[200px]"
+            >
+                <div
+                    class="flex items-center justify-between pb-4 border-b border-slate-100 dark:border-slate-700"
+                >
+                    <div>
+                        <p class="font-bold text-primary text-sm">
+                            Dr. Syamsul Arifin
+                        </p>
+                        <p class="text-xs text-slate-500">Kulit Dan Kelamin</p>
+                    </div>
+                    <img
+                        alt="Doctor profile"
+                        class="w-10 h-10 rounded-full object-cover shrink-0"
+                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuD_kKjS21eVAkjkineMm0tKJxCWcfBPkp3PrSYpaheOtDy5pwDeWdfmeLs04JDx7skL6IwAkuP_AkTRKK69LULKsmCPdW16EG8as9_mWAsgiE1nnGPQXXSz9lxht-9NZsRpL8qBsCImxEP2ZbHXbOq2Zn9dFl-5cwRI3FjDp4OONAubjBthw5do1BNm4P840M1Sncbs7khwCLZaXHZd8022otR0kxXzSJXVTdQVO0e9DjRk3XR1Ejibpf41h3HpoUPFCSquDFDs9wQ"
+                    />
+                </div>
+                <div
+                    class="flex items-center justify-between pb-4 border-b border-slate-100 dark:border-slate-700"
+                >
+                    <div>
+                        <p class="font-bold text-primary text-sm">
+                            Dr. Intan Ayu Ratnasari Sp.KK
+                        </p>
+                        <p class="text-xs text-slate-500">Kulit Dan Kelamin</p>
+                    </div>
+                    <img
+                        alt="Doctor profile"
+                        class="w-10 h-10 rounded-full object-cover shrink-0"
+                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuATp-7nwqFnmS4Bedq5liAVhjaQjasvLA-JHnpveGsXJMRMuweOhUbSNhpdhayNTsslyEADMk7bQG_W997pdjDkNmN9Isi1MfwTD1SeEa1G-k1O1QfdxAcivjcjErJytnxFlSm9elhE25VXlfYckjir2F6hqJqDeYmAaQ0EPxdg42K7Q8R5C5fTyir89w6dWXCiXmAwo7jfWO0PrNjIxrYGtK1BDqVcIcxMmKGmTzJLDV7gM0hR7MkB_xDXTnAqT9cf_U4ssrtWpLI"
+                    />
+                </div>
+                <!-- Extra items -->
+                <div
+                    class="flex items-center justify-between pb-4 border-b border-slate-100 dark:border-slate-700"
+                >
+                    <div>
+                        <p class="font-bold text-primary text-sm">
+                            Dr. Budi Santoso
+                        </p>
+                        <p class="text-xs text-slate-500">Umum</p>
+                    </div>
+                    <div class="w-10 h-10 rounded-full bg-slate-200 shrink-0">
+                    </div>
+                </div>
+                <div
+                    class="flex items-center justify-between pb-4 border-b border-slate-100 dark:border-slate-700"
+                >
+                    <div>
+                        <p class="font-bold text-primary text-sm">
+                            Dr. Siti Aminah
+                        </p>
+                        <p class="text-xs text-slate-500">Anak</p>
+                    </div>
+                    <div class="w-10 h-10 rounded-full bg-slate-200 shrink-0">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card 2: Dokter Jaga -->
+        <div
+            class="bg-primary p-6 rounded-xl shadow-xl text-white flex flex-col"
+        >
+            <div class="flex justify-between items-start mb-4 shrink-0">
+                <h3 class="text-lg font-bold">Dokter Jaga</h3>
+                <div class="text-[10px] opacity-80">
+                    Hari ini: Selasa, 27 Jan 2026
+                </div>
+            </div>
+            <!-- Constrained height. Original had 2 items. Each item ~20px + gap. 
+                 This constraint ensures visual balance with neighbors even with 5 items. -->
+            <div
+                class="space-y-4 mb-4 overflow-y-auto pr-2 custom-scrollbar-white max-h-[140px]"
+            >
+                <div class="flex justify-between text-sm">
+                    <p>Dr. Fira Bella Iskandar Sp.AN</p>
+                    <p class="font-mono">04:00 - 09:00</p>
+                </div>
+                <div class="flex justify-between text-sm">
+                    <p>Dr. Yenny Zen Lana</p>
+                    <p class="font-mono">09:00 - 12:00</p>
+                </div>
+                <div class="flex justify-between text-sm">
+                    <p>Dr. Ahmad Dahlan</p>
+                    <p class="font-mono">12:00 - 16:00</p>
+                </div>
+                <div class="flex justify-between text-sm">
+                    <p>Dr. Rina Wati</p>
+                    <p class="font-mono">16:00 - 20:00</p>
+                </div>
+                <div class="flex justify-between text-sm">
+                    <p>Dr. Joko Susilo</p>
+                    <p class="font-mono">20:00 - 00:00</p>
+                </div>
+            </div>
+            <!-- Buttons aligned to bottom -->
+            <div class="flex gap-2 shrink-0 mt-auto">
+                <button
+                    class="bg-white/20 hover:bg-white/30 px-4 py-2 rounded-lg text-xs font-semibold flex-1"
+                    >Lihat Semua</button
+                >
+                <button
+                    class="bg-white text-primary px-4 py-2 rounded-lg text-xs font-bold flex-1"
+                    >Jadwal Dokter</button
+                >
+            </div>
+        </div>
+
+        <!-- Card 3: Waktu Pelayanan -->
+        <div
+            class="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-xl flex flex-col"
+        >
+            <h3
+                class="text-lg font-bold mb-4 border-l-4 border-primary pl-4 shrink-0"
+            >
+                Waktu Pelayanan
+            </h3>
+            <!-- Original had 6 items. 7 items now. Constrain to approx 6 items. 
+                 One item ~20px + 8px gap = 28px. 6 * 28 = ~168px. -->
+            <div
+                class="space-y-2 text-sm text-slate-600 dark:text-slate-400 overflow-y-auto pr-2 custom-scrollbar max-h-[200px]"
+            >
+                <div class="flex justify-between">
+                    <span>Senin</span><span
+                        class="flex-1 border-b border-dotted border-slate-300 mx-2 mb-1"
+                    ></span><span>08:00 - 22:00</span>
+                </div>
+                <div class="flex justify-between">
+                    <span>Selasa</span><span
+                        class="flex-1 border-b border-dotted border-slate-300 mx-2 mb-1"
+                    ></span><span>08:00 - 22:00</span>
+                </div>
+                <div class="flex justify-between">
+                    <span>Rabu</span><span
+                        class="flex-1 border-b border-dotted border-slate-300 mx-2 mb-1"
+                    ></span><span>08:00 - 22:00</span>
+                </div>
+                <div class="flex justify-between text-primary font-bold">
+                    <span>Kamis</span><span
+                        class="flex-1 border-b border-dotted border-primary/30 mx-2 mb-1"
+                    ></span><span>08:00 - 22:00</span>
+                </div>
+                <div class="flex justify-between">
+                    <span>Jumat</span><span
+                        class="flex-1 border-b border-dotted border-slate-300 mx-2 mb-1"
+                    ></span><span>08:00 - 22:00</span>
+                </div>
+                <div class="flex justify-between">
+                    <span>Sabtu</span><span
+                        class="flex-1 border-b border-dotted border-slate-300 mx-2 mb-1"
+                    ></span><span>08:00 - 22:00</span>
+                </div>
+                <div class="flex justify-between text-red-500">
+                    <span>Minggu</span><span
+                        class="flex-1 border-b border-dotted border-red-300 mx-2 mb-1"
+                    ></span><span>Tutup</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    /* Custom Scrollbar for Webkit */
+    .custom-scrollbar::-webkit-scrollbar {
+        width: 4px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+        background: transparent;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+        background-color: #cbd5e1;
+        border-radius: 20px;
+    }
+    .dark .custom-scrollbar::-webkit-scrollbar-thumb {
+        background-color: #475569;
+    }
+
+    .custom-scrollbar-white::-webkit-scrollbar {
+        width: 4px;
+    }
+    .custom-scrollbar-white::-webkit-scrollbar-track {
+        background: transparent;
+    }
+    .custom-scrollbar-white::-webkit-scrollbar-thumb {
+        background-color: rgba(255, 255, 255, 0.3);
+        border-radius: 20px;
+    }
+</style>

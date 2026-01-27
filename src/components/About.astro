@@ -1,0 +1,168 @@
+---
+const partners = Array.from({ length: 20 }, (_, i) => ({
+    name: `Partner ${i + 1}`,
+    // Using a placeholder service or repeatable images since we don't have 20 unique logos
+    logo:
+        i % 4 === 0
+            ? "York"
+            : i % 4 === 1
+              ? "Focus"
+              : i % 4 === 2
+                ? "Khalifah"
+                : "Ciuss.",
+}));
+---
+
+<section class="py-20 bg-background-light dark:bg-background-dark">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid lg:grid-cols-2 gap-12">
+            <div>
+                <img
+                    alt="Medical Staff"
+                    class="rounded-2xl shadow-xl mb-8"
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuA9-LSyX3Ixg7FXiiDzYkie2EfOadb9QILN6WWyfDX9hw4O7Aib5AB4xRmNl9VAU6aoViDgCHa39L9GHBOoL33GMPqZuyCyGjoE-2NlQ-jtbyBzUtWWA-ueigdNA37IF1lJGajscHBNVTezKsU4VX3F1la5pwrZNV3Ab52F3EMhWfglpsVY1Q1KgbatP-R4YZTzWoHpM0b2yW24DyCB6DTR3agSVVoz-HeTGJ0bBTrHyvGJGfD3M3wLyvzHDOAlwQ76amImFxJKWYw"
+                />
+                <h2 class="text-3xl font-bold mb-4">RS Ciuss Medika</h2>
+                <p
+                    class="text-slate-500 dark:text-slate-400 mb-6 text-sm leading-relaxed"
+                >
+                    Ciuss WP Medika adalah tema dari Ciuss Creative yang dibuat
+                    dengan fitur khusus website Rumah Sakit. Telah dilengkapi
+                    dengan fitur Timetable, Daftar Dokter, Daftar Tenaga Medis,
+                    Daftar Ruang dan Tarif, dan lain sebagainya...
+                </p>
+                <button
+                    class="bg-primary text-white px-6 py-3 rounded-lg font-bold text-sm"
+                    >Baca Lengkapnya</button
+                >
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+                <div class="bg-primary/90 p-6 rounded-2xl text-white">
+                    <div class="flex items-center justify-between">
+                        <div class="flex -space-x-2">
+                            <div
+                                class="w-6 h-6 rounded-full bg-slate-200 border-2 border-primary overflow-hidden"
+                            >
+                                <img
+                                    alt="Doctor"
+                                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuDwBXmE3TuFTxixxAGi-L2fPOJf_Czx-AhA4jgvkT0xafYJ378WEvtZxDUnubCwggXk0jAhvhLP9p_gx2kpsNXHRXGgZoTAIFuCJ8wfCq2zwZi-ez0TUNtdTBm9PMaXCuXgbEMug4TVexEwkgm825fpPrVv5d-2QdM12woygnbfM7QoIZaVik7OtVXScBnJC4JzYb49AWDTqKZeHZNC7jEiJO7NfECgC9nhu3Z2OfIEhnSSpksp1A2vQ2zu6hZmdqWf-aJSgsUzUj8"
+                                />
+                            </div>
+                            <div
+                                class="w-6 h-6 rounded-full bg-slate-300 border-2 border-primary overflow-hidden"
+                            >
+                                <img
+                                    alt="Doctor"
+                                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuD4rjq7ruF8DKmvOqPK1dJG4YJn81omEH6IrdN51I1agJRpnqILJSCOJpZIN6RCsRidgbwcxLgB_BTRakfR0JfkTMViXsmnrY4ruuO7394qOB4WCRi8CTDaJfeLdg-orF2mnQ4Qjn_8ffpnqHJJsHKzGHxdDuyWQOWmD3m51qcx6vQSUeESeNbWiVT3FkyQGw-wfFAP_ZkQyPT-HrL-yOBbsgVM8k_S70lxbPgZBYjuA-Vuv2PgovYXxB6w14alkP5dsJbu8vo9C-0"
+                                />
+                            </div>
+                        </div>
+                        <span class="text-4xl font-bold">13</span>
+                    </div>
+                    <div class="mt-4">
+                        <p
+                            class="text-lg font-bold opacity-80 uppercase tracking-widest"
+                        >
+                            Dokter Kami
+                        </p>
+                    </div>
+                </div>
+                <div class="bg-primary/90 p-6 rounded-2xl text-white">
+                    <div class="flex items-center justify-end">
+                        <span class="text-4xl font-bold">6</span>
+                    </div>
+                    <div class="mt-4">
+                        <p
+                            class="text-lg font-bold opacity-80 uppercase tracking-widest"
+                        >
+                            Tenaga Medis
+                        </p>
+                    </div>
+                </div>
+                <div class="bg-primary/90 p-6 rounded-2xl text-white">
+                    <div class="flex items-center justify-end">
+                        <span class="text-4xl font-bold">21</span>
+                    </div>
+                    <div class="mt-4">
+                        <p class="text-xs opacity-80">
+                            ICU Room, Kelas I, Kelas II, Kelas III...
+                        </p>
+                        <p
+                            class="text-lg font-bold uppercase tracking-widest mt-1"
+                        >
+                            Fasilitas Kamar
+                        </p>
+                    </div>
+                </div>
+                <div class="bg-primary/90 p-6 rounded-2xl text-white">
+                    <div class="flex items-center justify-end">
+                        <span class="text-4xl font-bold">144</span>
+                    </div>
+                    <div class="mt-4">
+                        <p class="text-xs opacity-80">
+                            Ruang Tulip (8), Neonatus Incubator (4)...
+                        </p>
+                        <p
+                            class="text-lg font-bold uppercase tracking-widest mt-1"
+                        >
+                            Kapasitas Kamar
+                        </p>
+                    </div>
+                </div>
+
+                <div class="col-span-2 mt-8 overflow-hidden relative">
+                    <p
+                        class="text-sm font-bold text-slate-400 uppercase tracking-widest mb-4"
+                    >
+                        Rekanan
+                    </p>
+                    <!-- Partner Carousel Container -->
+                    <div
+                        class="flex space-x-4 partner-track transition-transform duration-500 ease-in-out"
+                        id="partnerTrack"
+                    >
+                        {
+                            partners.map((partner) => (
+                                <div class="bg-white dark:bg-slate-800 p-4 rounded-xl flex items-center justify-center grayscale opacity-50 min-w-[120px] shrink-0">
+                                    <span class="font-black italic text-slate-500">
+                                        {partner.logo}
+                                    </span>
+                                </div>
+                            ))
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    const track = document.getElementById("partnerTrack");
+    let offset = 0;
+    const itemWidth = 136; // 120px min-w + 16px gap (approx)
+    // Actually gaps are space-x-4 = 1rem = 16px.
+    // Total width per item is roughly 120 + 16 = 136px.
+
+    // We want to scroll continuously or step by step. User asked for "berganti setiap 5 detik".
+    // Let's shift 1 items every 5 seconds.
+
+    function scrollPartners() {
+        if (!track) return;
+
+        // Simple infinite scroll simulation: move first item to end after transition
+        // But for simplicity with CSS transition, we translate.
+
+        offset += itemWidth;
+        const maxOffset = track.children.length * itemWidth - track.clientWidth;
+
+        // Reset if we reach the end
+        if (offset > maxOffset) {
+            offset = 0;
+        }
+
+        track.style.transform = `translateX(-${offset}px)`;
+    }
+
+    setInterval(scrollPartners, 5000);
+</script>
