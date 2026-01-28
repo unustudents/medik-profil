@@ -1,61 +1,110 @@
 ---
-
+import { EMAIL_CONTACT, PHONE_EMERGENCY, PHONE_CONTACT } from "../consts";
 ---
 
 <section
     class="py-12 border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900"
 >
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="grid lg:grid-cols-4 gap-8">
-            <div class="flex items-center space-x-3">
-                <button
-                    class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center"
-                    ><i class="text-sm not-italic font-bold">f</i></button
-                >
-                <button
-                    class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center"
-                    ><i class="text-sm not-italic font-bold">𝕏</i></button
-                >
-                <button
-                    class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center"
-                    ><i class="text-sm not-italic font-bold">ig</i></button
-                >
-                <button
-                    class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center"
-                    ><i class="text-sm not-italic font-bold">yt</i></button
-                >
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-12">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-12 items-start">
+            <div class="md:col-span-1 space-y-6">
+                <div class="flex items-center gap-2">
+                    <span class="material-icons-outlined text-primary text-4xl"
+                        >local_hospital</span
+                    >
+                    <span class="text-2xl font-bold tracking-tight"
+                        >RSU <span class="text-primary">Afdila</span></span
+                    >
+                </div>
+                <div class="flex gap-4">
+                    <a
+                        class="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-white hover:opacity-80 transition-all"
+                        href="#"
+                        ><span class="material-icons-outlined text-lg"
+                            >facebook</span
+                        ></a
+                    >
+                    <a
+                        class="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-white hover:opacity-80 transition-all"
+                        href="#"
+                        ><span class="material-icons-outlined text-lg"
+                            >alternate_email</span
+                        ></a
+                    >
+                    <a
+                        class="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-white hover:opacity-80 transition-all"
+                        href="#"
+                        ><span class="material-icons-outlined text-lg"
+                            >photo_camera</span
+                        ></a
+                    >
+                    <a
+                        class="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-white hover:opacity-80 transition-all"
+                        href="#"
+                        ><span class="material-icons-outlined text-lg"
+                            >play_arrow</span
+                        ></a
+                    >
+                </div>
             </div>
-            <div class="flex items-center space-x-3">
-                <span class="material-icons-outlined text-primary"
-                    >phone_iphone</span
+            <div
+                class="flex items-start gap-4 p-1 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors"
+            >
+                <div
+                    class="bg-primary/10 w-12 h-12 flex items-center justify-center rounded-full"
                 >
-                <div class="text-[10px]">
-                    <p class="text-slate-400 font-bold uppercase">
+                    <span
+                        class="material-icons-outlined text-primary text-xl leading-none"
+                        >phone_in_talk</span
+                    >
+                </div>
+                <div>
+                    <h5
+                        class="text-slate-500 dark:text-slate-400 text-sm font-medium"
+                    >
                         Hubungi Darurat
-                    </p>
-                    <p class="text-primary font-bold">081532744804</p>
+                    </h5>
+                    <p class="font-bold text-lg">{PHONE_EMERGENCY}</p>
                 </div>
             </div>
-            <div class="flex items-center space-x-3">
-                <span class="material-icons-outlined text-primary"
-                    >headset_mic</span
+            <div
+                class="flex items-start gap-4 p-1 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors"
+            >
+                <div
+                    class="bg-primary/10 w-12 h-12 flex items-center justify-center rounded-full"
                 >
-                <div class="text-[10px]">
-                    <p class="text-slate-400 font-bold uppercase">
+                    <span
+                        class="material-icons-outlined text-primary text-xl leading-none"
+                        >schedule</span
+                    >
+                </div>
+                <div>
+                    <h5
+                        class="text-slate-500 dark:text-slate-400 text-sm font-medium"
+                    >
                         Hubungi Kami Kapanpun
-                    </p>
-                    <p class="text-primary font-bold">081532744804</p>
+                    </h5>
+                    <p class="font-bold text-lg">{PHONE_CONTACT}</p>
                 </div>
             </div>
-            <div class="flex items-center space-x-3">
-                <span class="material-icons-outlined text-primary">mail</span>
-                <div class="text-[10px]">
-                    <p class="text-slate-400 font-bold uppercase">
+            <div
+                class="flex items-start gap-4 p-1 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors"
+            >
+                <div
+                    class="bg-primary/10 w-12 h-12 flex items-center justify-center rounded-full"
+                >
+                    <span
+                        class="material-icons-outlined text-primary text-xl leading-none"
+                        >mail_outline</span
+                    >
+                </div>
+                <div>
+                    <h5
+                        class="text-slate-500 dark:text-slate-400 text-sm font-medium"
+                    >
                         Kirim Kami Masukan
-                    </p>
-                    <p class="text-primary font-bold">
-                        medicare@medikatheme.com
-                    </p>
+                    </h5>
+                    <p class="font-bold text-lg break-all">{EMAIL_CONTACT}</p>
                 </div>
             </div>
         </div>

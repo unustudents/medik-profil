@@ -11,9 +11,13 @@ import RoomPrices from "../components/RoomPrices.astro";
 import MedicalServices from "../components/MedicalServices.astro";
 import ContactInfo from "../components/ContactInfo.astro";
 import Footer from "../components/Footer.astro";
+import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
 ---
 
-<Layout title="RSU Afdila Medika - Professional Hospital Care">
+<Layout
+	title={SITE_TITLE + " - " + SITE_DESCRIPTION}
+	description={SITE_DESCRIPTION}
+>
 	<Header />
 	<main>
 		<Hero />
