@@ -7,18 +7,39 @@ export const SITE_URL = 'https://rsuafdila.com';
 export const COPYRIGHT = 'IT Department RSU Afdila';
 
 export const ADDRESS = 'Jln. Soekarno Hatta No.79 - Rejasari, Cilacap';
-export const PHONE_EMERGENCY = '+62 000 111 22';
-export const PHONE_CONTACT = '081532744804';
-export const EMAIL_CONTACT = 'rsuafdila@gmail.com';
-
 export const OPENING_HOURS = {
     WEEKDAY: '08:00 - 22:00',
     WEEKEND: '08:00 - 22:00'
 };
 
-export const SOCIALS = [
-    { name: 'Facebook', icon: 'f', url: '#' },
-    { name: 'X', icon: '𝕏', url: '#' },
-    { name: 'Instagram', icon: 'ig', url: '#' },
-    { name: 'Youtube', icon: 'yt', url: '#' }
+export const SOCIALS = {
+    facebook: { name: 'Facebook', url: 'https://facebook.com' },
+    instagram: { name: 'Instagram', url: 'https://instagram.com' },
+    youtube: { name: 'Youtube', url: 'https://youtube.com' }
+} as const;
+
+export const CONTACTS = {
+    phone: '+62 815 3274 4804',
+    email: 'rsuafdila@gmail.com',
+    igd: '+62 000 111 22'
+} as const;
+
+export const MENU = [
+    { name: "Beranda", href: "/" },
+    {
+        name: "Informasi Layanan",
+        href: "#",
+        subItems: [
+            { name: "Jadwal Dokter", href: "/jadwal-dokter" },
+            { name: "Dokter Jaga", href: "#" },
+            { name: "Dokter Praktek", href: "#" },
+            { name: "Dokter Tidak Praktek", href: "#" },
+            { name: "Ketersediaan Kamar", href: "#" },
+            { name: "Harga Sewa", href: "#" },
+        ],
+    },
+    { name: "Agenda", href: "#" },
+    { name: "Testimoni", href: "#" },
+    { name: "Galeri", href: "#" },
+    { name: "Pembayaran", href: "#" },
 ];

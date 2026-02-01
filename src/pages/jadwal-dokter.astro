@@ -1,0 +1,267 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/Header.astro";
+import ContactInfo from "../components/ContactInfo.astro";
+import Footer from "../components/Footer.astro";
+import { doctors } from "@/data/doctors";
+
+// Map days to specific colors based on the design
+const dayColors: Record<string, string> = {
+    monday: "bg-blue-400/20 text-blue-600 dark:text-blue-400 border-blue-200 dark:border-blue-800",
+    tuesday:
+        "bg-pink-400/20 text-pink-600 dark:text-pink-400 border-pink-200 dark:border-pink-800",
+    wednesday:
+        "bg-rose-400/20 text-rose-600 dark:text-rose-400 border-rose-200 dark:border-rose-800",
+    thursday:
+        "bg-amber-400/20 text-amber-600 dark:text-amber-400 border-amber-200 dark:border-amber-800",
+    friday: "bg-purple-400/20 text-purple-600 dark:text-purple-400 border-purple-200 dark:border-purple-800",
+    saturday:
+        "bg-teal-400/20 text-teal-600 dark:text-teal-400 border-teal-200 dark:border-teal-800",
+    sunday: "bg-orange-400/20 text-orange-600 dark:text-orange-400 border-orange-200 dark:border-orange-800",
+};
+
+const dayLabels: Record<string, string> = {
+    monday: "Senin",
+    tuesday: "Selasa",
+    wednesday: "Rabu",
+    thursday: "Kamis",
+    friday: "Jumat",
+    saturday: "Sabtu",
+    sunday: "Minggu",
+};
+
+const days = [
+    "monday",
+    "tuesday",
+    "wednesday",
+    "thursday",
+    "friday",
+    "saturday",
+    "sunday",
+];
+---
+
+<Layout title="Jadwal Dokter - RSU Afdila">
+    <Header />
+    <main>
+        <div class="max-w-7xl container mx-auto px-4 py-12">
+            <div class="mb-8 flex flex-wrap gap-4 items-center justify-between">
+                <h2 class="text-2xl font-bold text-slate-800 dark:text-white">
+                    Jadwal Dokter Praktik Spesialis
+                </h2>
+                <div class="flex gap-2">
+                    <select
+                        class="rounded-lg border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm text-slate-700 dark:text-slate-300 focus:ring-primary focus:border-primary"
+                    >
+                        <option>Semua Poliklinik</option>
+                        <option>Kulit & Kelamin</option>
+                        <option>Pediatrik</option>
+                        <option>Bedah Saraf</option>
+                        <option>Spesialis Anak</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Mobile View (Cards) -->
+            <div class="block md:hidden space-y-6" id="mobile-doctor-list">
+                {
+                    doctors.map((doctor, index) => (
+                        <div
+                            class={`doctor-item rounded-2xl overflow-hidden shadow-lg bg-white dark:bg-slate-800 transition-all duration-500 ${index >= 10 ? "hidden opacity-0 translate-y-4" : "opacity-100 translate-y-0"}`}
+                        >
+                            {/* Card Header */}
+                            <div class="bg-primary p-5 flex items-center gap-4">
+                                <img
+                                    alt={doctor.name}
+                                    class="w-16 h-16 rounded-xl object-cover shadow-sm bg-white"
+                                    src={doctor.image}
+                                />
+                                <div class="text-white">
+                                    <h3 class="font-bold text-lg leading-tight mb-1">
+                                        {doctor.name}
+                                    </h3>
+                                    <div class="flex items-center gap-1.5 text-white/90 text-sm">
+                                        <span class="material-icons text-base">
+                                            medical_information
+                                        </span>
+                                        <span>{doctor.specialist}</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Card Body (Schedule) */}
+                            <div class="p-4 space-y-3">
+                                {days.map((day) => {
+                                    const scheduleTime =
+                                        doctor.schedule[
+                                            day as keyof typeof doctor.schedule
+                                        ];
+                                    if (!scheduleTime) return null;
+
+                                    return (
+                                        <div class="flex items-center justify-between bg-slate-50 dark:bg-slate-700/50 p-3 rounded-lg border border-slate-100 dark:border-slate-700">
+                                            <span
+                                                class={`px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${dayColors[day]}`}
+                                            >
+                                                {dayLabels[day]}
+                                            </span>
+                                            <span class="font-semibold text-slate-700 dark:text-slate-200 text-sm">
+                                                {scheduleTime}
+                                            </span>
+                                        </div>
+                                    );
+                                })}
+                                {/* Show message if no schedule */}
+                                {Object.values(doctor.schedule).every(
+                                    (v) => !v,
+                                ) && (
+                                    <p class="text-center text-slate-400 text-sm py-2">
+                                        Tidak ada jadwal praktek
+                                    </p>
+                                )}
+                            </div>
+                        </div>
+                    ))
+                }
+            </div>
+
+            <!-- Desktop View (Grid) -->
+            <div class="hidden md:block overflow-x-auto pb-4">
+                <!-- Header Grid -->
+                <div class="schedule-grid mb-6">
+                    <div
+                        class="font-bold text-slate-400 uppercase text-xs tracking-widest pl-4 self-end pb-2"
+                    >
+                        Dokter & Spesialisasi
+                    </div>
+                    {
+                        days.map((day) => (
+                            <div class="text-center font-bold text-slate-400 uppercase text-xs tracking-widest self-end pb-2">
+                                {dayLabels[day]}
+                            </div>
+                        ))
+                    }
+                </div>
+
+                <div id="desktop-doctor-list" class="space-y-4">
+                    {
+                        doctors.map((doctor, index) => (
+                            <div
+                                class={`schedule-grid group doctor-item transition-all duration-500 ${index >= 10 ? "hidden opacity-0 translate-y-4" : "opacity-100 translate-y-0"}`}
+                            >
+                                {/* Doctor Info Card */}
+                                <div class=" bg-primary p-4 rounded-xl flex items-center gap-4 text-white shadow-md transition-transform group-hover:scale-[1.02]">
+                                    <img
+                                        alt={doctor.name}
+                                        class="w-14 h-14 rounded-full border-2 border-white/20 object-cover shadow-inner"
+                                        src={doctor.image}
+                                        style="width: 3.5rem; height: 3.5rem;"
+                                    />
+                                    <div class="min-w-0">
+                                        <h3 class="font-bold leading-tight line-clamp-2 text-sm md:text-base">
+                                            {doctor.name}
+                                        </h3>
+                                        <p class="text-xs text-white/80 mt-1 flex items-center gap-1">
+                                            <span class="material-icons text-[14px]">
+                                                medical_information
+                                            </span>
+                                            {
+                                                /* <span class="truncate">
+                                                {doctor.specialist}
+                                            </span> */
+                                                doctor.specialist
+                                            }
+                                        </p>
+                                    </div>
+                                </div>
+
+                                {/* Schedule Cells */}
+                                {days.map((day) => {
+                                    const scheduleTime =
+                                        doctor.schedule[
+                                            day as keyof typeof doctor.schedule
+                                        ];
+                                    return scheduleTime ? (
+                                        <div class="flex flex-col items-center justify-center gap-3 border border-slate-200 dark:border-slate-800 rounded-xl bg-white dark:bg-slate-900 h-full shadow-sm hover:shadow-md transition-shadow">
+                                            <span
+                                                class={`px-4 py-0.5 rounded-full text-[10px] font-bold uppercase ${dayColors[day]}`}
+                                            >
+                                                {dayLabels[day]}
+                                            </span>
+                                            <span class="text-xs font-semibold text-slate-700 dark:text-slate-300 text-center">
+                                                {scheduleTime}
+                                            </span>
+                                        </div>
+                                    ) : (
+                                        <div class="border border-slate-200 dark:border-slate-800 rounded-xl bg-white dark:bg-slate-900 h-full shadow-sm hover:shadow-md transition-shadow" />
+                                    );
+                                })}
+                            </div>
+                        ))
+                    }
+                </div>
+            </div>
+
+            <div class="mt-12 text-center" id="load-more-container">
+                <button
+                    id="load-more-btn"
+                    class="px-8 py-3 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-full font-bold hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors shadow-sm text-slate-700 dark:text-slate-300 cursor-pointer"
+                >
+                    Lihat Semua Dokter
+                </button>
+            </div>
+        </div>
+        <ContactInfo />
+    </main>
+    <Footer />
+</Layout>
+
+<style>
+    .schedule-grid {
+        display: grid;
+        grid-template-columns: 280px repeat(7, minmax(120px, 1fr));
+        gap: 1rem;
+        min-width: 1200px;
+    }
+
+    /* FIX: Force display none when hidden class is present, 
+       overriding the display: grid from .schedule-grid */
+    .doctor-item.hidden {
+        display: none !important;
+    }
+</style>
+
+<script>
+    const loadMoreBtn = document.getElementById("load-more-btn");
+    const loadMoreContainer = document.getElementById("load-more-container");
+
+    // Check initial state
+    const hiddenItems = document.querySelectorAll(".doctor-item.hidden");
+    if (hiddenItems.length === 0 && loadMoreContainer) {
+        loadMoreContainer.style.display = "none";
+    }
+
+    if (loadMoreBtn) {
+        loadMoreBtn.addEventListener("click", () => {
+            const items = document.querySelectorAll(".doctor-item.hidden");
+
+            items.forEach((item, index) => {
+                // Remove hidden class
+                item.classList.remove("hidden");
+
+                // Add staggered animation
+                // We use a small timeout to allow the browser to register the removal of 'hidden' (display: none)
+                // before starting the opacity transition
+                setTimeout(() => {
+                    item.classList.remove("opacity-0", "translate-y-4");
+                    item.classList.add("opacity-100", "translate-y-0");
+                }, index * 50);
+            });
+
+            // Hide button after loading all
+            if (loadMoreContainer) {
+                loadMoreContainer.style.display = "none";
+            }
+        });
+    }
+</script>

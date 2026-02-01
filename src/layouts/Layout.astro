@@ -1,6 +1,6 @@
 ---
-import "../styles/global.css";
-import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
+import "@/styles/global.css";
+import { SITE_TITLE, SITE_DESCRIPTION } from "@/consts";
 
 interface Props {
     title?: string;
@@ -23,7 +23,7 @@ const { title = SITE_TITLE, description = SITE_DESCRIPTION } = Astro.props;
             rel="stylesheet"
         />
         <link
-            href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined"
+            href="https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined"
             rel="stylesheet"
         />
         <title>{title}</title>
