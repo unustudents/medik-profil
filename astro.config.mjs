@@ -6,7 +6,7 @@ import { defineConfig } from 'astro/config';
 import tailwindcss from "@tailwindcss/vite";
 // https://astro.build/config
 export default defineConfig({
-	site: 'https://example.com',
+	site: 'https://medik-profil.vercel.app/',
 	integrations: [mdx(), sitemap()],
 	vite: {
 		plugins: [tailwindcss()],

@@ -1,17 +1,19 @@
 ---
-import Layout from "../layouts/Layout.astro";
-import Header from "../components/Header.astro";
-import Hero from "../components/Hero.astro";
-import EmergencyAndSchedule from "../components/EmergencyAndSchedule.astro";
-import RoomAvailability from "../components/RoomAvailability.astro";
-import About from "../components/About.astro";
-import DoctorsList from "../components/DoctorsList.astro";
-import Gallery from "../components/Gallery.astro";
-import RoomPrices from "../components/RoomPrices.astro";
-import MedicalServices from "../components/MedicalServices.astro";
-import ContactInfo from "../components/ContactInfo.astro";
-import Footer from "../components/Footer.astro";
-import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/Header.astro";
+import ContactInfo from "@/components/ContactInfo.astro";
+import Footer from "@/components/Footer.astro";
+import { SITE_TITLE, SITE_DESCRIPTION } from "@/consts";
+import {
+	Hero,
+	EmergencyAndSchedule,
+	RoomAvailability,
+	About,
+	DoctorsList,
+	Gallery,
+	RoomPrices,
+	MedicalServices,
+} from "@/components/home";
 ---
 
 <Layout
