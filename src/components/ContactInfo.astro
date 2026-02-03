@@ -1,6 +1,8 @@
 ---
 import { LogosFacebook, LogosInstagramIcon, LogosYoutubeIcon } from "@/icons";
 import { SOCIALS, CONTACTS } from "@/consts";
+import { Image } from "astro:assets";
+import { logo } from "@/assets";
 ---
 
 <section
@@ -9,7 +11,8 @@ import { SOCIALS, CONTACTS } from "@/consts";
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-12">
         <div class="grid grid-cols-1 md:grid-cols-4 gap-12">
             <div class="col-span-1 md:col-span-1">
-                <div class="flex items-center gap-2 mb-6">
+                <Image src={logo} alt="Logo" class="h-14 w-auto mb-6 block" />
+                <!-- <div class="flex items-center gap-2 mb-6">
                     <div
                         class="w-8 h-8 bg-primary rounded-full flex items-center justify-center"
                     >
@@ -21,7 +24,7 @@ import { SOCIALS, CONTACTS } from "@/consts";
                         class="text-2xl font-bold tracking-tight text-slate-800 dark:text-white"
                         >RSU <span class="text-primary">Afdila</span></span
                     >
-                </div>
+                </div> -->
                 <p
                     class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mb-6"
                 >
