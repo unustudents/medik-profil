@@ -31,7 +31,7 @@ export const MENU = [
         href: "#",
         subItems: [
             { name: "Jadwal Dokter", href: "/jadwal-dokter" },
-            { name: "Dokter Jaga", href: "#" },
+            { name: "Dokter Jaga", href: "/dokter-hari-ini" },
             { name: "Dokter Praktek", href: "#" },
             { name: "Dokter Tidak Praktek", href: "#" },
             { name: "Ketersediaan Kamar", href: "#" },
