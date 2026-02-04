@@ -1,5 +1,7 @@
 ---
 import { ADDRESS, CONTACTS, MENU } from "@/consts";
+import { Image } from "astro:assets";
+import { logo } from "@/assets";
 ---
 
 <header
@@ -59,7 +61,7 @@ import { ADDRESS, CONTACTS, MENU } from "@/consts";
 		<nav class="flex items-center justify-between py-4">
 			<div class="flex items-center space-x-8">
 				<div class="flex items-center space-x-2">
-					<div
+					<!-- <div
 						class="w-10 h-10 bg-primary rounded-lg flex items-center justify-center"
 					>
 						<span class="material-icons-outlined text-white"
@@ -68,7 +70,14 @@ import { ADDRESS, CONTACTS, MENU } from "@/consts";
 					</div>
 					<span class="text-xl font-bold text-primary tracking-tight"
 						>RSU Afdila</span
-					>
+					> -->
+					<a href="/">
+						<Image
+							src={logo}
+							alt="RSU Afdila Logo"
+							class="h-14 w-auto"
+						/>
+					</a>
 				</div>
 
 				<!-- Desktop Menu -->
