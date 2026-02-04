@@ -1,0 +1,150 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/Header.astro";
+import ContactInfo from "@/components/ContactInfo.astro";
+import Footer from "@/components/Footer.astro";
+// Data dokter hari ini (bisa diganti dengan data dari API/database)
+import { todayDoctors } from "@/data/dokter-jaga";
+
+// Number of doctors to show initially
+const initialCount = 4;
+---
+
+<Layout title="Dokter Hari Ini - RSU Afdila">
+    <Header />
+    <main>
+        <div class="max-w-5xl container mx-auto px-4 py-12">
+            <div class="mb-8">
+                <h2 class="text-2xl font-bold text-slate-800 dark:text-white">
+                    Dokter Hari Ini
+                </h2>
+                <p class="text-slate-600 dark:text-slate-400 mt-2">
+                    Daftar dokter yang praktik hari ini
+                </p>
+            </div>
+
+            <div class="space-y-6" id="doctor-list">
+                {
+                    todayDoctors.map((doctor, index) => (
+                        <div
+                            class={`doctor-item bg-white dark:bg-gray-800 rounded-lg shadow-sm border-t-2 border-primary overflow-hidden flex flex-col md:flex-row items-center p-6 transition-all hover:shadow-md duration-500 ${index >= initialCount ? "hidden opacity-0 translate-y-4" : "opacity-100 translate-y-0"}`}
+                        >
+                            <div class="flex-shrink-0 mb-4 md:mb-0">
+                                <img
+                                    alt={doctor.name}
+                                    class="w-32 h-32 md:w-40 md:h-40 object-cover rounded-xl border-2 border-primary/10"
+                                    src={doctor.image}
+                                    loading={
+                                        index >= initialCount ? "lazy" : "eager"
+                                    }
+                                    decoding={
+                                        index >= initialCount ? "async" : "auto"
+                                    }
+                                />
+                            </div>
+                            <div class="flex-grow md:ml-8 text-center md:text-left">
+                                <h2 class="text-xl font-bold text-primary mb-3">
+                                    {doctor.name}
+                                </h2>
+                                <ul class="space-y-1.5 text-gray-600 dark:text-gray-300 text-sm">
+                                    {doctor.details.map((detail) => (
+                                        <li class="flex items-center justify-center md:justify-start">
+                                            <span class="material-icons-outlined text-primary text-lg mr-2">
+                                                {detail.icon}
+                                            </span>
+                                            {detail.label}
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+                            <div class="mt-6 md:mt-0 md:ml-8 md:pl-8 md:border-l border-gray-100 dark:border-gray-700 w-full md:w-auto text-center md:text-right flex flex-col items-center md:items-end justify-center">
+                                <div class="mb-4">
+                                    <p class="text-lg font-semibold text-gray-800 dark:text-gray-100">
+                                        {doctor.schedule}
+                                    </p>
+                                    <p class="text-sm text-gray-500 dark:text-gray-400">
+                                        {doctor.location}
+                                    </p>
+                                    {doctor.ext && (
+                                        <p class="text-xs text-gray-400 mt-1 uppercase tracking-wider">
+                                            Ext : {doctor.ext}
+                                        </p>
+                                    )}
+                                </div>
+                                <button class="bg-primary hover:bg-opacity-90 text-white font-medium py-2 px-6 rounded-full transition-all shadow-sm active:scale-95">
+                                    Cek Profil
+                                </button>
+                            </div>
+                        </div>
+                    ))
+                }
+            </div>
+
+            <div class="mt-12 text-center" id="load-more-container">
+                <button
+                    id="load-more-btn"
+                    class="px-8 py-3 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-full font-bold hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors shadow-sm text-slate-700 dark:text-slate-300 cursor-pointer"
+                >
+                    Lihat Semua Dokter
+                </button>
+            </div>
+        </div>
+        <ContactInfo />
+    </main>
+    <Footer />
+</Layout>
+
+<style>
+    /* FIX: Force display none when hidden class is present */
+    .doctor-item.hidden {
+        display: none !important;
+    }
+</style>
+
+<script>
+    const loadMoreBtn = document.getElementById("load-more-btn");
+    const loadMoreContainer = document.getElementById("load-more-container");
+    const BATCH_SIZE = 4; // Load 4 doctors per click
+
+    // Function to check and hide button when no more items
+    function updateButtonVisibility() {
+        const hiddenItems = document.querySelectorAll(".doctor-item.hidden");
+
+        if (hiddenItems.length === 0 && loadMoreContainer) {
+            loadMoreContainer.style.display = "none";
+        }
+    }
+
+    // Check initial state
+    updateButtonVisibility();
+
+    if (loadMoreBtn) {
+        loadMoreBtn.addEventListener("click", () => {
+            const hiddenItems = document.querySelectorAll(
+                ".doctor-item.hidden",
+            );
+
+            // Only show next batch (BATCH_SIZE items)
+            const itemsToShow = Array.from(hiddenItems).slice(0, BATCH_SIZE);
+
+            itemsToShow.forEach((item, index) => {
+                // Remove hidden class
+                item.classList.remove("hidden");
+
+                // Add staggered animation
+                setTimeout(() => {
+                    item.classList.remove("opacity-0", "translate-y-4");
+                    item.classList.add("opacity-100", "translate-y-0");
+                }, index * 50);
+            });
+
+            // Update button text after loading batch
+            setTimeout(
+                () => {
+                    updateButtonVisibility();
+                },
+                itemsToShow.length * 50 + 100,
+            );
+        });
+    }
+</script>
