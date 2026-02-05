@@ -75,6 +75,8 @@ const days = [
                                     alt={doctor.name}
                                     class="w-16 h-16 rounded-xl object-cover shadow-sm bg-white"
                                     src={doctor.image}
+                                    loading={index >= 10 ? "lazy" : "eager"}
+                                    decoding={index >= 10 ? "async" : "auto"}
                                 />
                                 <div class="text-white">
                                     <h3 class="font-bold text-lg leading-tight mb-1">
@@ -156,6 +158,10 @@ const days = [
                                         class="w-14 h-14 rounded-full border-2 border-white/20 object-cover shadow-inner"
                                         src={doctor.image}
                                         style="width: 3.5rem; height: 3.5rem;"
+                                        loading={index >= 10 ? "lazy" : "eager"}
+                                        decoding={
+                                            index >= 10 ? "async" : "auto"
+                                        }
                                     />
                                     <div class="min-w-0">
                                         <h3 class="font-bold leading-tight line-clamp-2 text-sm md:text-base">
@@ -234,34 +240,72 @@ const days = [
 <script>
     const loadMoreBtn = document.getElementById("load-more-btn");
     const loadMoreContainer = document.getElementById("load-more-container");
+    const mobileList = document.getElementById("mobile-doctor-list");
+    const desktopList = document.getElementById("desktop-doctor-list");
+    const BATCH_SIZE = 10; // Load 10 doctors per click (same as initial count)
+
+    // Function to check and hide button when no more items
+    function updateButtonVisibility() {
+        // Check both lists - hide when both are empty
+        const mobileHidden =
+            mobileList?.querySelectorAll(".doctor-item.hidden") || [];
+        const desktopHidden =
+            desktopList?.querySelectorAll(".doctor-item.hidden") || [];
+
+        if (
+            mobileHidden.length === 0 &&
+            desktopHidden.length === 0 &&
+            loadMoreContainer
+        ) {
+            loadMoreContainer.style.display = "none";
+        }
+    }
 
     // Check initial state
-    const hiddenItems = document.querySelectorAll(".doctor-item.hidden");
-    if (hiddenItems.length === 0 && loadMoreContainer) {
-        loadMoreContainer.style.display = "none";
-    }
+    updateButtonVisibility();
 
     if (loadMoreBtn) {
         loadMoreBtn.addEventListener("click", () => {
-            const items = document.querySelectorAll(".doctor-item.hidden");
+            // Get hidden items from both lists separately
+            const mobileHidden =
+                mobileList?.querySelectorAll(".doctor-item.hidden") || [];
+            const desktopHidden =
+                desktopList?.querySelectorAll(".doctor-item.hidden") || [];
 
-            items.forEach((item, index) => {
-                // Remove hidden class
+            // Show next batch from mobile list
+            const mobileToShow = Array.from(mobileHidden).slice(0, BATCH_SIZE);
+            mobileToShow.forEach((item, index) => {
                 item.classList.remove("hidden");
-
-                // Add staggered animation
-                // We use a small timeout to allow the browser to register the removal of 'hidden' (display: none)
-                // before starting the opacity transition
                 setTimeout(() => {
                     item.classList.remove("opacity-0", "translate-y-4");
                     item.classList.add("opacity-100", "translate-y-0");
                 }, index * 50);
             });
 
-            // Hide button after loading all
-            if (loadMoreContainer) {
-                loadMoreContainer.style.display = "none";
-            }
+            // Show next batch from desktop list
+            const desktopToShow = Array.from(desktopHidden).slice(
+                0,
+                BATCH_SIZE,
+            );
+            desktopToShow.forEach((item, index) => {
+                item.classList.remove("hidden");
+                setTimeout(() => {
+                    item.classList.remove("opacity-0", "translate-y-4");
+                    item.classList.add("opacity-100", "translate-y-0");
+                }, index * 50);
+            });
+
+            // Update button visibility after loading batch
+            const maxItems = Math.max(
+                mobileToShow.length,
+                desktopToShow.length,
+            );
+            setTimeout(
+                () => {
+                    updateButtonVisibility();
+                },
+                maxItems * 50 + 100,
+            );
         });
     }
 </script>
