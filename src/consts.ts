@@ -41,5 +41,5 @@ export const MENU = [
     { name: "Agenda", href: "#" },
     { name: "Testimoni", href: "#" },
     { name: "Galeri", href: "#" },
-    { name: "Pembayaran", href: "#" },
+    { name: "Pembayaran", href: "/metode-pembayaran" },
 ];
