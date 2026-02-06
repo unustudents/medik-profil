@@ -1,0 +1,285 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/Header.astro";
+import Footer from "@/components/Footer.astro";
+import ContactInfo from "@/components/ContactInfo.astro";
+import { rooms, type Room } from "@/data/rooms";
+import { Image } from "astro:assets";
+
+export function slugify(text: string) {
+    return text
+        .toString()
+        .toLowerCase()
+        .replace(/\s+/g, "-") // Replace spaces with -
+        .replace(/[^\w\-]+/g, "") // Remove all non-word chars
+        .replace(/\-\-+/g, "-") // Replace multiple - with single -
+        .replace(/^-+/, "") // Trim - from start of text
+        .replace(/-+$/, ""); // Trim - from end of text
+}
+
+export async function getStaticPaths() {
+    return rooms.map((room) => ({
+        params: { slug: slugify(room.name) },
+        props: { room },
+    }));
+}
+
+interface Props {
+    room: Room;
+}
+
+const { room } = Astro.props;
+
+// room now contains beds directly, no need to look it up separately
+const roomAvailability = room;
+
+const formatPrice = (price: number) => {
+    return new Intl.NumberFormat("id-ID", {
+        style: "currency",
+        currency: "IDR",
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0,
+    }).format(price);
+};
+---
+
+<Layout title={`Detail Kamar ${room.name} - RSU Afdila`}>
+    <Header />
+    <main class="max-w-6xl mx-auto px-6 py-12">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start mb-16">
+            <div>
+                <nav
+                    class="flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400 mb-6"
+                >
+                    <a class="hover:text-primary transition-colors" href="/"
+                        >Beranda</a
+                    >
+                    <span class="material-symbols-rounded text-xs"
+                        >chevron_right</span
+                    >
+                    <a
+                        class="hover:text-primary transition-colors"
+                        href="/tarif-kamar">Kamar</a
+                    >
+                    <span class="material-symbols-rounded text-xs"
+                        >chevron_right</span
+                    >
+                    <span class="font-medium text-slate-900 dark:text-slate-100"
+                        >{room.name}</span
+                    >
+                </nav>
+                <h1
+                    class="text-4xl font-extrabold text-slate-900 dark:text-white mb-4"
+                >
+                    {room.name}
+                </h1>
+                <div class="flex flex-wrap items-center gap-6 mb-4">
+                    <div
+                        class="flex items-center gap-2 text-primary font-medium"
+                    >
+                        <span class="material-symbols-rounded">star</span>
+                        <span>{room.type}</span>
+                    </div>
+                    <div
+                        class="flex items-center gap-2 text-slate-600 dark:text-slate-400"
+                    >
+                        <span class="material-symbols-rounded">group</span>
+                        <span
+                            >Kapasitas: <span class="font-semibold text-primary"
+                                >{room.capacity}</span
+                            ></span
+                        >
+                    </div>
+                </div>
+                <div class="text-3xl font-bold text-primary mb-10">
+                    {formatPrice(room.price)}
+                    <span
+                        class="text-sm font-normal text-slate-500 dark:text-slate-400"
+                        >/ malam</span
+                    >
+                </div>
+                <div>
+                    <h3
+                        class="text-xs uppercase tracking-widest font-bold text-slate-500 dark:text-slate-400 mb-4"
+                    >
+                        FASILITAS
+                    </h3>
+                    <div class="flex flex-wrap gap-2">
+                        {
+                            room.facilities && room.facilities.length > 0 ? (
+                                room.facilities.map((facility) => (
+                                    <span class="px-4 py-2 bg-primary text-white text-sm font-semibold rounded-full shadow-sm">
+                                        {facility}
+                                    </span>
+                                ))
+                            ) : (
+                                <span class="text-sm text-slate-500 italic">
+                                    Tidak ada data fasilitas.
+                                </span>
+                            )
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="relative group">
+                <div
+                    class="absolute -inset-1 bg-gradient-to-r from-primary to-emerald-400 rounded-[2rem] blur opacity-25 group-hover:opacity-40 transition duration-1000 group-hover:duration-200"
+                >
+                </div>
+                <div
+                    class="relative overflow-hidden rounded-[1.5rem] shadow-2xl"
+                >
+                    <Image
+                        alt={room.name}
+                        class="w-full h-auto object-cover hover:scale-105 transition-transform duration-700"
+                        src={room.image}
+                        width={600}
+                        height={400}
+                    />
+                </div>
+            </div>
+        </div>
+        <section class="mb-16">
+            <div
+                class="flex flex-col sm:flex-row justify-between items-end mb-8 gap-4"
+            >
+                <h2 class="text-2xl font-bold text-slate-900 dark:text-white">
+                    Ketersediaan Kamar
+                </h2>
+                <div class="flex items-center gap-4 text-sm font-bold">
+                    <div class="flex items-center gap-2">
+                        <span
+                            class="w-12 h-6 bg-slate-800 dark:bg-slate-700 rounded-md"
+                        ></span>
+                        <span class="text-slate-700 dark:text-slate-300"
+                            >Tidak Tersedia</span
+                        >
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span class="w-12 h-6 bg-primary rounded-md"></span>
+                        <span class="text-slate-700 dark:text-slate-300"
+                            >Kosong</span
+                        >
+                    </div>
+                </div>
+            </div>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                {
+                    roomAvailability.beds.length > 0 ? (
+                        roomAvailability.beds.map((bed) => (
+                            <div
+                                class={`aspect-video flex items-start p-6 rounded-2xl shadow-lg transition-transform hover:-translate-y-1 ${
+                                    bed.isOccupied
+                                        ? "bg-slate-800 dark:bg-slate-700"
+                                        : "bg-primary cursor-pointer"
+                                }`}
+                            >
+                                <span
+                                    class={`text-3xl font-bold text-white ${
+                                        bed.isOccupied ? "opacity-80" : ""
+                                    }`}
+                                >
+                                    {bed.number}
+                                </span>
+                            </div>
+                        ))
+                    ) : (
+                        <div class="col-span-full text-center py-8 text-slate-500">
+                            Data ketersediaan tidak ditemukan.
+                        </div>
+                    )
+                }
+            </div>
+        </section>
+        <section class="mb-16">
+            <div class="prose prose-slate dark:prose-invert max-w-none">
+                <p
+                    class="text-lg leading-relaxed text-slate-600 dark:text-slate-400"
+                >
+                    Ini adalah contoh laman. Ini berbeda dengan posting blog
+                    karena akan tetap berada di satu tempat dan akan muncul di
+                    navigasi situs Anda (di kebanyakan tema). Kebanyakan orang
+                    memulai dengan laman Tentang yang memperkenalkannya ke calon
+                    pengunjung situs. Biasanya terdengar seperti ini: Hai
+                    disana! Saya adalah pembawa sepeda siang hari, calon aktor
+                    di malam hari, dan ini adalah situs web saya. Saya tinggal
+                    di Los Angeles, punya anjing hebat bernama Jack, dan saya
+                    suka piña colada. (Dan tertangkap basah).
+                </p>
+                <p
+                    class="text-lg leading-relaxed text-slate-600 dark:text-slate-400 mt-6"
+                >
+                    The XYZ Doohickey Company didirikan pada tahun 1971, dan
+                    telah menyediakan doohickeys berkualitas kepada masyarakat
+                    sejak saat itu. Terletak di Gotham City, XYZ mempekerjakan
+                    lebih dari 2.000 orang dan melakukan segala hal yang
+                    mengagumkan untuk komunitas Gotham.
+                </p>
+                <p
+                    class="text-lg leading-relaxed text-slate-600 dark:text-slate-400 mt-6"
+                >
+                    Sebagai pengguna WordPress baru, Anda harus membuka dasbor
+                    untuk menghapus halaman ini dan membuat halaman baru untuk
+                    konten Anda. Selamat bersenang-senang! Ini adalah contoh
+                    laman. Ini berbeda dengan posting blog karena akan tetap
+                    berada di satu tempat dan akan muncul di navigasi situs
+                    Anda.
+                </p>
+            </div>
+        </section>
+
+        <!-- Social Share Section (from HTML footer) -->
+        <div
+            class="flex flex-col sm:flex-row items-center justify-between gap-8 pt-8 border-t border-slate-200 dark:border-slate-800"
+        >
+            <div class="flex flex-wrap gap-2">
+                <button
+                    class="flex items-center gap-3 bg-[#3b5998] hover:bg-[#2d4373] text-white px-5 py-2.5 rounded-lg text-sm font-semibold transition-all"
+                >
+                    <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
+                        <path
+                            d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"
+                        ></path>
+                    </svg>
+                    Bagikan ke Facebook
+                </button>
+                <button
+                    class="flex items-center justify-center bg-black hover:bg-slate-900 text-white w-10 h-10 rounded-lg transition-all"
+                >
+                    <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                        <path
+                            d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"
+                        ></path>
+                    </svg>
+                </button>
+                <button
+                    class="flex items-center justify-center bg-[#25D366] hover:bg-[#128C7E] text-white w-10 h-10 rounded-lg transition-all"
+                >
+                    <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
+                        <path
+                            d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"
+                        ></path>
+                    </svg>
+                </button>
+                <button
+                    class="flex items-center justify-center bg-[#0088cc] hover:bg-[#0077b5] text-white w-10 h-10 rounded-lg transition-all"
+                >
+                    <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
+                        <path
+                            d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm4.462 8.246c.145.515.044.841.17 1.312 0 0 .139 1.562-.367 2.703-.316.714-.809 1.487-1.316 1.932-1.037.909-2.274 1.531-3.605 1.838-.974.226-1.758.257-2.583.151-.813-.105-1.52-.361-2.209-.73-.683-.365-1.246-.844-1.728-1.391-.482-.547-.843-1.162-1.048-1.812-.204-.65-.251-1.332-.142-2.008.109-.676.368-1.314.735-1.884.368-.57.848-1.06 1.397-1.442.548-.382 1.168-.669 1.821-.844.654-.175 1.339-.219 2.016-.131.677.088 1.33 3.328 1.886 4.309z"
+                        ></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </main>
+    <ContactInfo />
+    <Footer />
+</Layout>
+
+<style>
+    .material-symbols-rounded {
+        font-size: 20px;
+        vertical-align: middle;
+    }
+</style>

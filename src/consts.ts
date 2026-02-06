@@ -35,11 +35,12 @@ export const MENU = [
             // { name: "Dokter Praktek", href: "#" },
             // { name: "Dokter Tidak Praktek", href: "#" },
             { name: "Ketersediaan Kamar", href: "/ketersediaan-kamar" },
-            { name: "Tarif Kamar", href: "/tarif-kamar" },
+            { name: "Kamar & Tarif", href: "/tarif-kamar" },
         ],
     },
     { name: "Agenda", href: "#" },
     { name: "Testimoni", href: "#" },
     { name: "Galeri", href: "#" },
     { name: "Pembayaran", href: "/metode-pembayaran" },
+    { name: "Berita", href: "#" },
 ];
