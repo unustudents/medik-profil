@@ -7,7 +7,7 @@ export interface RoomRate {
 }
 
 export const roomRates: RoomRate[] = [
-    ...Array.from({ length: 30 }).map((_, index) => {
+    ...Array.from({ length: 20 }).map((_, index) => {
         const types = [
             { name: "Ruang Tulip", type: "Ruang Khusus", cap: "8 Set", price: 328000 },
             { name: "Neonatus Incubator", type: "Ruang Khusus", cap: "4 Set", price: 600000 },

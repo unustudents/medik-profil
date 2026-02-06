@@ -5,6 +5,8 @@ import Footer from "@/components/Footer.astro";
 import ContactInfo from "@/components/ContactInfo.astro";
 import { roomRates } from "@/data/room-rates";
 
+const initialCount = 8;
+
 const formatPrice = (price: number) => {
     return new Intl.NumberFormat("id-ID", {
         style: "currency",
@@ -32,13 +34,25 @@ const formatPrice = (price: number) => {
             </header>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                 {
-                    roomRates.map((room) => (
-                        <div class="bg-white dark:bg-slate-800 rounded-xl shadow-md overflow-hidden flex flex-col hover:shadow-lg transition-shadow">
+                    roomRates.map((room, index) => (
+                        <div
+                            class={`room-item bg-white dark:bg-slate-800 rounded-xl shadow-md overflow-hidden flex flex-col hover:shadow-lg transition-shadow duration-500 ${
+                                index >= initialCount
+                                    ? "hidden opacity-0 translate-y-4"
+                                    : "opacity-100 translate-y-0"
+                            }`}
+                        >
                             <div class="h-48 overflow-hidden">
                                 <img
                                     alt={room.name}
                                     class="w-full h-full object-cover"
                                     src={room.image}
+                                    loading={
+                                        index >= initialCount ? "lazy" : "eager"
+                                    }
+                                    decoding={
+                                        index >= initialCount ? "async" : "auto"
+                                    }
                                 />
                             </div>
                             <div class="p-5 flex-grow">
@@ -61,8 +75,70 @@ const formatPrice = (price: number) => {
                     ))
                 }
             </div>
+
+            <div class="mt-12 text-center" id="load-more-container">
+                <button
+                    id="load-more-btn"
+                    class="px-8 py-3 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-full font-bold hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors shadow-sm text-slate-700 dark:text-slate-300 cursor-pointer"
+                >
+                    Lihat Semua Kamar
+                </button>
+            </div>
         </div>
     </main>
     <ContactInfo />
     <Footer />
 </Layout>
+
+<style>
+    /* FIX: Force display none when hidden class is present */
+    .room-item.hidden {
+        display: none !important;
+    }
+</style>
+
+<script>
+    const loadMoreBtn = document.getElementById("load-more-btn");
+    const loadMoreContainer = document.getElementById("load-more-container");
+    const BATCH_SIZE = 8; // Load 8 items per click
+
+    // Function to check and hide button when no more items
+    function updateButtonVisibility() {
+        const hiddenItems = document.querySelectorAll(".room-item.hidden");
+
+        if (hiddenItems.length === 0 && loadMoreContainer) {
+            loadMoreContainer.style.display = "none";
+        }
+    }
+
+    // Check initial state
+    updateButtonVisibility();
+
+    if (loadMoreBtn) {
+        loadMoreBtn.addEventListener("click", () => {
+            const hiddenItems = document.querySelectorAll(".room-item.hidden");
+
+            // Only show next batch (BATCH_SIZE items)
+            const itemsToShow = Array.from(hiddenItems).slice(0, BATCH_SIZE);
+
+            itemsToShow.forEach((item, index) => {
+                // Remove hidden class
+                item.classList.remove("hidden");
+
+                // Add staggered animation
+                setTimeout(() => {
+                    item.classList.remove("opacity-0", "translate-y-4");
+                    item.classList.add("opacity-100", "translate-y-0");
+                }, index * 50);
+            });
+
+            // Update button text after loading batch
+            setTimeout(
+                () => {
+                    updateButtonVisibility();
+                },
+                itemsToShow.length * 50 + 100,
+            );
+        });
+    }
+</script>
