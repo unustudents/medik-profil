@@ -43,4 +43,5 @@ export const MENU = [
     { name: "Galeri", href: "#" },
     { name: "Pembayaran", href: "/metode-pembayaran" },
     { name: "Artikel", href: "/article" },
+    { name: "Rekanan", href: "/rekanan" },
 ];

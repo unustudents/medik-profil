@@ -2,7 +2,6 @@ export interface PaymentMethod {
     name: string;
     type: 'image' | 'html';
     image?: string;
-    htmlContent?: string;
 }
 
 export const paymentMethods: PaymentMethod[] = [
