@@ -1,0 +1,212 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/Header.astro";
+import ContactInfo from "@/components/ContactInfo.astro";
+import Footer from "@/components/Footer.astro";
+import ArticleCard from "@/components/ArticleCard.astro";
+import { articles } from "@/data/articles";
+
+import type { GetStaticPaths } from "astro";
+
+export const getStaticPaths = (async ({ paginate }) => {
+    // Sort articles by date or ID if needed, here we just use the array order
+    // Pagination: 8 items per page
+    return paginate(articles, { pageSize: 8 });
+}) satisfies GetStaticPaths;
+
+const { page } = Astro.props;
+
+// Pre-calculate pagination items to avoid Fragment syntax issues in template
+type PageItem =
+    | { type: "page"; num: number; href: string; isCurrent: boolean }
+    | { type: "ellipsis" };
+const pageItems: PageItem[] = [];
+
+for (let i = 1; i <= page.lastPage; i++) {
+    const showPage =
+        i === 1 || i === page.lastPage || Math.abs(i - page.currentPage) <= 1;
+    const showEllipsisBefore =
+        i === page.currentPage - 2 && page.currentPage > 3;
+    const showEllipsisAfter =
+        i === page.currentPage + 2 && page.currentPage < page.lastPage - 2;
+
+    if (showEllipsisBefore || showEllipsisAfter) {
+        pageItems.push({ type: "ellipsis" });
+    } else if (showPage) {
+        pageItems.push({
+            type: "page",
+            num: i,
+            href: i === 1 ? "/article" : `/article/${i}`,
+            isCurrent: i === page.currentPage,
+        });
+    }
+}
+---
+
+<Layout
+    title={`Informasi & Edukasi Kesehatan - Halaman ${page.currentPage} - RSU Afdila`}
+>
+    <Header />
+    <main class="min-h-screen py-16 px-4 md:px-8">
+        <div class="max-w-7xl mx-auto">
+            <header class="mb-12">
+                <h1
+                    class="text-3xl md:text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white mb-4"
+                >
+                    Informasi & Edukasi Kesehatan
+                </h1>
+                <p class="text-lg text-slate-600 dark:text-slate-400 max-w-2xl">
+                    Dapatkan artikel kesehatan terpercaya dan berita terbaru
+                    seputar layanan RSU Afdila.
+                </p>
+            </header>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                {page.data.map((article) => <ArticleCard article={article} />)}
+            </div>
+
+            <!-- Pagination Controls -->
+            {
+                page.lastPage > 1 && (
+                    <nav
+                        class="mt-12 flex justify-center items-center"
+                        aria-label="Pagination"
+                    >
+                        <ul class="flex items-center gap-1">
+                            {/* First Page Button */}
+                            {page.currentPage > 2 && (
+                                <li>
+                                    <a
+                                        href="/article"
+                                        class="flex items-center justify-center size-10 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-primary hover:text-white hover:border-primary transition-colors"
+                                        aria-label="Halaman pertama"
+                                    >
+                                        <svg
+                                            class="w-4 h-4"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            viewBox="0 0 24 24"
+                                        >
+                                            <path
+                                                stroke-linecap="round"
+                                                stroke-linejoin="round"
+                                                stroke-width="2"
+                                                d="M11 19l-7-7 7-7m8 14l-7-7 7-7"
+                                            />
+                                        </svg>
+                                    </a>
+                                </li>
+                            )}
+
+                            {/* Previous Button */}
+                            {page.url.prev && (
+                                <li>
+                                    <a
+                                        href={page.url.prev}
+                                        class="flex items-center justify-center size-10 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-primary hover:text-white hover:border-primary transition-colors"
+                                        aria-label="Halaman sebelumnya"
+                                    >
+                                        <svg
+                                            class="w-4 h-4"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            viewBox="0 0 24 24"
+                                        >
+                                            <path
+                                                stroke-linecap="round"
+                                                stroke-linejoin="round"
+                                                stroke-width="2"
+                                                d="M15 19l-7-7 7-7"
+                                            />
+                                        </svg>
+                                    </a>
+                                </li>
+                            )}
+
+                            {/* Page Numbers */}
+                            {pageItems.map((item, idx) =>
+                                item.type === "ellipsis" ? (
+                                    <li>
+                                        <span class="flex items-center justify-center size-10 text-slate-400 dark:text-slate-600">
+                                            ...
+                                        </span>
+                                    </li>
+                                ) : (
+                                    <li>
+                                        <a
+                                            href={item.href}
+                                            class={
+                                                item.isCurrent
+                                                    ? "flex items-center justify-center size-10 rounded-lg font-medium transition-colors bg-primary text-white border border-primary shadow-lg shadow-primary/25"
+                                                    : "flex items-center justify-center size-10 rounded-lg font-medium transition-colors border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-primary hover:text-white hover:border-primary"
+                                            }
+                                            aria-current={
+                                                item.isCurrent
+                                                    ? "page"
+                                                    : undefined
+                                            }
+                                        >
+                                            {item.num}
+                                        </a>
+                                    </li>
+                                ),
+                            )}
+
+                            {/* Next Button */}
+                            {page.url.next && (
+                                <li>
+                                    <a
+                                        href={page.url.next}
+                                        class="flex items-center justify-center size-10 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-primary hover:text-white hover:border-primary transition-colors"
+                                        aria-label="Halaman selanjutnya"
+                                    >
+                                        <svg
+                                            class="w-4 h-4"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            viewBox="0 0 24 24"
+                                        >
+                                            <path
+                                                stroke-linecap="round"
+                                                stroke-linejoin="round"
+                                                stroke-width="2"
+                                                d="M9 5l7 7-7 7"
+                                            />
+                                        </svg>
+                                    </a>
+                                </li>
+                            )}
+
+                            {/* Last Page Button */}
+                            {page.currentPage < page.lastPage - 1 && (
+                                <li>
+                                    <a
+                                        href={`/article/${page.lastPage}`}
+                                        class="flex items-center justify-center size-10 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-primary hover:text-white hover:border-primary transition-colors"
+                                        aria-label="Halaman terakhir"
+                                    >
+                                        <svg
+                                            class="w-4 h-4"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            viewBox="0 0 24 24"
+                                        >
+                                            <path
+                                                stroke-linecap="round"
+                                                stroke-linejoin="round"
+                                                stroke-width="2"
+                                                d="M13 5l7 7-7 7M5 5l7 7-7 7"
+                                            />
+                                        </svg>
+                                    </a>
+                                </li>
+                            )}
+                        </ul>
+                    </nav>
+                )
+            }
+        </div>
+    </main>
+    <ContactInfo />
+    <Footer />
+</Layout>
