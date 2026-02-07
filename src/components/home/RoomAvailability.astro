@@ -1,5 +1,5 @@
 ---
-
+import { Image } from "astro:assets";
 ---
 
 <section class="py-20 bg-white dark:bg-slate-900 overflow-hidden">
@@ -43,10 +43,17 @@
             <div class="relative">
                 <div class="grid grid-cols-12 gap-4">
                     <div class="col-span-6 relative h-[400px]">
-                        <img
+                        <!-- <img
                             alt="Hospital Room"
                             class="rounded-2xl h-full w-full object-cover shadow-2xl"
                             src="https://lh3.googleusercontent.com/aida-public/AB6AXuCC1KUdrr8n3U5L7Y2Wje2AUjLI7VSwsQSARdfBZOzMdhc6O0n30fzfc0iLbibHag57HPXmgnzay2Y7B8CEMLOQ25LlcOcgrgkASqXOd-uL6kxqYQls4sTjn8UcFsYnSt4ljwxXjnILNPI6IXsjrj9akek86wToyyKnLoD5PalVI2Hn2wVyAE0oVBdU4L19kNzgMa8yhMa86tA_IlahGr1jbs61BcvGhGrqvO07YJKaJQFPcsPNZRyHiJpSmw9jrwYZZ-F_jWK0ApE"
+                        /> -->
+                        <Image
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuCC1KUdrr8n3U5L7Y2Wje2AUjLI7VSwsQSARdfBZOzMdhc6O0n30fzfc0iLbibHag57HPXmgnzay2Y7B8CEMLOQ25LlcOcgrgkASqXOd-uL6kxqYQls4sTjn8UcFsYnSt4ljwxXjnILNPI6IXsjrj9akek86wToyyKnLoD5PalVI2Hn2wVyAE0oVBdU4L19kNzgMa8yhMa86tA_IlahGr1jbs61BcvGhGrqvO07YJKaJQFPcsPNZRyHiJpSmw9jrwYZZ-F_jWK0ApE"
+                            alt="Hospital Room"
+                            width={600}
+                            height={400}
+                            class="rounded-2xl h-full w-full object-cover shadow-2xl"
                         />
                         <div class="absolute bottom-4 left-4">
                             <span
@@ -60,17 +67,31 @@
                         </div>
                     </div>
                     <div class="col-span-3 h-[400px] mt-8">
-                        <img
+                        <!-- <img
                             alt="Hospital interior"
                             class="rounded-2xl h-full w-full object-cover"
                             src="https://lh3.googleusercontent.com/aida-public/AB6AXuASsw7vdsCs7wDAKCNjOiPS33FOXsNMnffoxbegORXqQ4oXG9PPfyBBq89POFmGvZdMMZpXvzP1bVnsqmoLkywAPltbfPNt38lThBXi35zKEh5B-Ip8JiMs4GvvkyAtoo7zbMw-3zuOajTf8tZnm9cwD1DOOFgmCWFpxyKdM9m14a8TRyj7HBw0hkSI0-hj7tcWgHzmS8ZvQaNOzslrIBm_Md3isMvgvHSFJL6fTUCAbZh8ASlB4hnVbFkFaQxDOJswG-cnisE_Q8Q"
+                        /> -->
+                        <Image
+                            alt="Hospital interior"
+                            class="rounded-2xl h-full w-full object-cover"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuASsw7vdsCs7wDAKCNjOiPS33FOXsNMnffoxbegORXqQ4oXG9PPfyBBq89POFmGvZdMMZpXvzP1bVnsqmoLkywAPltbfPNt38lThBXi35zKEh5B-Ip8JiMs4GvvkyAtoo7zbMw-3zuOajTf8tZnm9cwD1DOOFgmCWFpxyKdM9m14a8TRyj7HBw0hkSI0-hj7tcWgHzmS8ZvQaNOzslrIBm_Md3isMvgvHSFJL6fTUCAbZh8ASlB4hnVbFkFaQxDOJswG-cnisE_Q8Q"
+                            width={600}
+                            height={400}
                         />
                     </div>
                     <div class="col-span-3 h-[400px] mt-16 relative">
-                        <img
+                        <!-- <img
                             alt="Medical facility"
                             class="rounded-2xl h-full w-full object-cover"
                             src="https://lh3.googleusercontent.com/aida-public/AB6AXuBeI2yNA_EdmwyZ_axwnNB0JaEGMzJQDYTgMiKHQoTOxTviV6uohVi2Mwdx26VVTzth0-vuVI40EDs1g0L9j5iBhsMfXdlGJ6JP3QTa8HaQStq4FYZIx-_BiM6L18mxVG2b8L1bueHmRWztCZ3-0Bh09NAJB-Y0aIs8Hipd9qg6pgjOmwU4mdrywZqB4ZVAodUOilpXMKA0U0JnA3b4exTv_O1LB1OmsHEd5KW2vRnm0oGsw2IcxJleYXKEiQdhyBFIop8ieuOoVgs"
+                        /> -->
+                        <Image
+                            alt="Medical facility"
+                            class="rounded-2xl h-full w-full object-cover"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuBeI2yNA_EdmwyZ_axwnNB0JaEGMzJQDYTgMiKHQoTOxTviV6uohVi2Mwdx26VVTzth0-vuVI40EDs1g0L9j5iBhsMfXdlGJ6JP3QTa8HaQStq4FYZIx-_BiM6L18mxVG2b8L1bueHmRWztCZ3-0Bh09NAJB-Y0aIs8Hipd9qg6pgjOmwU4mdrywZqB4ZVAodUOilpXMKA0U0JnA3b4exTv_O1LB1OmsHEd5KW2vRnm0oGsw2IcxJleYXKEiQdhyBFIop8ieuOoVgs"
+                            width={600}
+                            height={400}
                         />
                         <div
                             class="absolute top-4 left-4 bg-white dark:bg-slate-800 p-3 rounded-xl shadow-lg text-center border border-slate-100 dark:border-slate-700"

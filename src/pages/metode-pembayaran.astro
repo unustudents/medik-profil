@@ -1,0 +1,117 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/Header.astro";
+import Footer from "@/components/Footer.astro";
+import ContactInfo from "@/components/ContactInfo.astro";
+import { paymentMethods } from "@/data/paymentMethods";
+
+const BATCH_SIZE = 10;
+---
+
+<Layout title="Metode Pembayaran">
+    <Header />
+
+    <main
+        class="bg-slate-50 dark:bg-slate-900 min-h-screen transition-colors duration-300"
+    >
+        <div class="max-w-6xl mx-auto px-4 py-12">
+            <div class="mb-10">
+                <h1
+                    class="text-3xl font-bold text-slate-900 dark:text-white mb-2"
+                >
+                    Payment Method
+                </h1>
+                <p class="text-slate-500 dark:text-slate-400 text-lg">
+                    Select your preferred payment method
+                </p>
+            </div>
+
+            <div
+                class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
+                id="payment-grid"
+            >
+                {
+                    paymentMethods.map((method, index) => (
+                        <button
+                            class={`relative group bg-white dark:bg-slate-800 border-2 border-slate-100 dark:border-slate-700 rounded-2xl p-8 flex items-center justify-center h-32 transition-all duration-200 hover:border-teal-500/50 hover:shadow-lg payment-card-shadow payment-item ${index >= BATCH_SIZE ? "hidden opacity-0 translate-y-4" : "opacity-100 translate-y-0"}`}
+                            aria-label={method.name}
+                            title={method.name}
+                        >
+                            {method.type === "html" ? (
+                                <Fragment set:html={method.htmlContent} />
+                            ) : (
+                                <img
+                                    src={method.image}
+                                    alt={method.name}
+                                    class="h-12 w-auto object-contain max-w-full"
+                                    loading={
+                                        index >= BATCH_SIZE ? "lazy" : "eager"
+                                    }
+                                />
+                            )}
+                        </button>
+                    ))
+                }
+            </div>
+
+            <div class="mt-12 text-center" id="load-more-container">
+                <button
+                    id="load-more-btn"
+                    class="px-8 py-3 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-full font-bold hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors shadow-sm text-slate-700 dark:text-slate-300 cursor-pointer"
+                >
+                    Lebih Banyak
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <ContactInfo />
+    <Footer />
+</Layout>
+
+<style>
+    .payment-card-shadow {
+        box-shadow:
+            0 4px 6px -1px rgba(0, 0, 0, 0.05),
+            0 2px 4px -1px rgba(0, 0, 0, 0.03);
+    }
+</style>
+
+<script>
+    const loadMoreBtn = document.getElementById("load-more-btn");
+    const loadMoreContainer = document.getElementById("load-more-container");
+    const paymentGrid = document.getElementById("payment-grid");
+    const BATCH_SIZE = 10;
+
+    function updateButtonVisibility() {
+        const hiddenItems =
+            paymentGrid?.querySelectorAll(".payment-item.hidden") || [];
+        if (hiddenItems.length === 0 && loadMoreContainer) {
+            loadMoreContainer.style.display = "none";
+        }
+    }
+
+    // Initial check
+    updateButtonVisibility();
+
+    if (loadMoreBtn) {
+        loadMoreBtn.addEventListener("click", () => {
+            const hiddenItems =
+                paymentGrid?.querySelectorAll(".payment-item.hidden") || [];
+            const itemsToShow = Array.from(hiddenItems).slice(0, BATCH_SIZE);
+
+            itemsToShow.forEach((item, index) => {
+                item.classList.remove("hidden");
+                // Add small delay for stagger effect
+                setTimeout(() => {
+                    item.classList.remove("opacity-0", "translate-y-4");
+                    item.classList.add("opacity-100", "translate-y-0");
+                }, index * 50);
+            });
+
+            // Update visibility after animations would start
+            const maxDelay = itemsToShow.length * 50;
+            setTimeout(updateButtonVisibility, maxDelay + 100);
+        });
+    }
+</script>
