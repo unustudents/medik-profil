@@ -1,0 +1,307 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/Header.astro";
+import ContactInfo from "@/components/ContactInfo.astro";
+import Footer from "@/components/Footer.astro";
+import { articles } from "@/data/articles";
+import type { GetStaticPaths } from "astro";
+import FormattedDate from "@/components/FormattedDate.astro";
+
+export const getStaticPaths = (async () => {
+    return articles.map((article) => ({
+        params: { slug: article.slug },
+        props: { article },
+    }));
+}) satisfies GetStaticPaths;
+
+const { article } = Astro.props;
+
+// Mock related articles (take last 3 except current)
+const relatedArticles = articles.filter((a) => a.id !== article.id).slice(0, 3);
+---
+
+<Layout title={`${article.title} - RSU Afdila`}>
+    <Header />
+    <main
+        class="bg-background-light dark:bg-background-dark font-display text-[#111717] dark:text-white transition-colors duration-200"
+    >
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <!-- Breadcrumbs -->
+            <nav
+                class="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 mb-8"
+            >
+                <a class="hover:text-primary" href="/">Beranda</a>
+                <span class="material-icons-outlined text-xs"
+                    >chevron_right</span
+                >
+                <a class="hover:text-primary" href="/article">Artikel</a>
+                <span class="material-icons-outlined text-xs"
+                    >chevron_right</span
+                >
+                <span class="text-primary font-medium">Detail Artikel</span>
+            </nav>
+            <!-- Hero Section -->
+            <div
+                class="relative w-full aspect-[21/9] rounded-2xl overflow-hidden mb-10 group"
+            >
+                <img
+                    alt={article.title}
+                    class="w-full h-full object-cover"
+                    src={article.image}
+                />
+                <div
+                    class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-8 md:p-12"
+                >
+                    <div class="max-w-4xl">
+                        <span
+                            class="bg-primary text-white px-3 py-1 rounded text-xs font-bold uppercase tracking-wider mb-4 inline-block"
+                            >{article.category}</span
+                        >
+                        <h1
+                            class="text-3xl md:text-5xl font-bold text-white leading-tight mb-4"
+                        >
+                            {article.title}
+                        </h1>
+                    </div>
+                </div>
+            </div>
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+                <!-- Article Body -->
+                <article class="lg:col-span-8">
+                    <!-- Metadata -->
+                    <div
+                        class="flex flex-wrap items-center gap-6 pb-8 border-b border-gray-100 dark:border-gray-800 mb-8 text-sm text-gray-600 dark:text-gray-400"
+                    >
+                        <div class="flex items-center gap-2">
+                            <span class="material-icons-outlined text-primary"
+                                >calendar_month</span
+                            >
+                            <span
+                                ><FormattedDate
+                                    date={new Date(article.date)}
+                                /></span
+                            >
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <span class="material-icons-outlined text-primary"
+                                >person</span
+                            >
+                            <span>{article.author.name}</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <span class="material-icons-outlined text-primary"
+                                >visibility</span
+                            >
+                            <span>{article.views} Dilihat</span>
+                        </div>
+                    </div>
+                    <!-- Content -->
+                    <div
+                        class="article-content text-lg leading-relaxed dark:text-gray-300 prose prose-lg prose-headings:text-primary prose-a:text-primary prose-blockquote:border-primary prose-blockquote:bg-primary/5 prose-blockquote:text-gray-700 dark:prose-invert dark:prose-headings:text-white dark:prose-blockquote:bg-primary/10 dark:prose-blockquote:text-gray-200"
+                        set:html={article.content}
+                    />
+
+                    <!-- Footer Article / Tags & Share -->
+                    <div
+                        class="mt-12 pt-8 border-t border-gray-100 dark:border-gray-800 flex flex-col md:flex-row md:items-center justify-between gap-6"
+                    >
+                        <div class="flex flex-wrap gap-2">
+                            {
+                                article.tags.map((tag) => (
+                                    <span class="px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-full text-sm text-gray-600 dark:text-gray-400">
+                                        {tag}
+                                    </span>
+                                ))
+                            }
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <span class="text-sm font-medium text-gray-500"
+                                >Bagikan:</span
+                            >
+                            <div class="flex gap-2">
+                                <a
+                                    class="size-10 rounded-full bg-primary/10 hover:bg-primary text-primary hover:text-white flex items-center justify-center transition-all"
+                                    href="#"
+                                >
+                                    <!-- Facebook Icon -->
+                                    <svg
+                                        class="w-5 h-5 fill-current"
+                                        viewBox="0 0 24 24"
+                                    >
+                                        <path
+                                            d="M12 2.04c-5.5 0-10 4.49-10 10.02 0 5 3.66 9.15 8.44 9.9v-7h-2.54v-2.9h2.54V9.82c0-2.51 1.49-3.89 3.78-3.89 1.09 0 2.23.19 2.23.19v2.47h-1.26c-1.24 0-1.63.77-1.63 1.56v1.88h2.78l-.45 2.9h-2.33v7a10 10 0 0 0 8.44-9.9c0-5.53-4.5-10.02-10-10.02z"
+                                        ></path>
+                                    </svg>
+                                </a>
+                                <a
+                                    class="size-10 rounded-full bg-primary/10 hover:bg-primary text-primary hover:text-white flex items-center justify-center transition-all"
+                                    href="#"
+                                >
+                                    <!-- Twitter/X Icon -->
+                                    <svg
+                                        class="w-5 h-5 fill-current"
+                                        viewBox="0 0 24 24"
+                                    >
+                                        <path
+                                            d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"
+                                        ></path>
+                                    </svg>
+                                </a>
+                                <a
+                                    class="size-10 rounded-full bg-primary/10 hover:bg-primary text-primary hover:text-white flex items-center justify-center transition-all"
+                                    href="#"
+                                >
+                                    <!-- LinkedIn/Link Icon -->
+                                    <svg
+                                        class="w-4 h-4 fill-current"
+                                        viewBox="0 0 24 24"
+                                    >
+                                        <path
+                                            d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"
+                                        ></path>
+                                    </svg>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- CTA Banner -->
+                    <div
+                        class="mt-12 bg-slate-900 dark:bg-black/20 rounded-2xl p-8 text-white flex flex-col md:flex-row items-center gap-8 border border-white/10"
+                    >
+                        <div class="flex-1">
+                            <h3 class="text-2xl font-bold mb-2">
+                                Punya keluhan kesehatan?
+                            </h3>
+                            <p class="text-white/80">
+                                Konsultasikan langsung dengan dokter spesialis
+                                jantung kami di RSU Afdila. Kami siap melayani
+                                Anda 24/7.
+                            </p>
+                        </div>
+                        <button
+                            class="whitespace-nowrap bg-primary px-8 py-3 rounded-xl font-bold hover:scale-105 transition-transform text-white"
+                        >
+                            Konsultasi Sekarang
+                        </button>
+                    </div>
+                </article>
+                <!-- Sidebar -->
+                <aside class="lg:col-span-4 space-y-8">
+                    <!-- Related Articles -->
+                    <div
+                        class="bg-white dark:bg-slate-900 border border-gray-100 dark:border-gray-800 rounded-2xl p-6"
+                    >
+                        <h3
+                            class="text-lg font-bold mb-6 flex items-center gap-2 text-slate-900 dark:text-white"
+                        >
+                            <span class="material-icons-outlined text-primary"
+                                >article</span
+                            >
+                            Artikel Terkait
+                        </h3>
+                        <div class="space-y-6">
+                            {
+                                relatedArticles.map((related) => (
+                                    <a
+                                        class="flex gap-4 group"
+                                        href={`/article/${related.slug}`}
+                                    >
+                                        <div class="size-20 rounded-lg overflow-hidden flex-shrink-0">
+                                            <img
+                                                class="w-full h-full object-cover group-hover:scale-110 transition-transform"
+                                                src={related.image}
+                                                alt={related.title}
+                                            />
+                                        </div>
+                                        <div class="flex flex-col justify-center">
+                                            <h4 class="text-sm font-bold group-hover:text-primary transition-colors line-clamp-2 text-slate-800 dark:text-gray-200">
+                                                {related.title}
+                                            </h4>
+                                            <span class="text-xs text-gray-500 mt-1">
+                                                <FormattedDate
+                                                    date={
+                                                        new Date(related.date)
+                                                    }
+                                                />
+                                            </span>
+                                        </div>
+                                    </a>
+                                ))
+                            }
+                        </div>
+                        <a
+                            href="/article"
+                            class="block w-full mt-8 py-3 text-sm font-bold text-center text-primary border border-primary/20 rounded-xl hover:bg-primary/5 transition-colors"
+                        >
+                            Lihat Semua Artikel
+                        </a>
+                    </div>
+                    <!-- Newsletter / Subscribe -->
+                    <div
+                        class="bg-primary/10 dark:bg-primary/5 rounded-2xl p-6 border border-primary/10"
+                    >
+                        <h3
+                            class="text-lg font-bold mb-2 text-slate-900 dark:text-white"
+                        >
+                            Update Kesehatan
+                        </h3>
+                        <p
+                            class="text-sm text-gray-600 dark:text-gray-400 mb-4"
+                        >
+                            Dapatkan tips kesehatan mingguan langsung ke inbox
+                            Anda.
+                        </p>
+                        <div class="space-y-3">
+                            <input
+                                class="w-full rounded-xl border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-800 focus:ring-primary focus:border-primary text-sm p-3"
+                                placeholder="Email Anda"
+                                type="email"
+                            />
+                            <button
+                                class="w-full py-3 bg-primary text-white rounded-xl font-bold text-sm shadow-lg shadow-primary/20"
+                                >Berlangganan</button
+                            >
+                        </div>
+                    </div>
+                    <!-- Doctor Highlight -->
+                    <div
+                        class="bg-white dark:bg-slate-900 border border-gray-100 dark:border-gray-800 rounded-2xl p-6"
+                    >
+                        <h3
+                            class="text-sm font-bold uppercase tracking-widest text-gray-400 mb-4"
+                        >
+                            Penulis
+                        </h3>
+                        <div class="flex items-center gap-4">
+                            <div
+                                class="size-16 rounded-full overflow-hidden border-2 border-primary"
+                            >
+                                <img
+                                    class="w-full h-full object-cover"
+                                    src={article.author.image}
+                                    alt={article.author.name}
+                                />
+                            </div>
+                            <div>
+                                <h4
+                                    class="font-bold text-[#111717] dark:text-white"
+                                >
+                                    {article.author.name}
+                                </h4>
+                                <p class="text-xs text-primary font-medium">
+                                    {article.author.role}
+                                </p>
+                            </div>
+                        </div>
+                        <p class="text-xs text-gray-500 mt-4 leading-relaxed">
+                            Berpengalaman lebih dari 10 tahun dalam penanganan
+                            kasus kardiovaskular kronis di RSU Afdila.
+                        </p>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </main>
+    <ContactInfo />
+    <Footer />
+</Layout>
