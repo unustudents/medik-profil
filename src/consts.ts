@@ -38,7 +38,7 @@ export const MENU = [
             { name: "Kamar & Tarif", href: "/tarif-kamar" },
         ],
     },
-    { name: "Agenda", href: "#" },
+    { name: "Agenda", href: "/agenda" },
     { name: "Testimoni", href: "#" },
     { name: "Galeri", href: "#" },
     { name: "Pembayaran", href: "/metode-pembayaran" },

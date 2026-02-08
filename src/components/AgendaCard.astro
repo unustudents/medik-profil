@@ -1,0 +1,80 @@
+---
+import { Image } from "astro:assets";
+import type { AgendaEvent } from "@/data/agenda";
+
+interface Props {
+    event: AgendaEvent;
+}
+
+const { event } = Astro.props;
+
+const getStatusConfig = (status: string) => {
+    switch (status) {
+        case "Akan Datang":
+            return {
+                icon: "event",
+                color: "text-emerald-500",
+                bg: "bg-emerald-50 dark:bg-emerald-900/10",
+                border: "border-emerald-100 dark:border-emerald-900/30",
+            };
+        case "Sedang Berlangsung":
+            return {
+                icon: "play_circle",
+                color: "text-blue-500",
+                bg: "bg-blue-50 dark:bg-blue-900/10",
+                border: "border-blue-100 dark:border-blue-900/30",
+            };
+        default: // Acara telah lewat
+            return {
+                icon: "pan_tool",
+                color: "text-red-500",
+                bg: "bg-red-50 dark:bg-red-900/10",
+                border: "border-red-100 dark:border-red-900/30",
+            };
+    }
+};
+
+const statusConfig = getStatusConfig(event.status);
+---
+
+<article
+    class="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden group hover:shadow-md transition-shadow"
+>
+    <a href={`/agenda/${event.slug}`} class="block">
+        <div class="aspect-video overflow-hidden">
+            <Image
+                alt={event.title}
+                class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                src={event.image}
+                width={400}
+                height={225}
+            />
+        </div>
+        <div class="p-5">
+            <div class="flex items-start gap-3 mb-4">
+                <div
+                    class={`flex-shrink-0 w-10 h-10 border ${statusConfig.border} rounded flex items-center justify-center ${statusConfig.color} ${statusConfig.bg}`}
+                >
+                    <span class="material-icons-outlined text-[20px]">
+                        {statusConfig.icon}
+                    </span>
+                </div>
+                <div>
+                    <p
+                        class={`text-[13px] font-medium ${statusConfig.color} leading-tight`}
+                    >
+                        {event.status}
+                    </p>
+                    <p class="text-[13px] text-slate-500 dark:text-slate-400">
+                        {event.date} - {event.time}
+                    </p>
+                </div>
+            </div>
+            <h3
+                class="text-lg font-bold text-slate-800 dark:text-slate-100 leading-snug group-hover:text-teal-600 transition-colors"
+            >
+                {event.title}
+            </h3>
+        </div>
+    </a>
+</article>

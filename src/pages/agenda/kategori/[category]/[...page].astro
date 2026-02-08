@@ -1,0 +1,110 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/Header.astro";
+import Footer from "@/components/Footer.astro";
+import ContactInfo from "@/components/ContactInfo.astro";
+import { agendaEvents } from "@/data/agenda";
+import type { AgendaEvent } from "@/data/agenda";
+import type { GetStaticPaths, Page } from "astro";
+import AgendaCard from "@/components/AgendaCard.astro";
+import Pagination from "@/components/Pagination.astro";
+
+// Pagination Logic
+export const getStaticPaths = (async ({ paginate }) => {
+    const categories = [
+        {
+            slug: "akan-datang",
+            status: "Akan Datang",
+            title: "Acara Akan Datang",
+        },
+        {
+            slug: "sedang-berlangsung",
+            status: "Sedang Berlangsung",
+            title: "Acara Sedang Berlangsung",
+        },
+        {
+            slug: "selesai",
+            status: "Acara telah lewat",
+            title: "Acara Selesai",
+        },
+    ];
+
+    return categories.flatMap((category) => {
+        const filteredEvents = agendaEvents.filter(
+            (event) => event.status === category.status,
+        );
+
+        return paginate(filteredEvents, {
+            params: { category: category.slug },
+            props: { categoryTitle: category.title },
+            pageSize: 8,
+        });
+    });
+}) satisfies GetStaticPaths;
+
+interface Props {
+    page: Page<AgendaEvent>;
+    categoryTitle: string;
+}
+
+const { page, categoryTitle } = Astro.props;
+const { category } = Astro.params;
+---
+
+<Layout title={`${categoryTitle} - Halaman ${page.currentPage} - RSU Afdila`}>
+    <Header />
+
+    <header
+        class="py-12 md:py-16 bg-slate-50 dark:bg-slate-900 transition-colors duration-200"
+    >
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="mb-4">
+                <a
+                    href="/agenda"
+                    class="text-sm font-medium text-primary hover:underline flex items-center gap-1"
+                >
+                    <span class="material-icons-outlined text-sm"
+                        >arrow_back</span
+                    >
+                    Kembali ke Semua Agenda
+                </a>
+            </div>
+            <h1
+                class="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-4"
+            >
+                {categoryTitle}
+            </h1>
+            <p class="text-slate-500 dark:text-slate-400 max-w-2xl">
+                Menampilkan daftar agenda berdasarkan kategori yang dipilih.
+            </p>
+        </div>
+    </header>
+
+    <main
+        class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20 bg-slate-50 dark:bg-slate-900 transition-colors duration-200"
+    >
+        {
+            page.data.length === 0 ? (
+                <div class="text-center py-20">
+                    <span class="material-icons-outlined text-6xl text-slate-300 dark:text-slate-600 mb-4">
+                        event_busy
+                    </span>
+                    <p class="text-slate-500 dark:text-slate-400 text-lg">
+                        Tidak ada agenda dalam kategori ini.
+                    </p>
+                </div>
+            ) : (
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    {page.data.map((event) => (
+                        <AgendaCard event={event} />
+                    ))}
+                </div>
+            )
+        }
+
+        <Pagination page={page} baseUrl={`/agenda/kategori/${category}`} />
+    </main>
+
+    <ContactInfo />
+    <Footer />
+</Layout>
