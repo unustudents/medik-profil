@@ -1,6 +1,5 @@
 import { db, HomePage, eq } from "astro:db";
-
-const STRAPI_URL = import.meta.env.STRAPI_URL;
+import { STRAPI_URL } from "astro:env/server";
 
 // =============================================
 // Data Gateway Functions (Strapi → AstroDB)
