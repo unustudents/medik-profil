@@ -6,11 +6,16 @@ import db from '@astrojs/db';
 import { defineConfig } from 'astro/config';
 import tailwindcss from "@tailwindcss/vite";
 // https://astro.build/config
+import { loadEnv } from 'vite';
+
+const { STRAPI_URL, SITE_URL } = loadEnv(process.env.NODE_ENV, process.cwd(), '');
+const strapiHost = STRAPI_URL ? new URL(STRAPI_URL).hostname : '172.192.7.10';
+
 export default defineConfig({
-	site: 'https://medik-profil.vercel.app/',
+	site: SITE_URL,
 	integrations: [mdx(), sitemap(), db()],
 	image: {
-		domains: ['172.192.7.10', import.meta.env.STRAPI_URL],
+		domains: [strapiHost],
 	},
 	vite: {
 		plugins: [tailwindcss()],

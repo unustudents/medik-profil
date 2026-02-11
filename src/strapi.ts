@@ -1,9 +1,6 @@
-import { strapi } from "@strapi/client";
 import { db, HomePage, eq } from "astro:db";
 
-export const client = strapi({
-    baseURL: `${import.meta.env.STRAPI_URL}/api`,
-});
+const STRAPI_URL = import.meta.env.STRAPI_URL;
 
 // =============================================
 // Data Gateway Functions (Strapi → AstroDB)
@@ -17,12 +14,14 @@ export const client = strapi({
  */
 export async function getHomePage() {
     try {
-        const res = await client.single("home-page").find({ populate: "*" });
-        const data = res.data as any;
+        const res = await fetch(`${STRAPI_URL}/api/home-page?populate=*`);
+        if (!res.ok) throw new Error(`Strapi error: ${res.status}`);
+        const json = await res.json();
+        const data = json.data as any;
 
         // Ekstrak URL gambar dari objek Strapi
-        const aboutImageUrl = data.about_image?.url ? `${import.meta.env.STRAPI_URL}${data.about_image.url}` : '';
-        const heroImageUrls = (data.hero_images ?? []).map((img: any) => `${import.meta.env.STRAPI_URL}${img.url}`);
+        const aboutImageUrl = data.about_image?.url ? `${STRAPI_URL}${data.about_image.url}` : '';
+        const heroImageUrls = (data.hero_images ?? []).map((img: any) => `${STRAPI_URL}${img.url}`);
 
         // Simpan ke AstroDB (replace)
         const existing = await db.select().from(HomePage).where(eq(HomePage.id, 1));
