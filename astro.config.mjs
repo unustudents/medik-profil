@@ -10,7 +10,7 @@ export default defineConfig({
 	site: 'https://medik-profil.vercel.app/',
 	integrations: [mdx(), sitemap(), db()],
 	image: {
-		domains: ['172.192.7.10'],
+		domains: ['172.192.7.10', import.meta.env.STRAPI_URL],
 	},
 	vite: {
 		plugins: [tailwindcss()],
