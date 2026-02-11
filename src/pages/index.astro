@@ -14,6 +14,9 @@ import {
 	RoomPrices,
 	MedicalServices,
 } from "@/components/home";
+import { getHomePage } from "@/strapi";
+
+const homePage = await getHomePage();
 ---
 
 <Layout
@@ -22,10 +25,19 @@ import {
 >
 	<Header />
 	<main>
-		<Hero />
+		<Hero images={homePage?.hero_images} />
 		<EmergencyAndSchedule />
 		<RoomAvailability />
-		<About />
+		<About
+			title={homePage?.about_title}
+			description={homePage?.about_description}
+			image={homePage?.about_image}
+			stats_doctors={homePage?.stats_doctors}
+			stats_medics={homePage?.stats_medics}
+			stats_rooms={homePage?.stats_rooms}
+			stats_capacity={homePage?.stats_capacity}
+			client:visible
+		/>
 		<DoctorsList />
 		<Gallery />
 		<RoomPrices />

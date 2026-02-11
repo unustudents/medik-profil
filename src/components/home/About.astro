@@ -1,9 +1,28 @@
 ---
 import { Image } from "astro:assets";
 
+interface Props {
+    title?: string;
+    description?: string;
+    image?: string;
+    stats_doctors?: number;
+    stats_medics?: number;
+    stats_rooms?: number;
+    stats_capacity?: number;
+}
+
+const {
+    title = "RS Ciuss Medika",
+    description = "Ciuss WP Medika adalah tema dari Ciuss Creative yang dibuat dengan fitur khusus website Rumah Sakit. Telah dilengkapi dengan fitur Timetable, Daftar Dokter, Daftar Tenaga Medis, Daftar Ruang dan Tarif, dan lain sebagainya...",
+    image = "",
+    stats_doctors = 0,
+    stats_medics = 0,
+    stats_rooms = 0,
+    stats_capacity = 0,
+} = Astro.props;
+
 const partners = Array.from({ length: 20 }, (_, i) => ({
     name: `Partner ${i + 1}`,
-    // Using a placeholder service or repeatable images since we don't have 20 unique logos
     logo:
         i % 4 === 0
             ? "York"
@@ -24,21 +43,24 @@ const partners = Array.from({ length: 20 }, (_, i) => ({
                     class="rounded-2xl shadow-xl mb-8"
                     src="https://lh3.googleusercontent.com/aida-public/AB6AXuA9-LSyX3Ixg7FXiiDzYkie2EfOadb9QILN6WWyfDX9hw4O7Aib5AB4xRmNl9VAU6aoViDgCHa39L9GHBOoL33GMPqZuyCyGjoE-2NlQ-jtbyBzUtWWA-ueigdNA37IF1lJGajscHBNVTezKsU4VX3F1la5pwrZNV3Ab52F3EMhWfglpsVY1Q1KgbatP-R4YZTzWoHpM0b2yW24DyCB6DTR3agSVVoz-HeTGJ0bBTrHyvGJGfD3M3wLyvzHDOAlwQ76amImFxJKWYw"
                 /> -->
-                <Image
-                    alt="Medical Staff"
-                    class="rounded-2xl shadow-xl mb-8"
-                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuA9-LSyX3Ixg7FXiiDzYkie2EfOadb9QILN6WWyfDX9hw4O7Aib5AB4xRmNl9VAU6aoViDgCHa39L9GHBOoL33GMPqZuyCyGjoE-2NlQ-jtbyBzUtWWA-ueigdNA37IF1lJGajscHBNVTezKsU4VX3F1la5pwrZNV3Ab52F3EMhWfglpsVY1Q1KgbatP-R4YZTzWoHpM0b2yW24DyCB6DTR3agSVVoz-HeTGJ0bBTrHyvGJGfD3M3wLyvzHDOAlwQ76amImFxJKWYw"
-                    width={500}
-                    height={500}
-                />
-                <h2 class="text-3xl font-bold mb-4">RS Ciuss Medika</h2>
+                <!-- https://lh3.googleusercontent.com/aida-public/AB6AXuA9-LSyX3Ixg7FXiiDzYkie2EfOadb9QILN6WWyfDX9hw4O7Aib5AB4xRmNl9VAU6aoViDgCHa39L9GHBOoL33GMPqZuyCyGjoE-2NlQ-jtbyBzUtWWA-ueigdNA37IF1lJGajscHBNVTezKsU4VX3F1la5pwrZNV3Ab52F3EMhWfglpsVY1Q1KgbatP-R4YZTzWoHpM0b2yW24DyCB6DTR3agSVVoz-HeTGJ0bBTrHyvGJGfD3M3wLyvzHDOAlwQ76amImFxJKWYw -->
+                {
+                    image && (
+                        <Image
+                            src={image}
+                            alt="Medical Staff"
+                            class="rounded-2xl shadow-xl mb-8"
+                            width={500}
+                            height={500}
+                            inferSize
+                        />
+                    )
+                }
+                <h2 class="text-3xl font-bold mb-4">{title}</h2>
                 <p
                     class="text-slate-500 dark:text-slate-400 mb-6 text-sm leading-relaxed"
                 >
-                    Ciuss WP Medika adalah tema dari Ciuss Creative yang dibuat
-                    dengan fitur khusus website Rumah Sakit. Telah dilengkapi
-                    dengan fitur Timetable, Daftar Dokter, Daftar Tenaga Medis,
-                    Daftar Ruang dan Tarif, dan lain sebagainya...
+                    {description}
                 </p>
                 <button
                     class="bg-primary text-white px-6 py-3 rounded-lg font-bold text-sm"
@@ -66,7 +88,7 @@ const partners = Array.from({ length: 20 }, (_, i) => ({
                                 />
                             </div>
                         </div>
-                        <span class="text-4xl font-bold">13</span>
+                        <span class="text-4xl font-bold">{stats_doctors}</span>
                     </div>
                     <div class="mt-4">
                         <p
@@ -78,7 +100,7 @@ const partners = Array.from({ length: 20 }, (_, i) => ({
                 </div>
                 <div class="bg-primary/90 p-6 rounded-2xl text-white">
                     <div class="flex items-center justify-end">
-                        <span class="text-4xl font-bold">6</span>
+                        <span class="text-4xl font-bold">{stats_medics}</span>
                     </div>
                     <div class="mt-4">
                         <p
@@ -90,7 +112,7 @@ const partners = Array.from({ length: 20 }, (_, i) => ({
                 </div>
                 <div class="bg-primary/90 p-6 rounded-2xl text-white">
                     <div class="flex items-center justify-end">
-                        <span class="text-4xl font-bold">21</span>
+                        <span class="text-4xl font-bold">{stats_rooms}</span>
                     </div>
                     <div class="mt-4">
                         <p class="text-xs opacity-80">
@@ -105,7 +127,7 @@ const partners = Array.from({ length: 20 }, (_, i) => ({
                 </div>
                 <div class="bg-primary/90 p-6 rounded-2xl text-white">
                     <div class="flex items-center justify-end">
-                        <span class="text-4xl font-bold">144</span>
+                        <span class="text-4xl font-bold">{stats_capacity}</span>
                     </div>
                     <div class="mt-4">
                         <p class="text-xs opacity-80">
@@ -123,7 +145,7 @@ const partners = Array.from({ length: 20 }, (_, i) => ({
                     <p
                         class="text-sm font-bold text-slate-400 uppercase tracking-widest mb-4"
                     >
-                        Rekanan
+                        Asuransi
                     </p>
                     <!-- Partner Carousel Container -->
                     <div
