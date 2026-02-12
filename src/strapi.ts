@@ -1,18 +1,26 @@
 // import { db, HomePage, eq } from "astro:db"; // AstroDB dinonaktifkan — Astro Studio sudah sunset
-import { STRAPI_URL } from "astro:env/server";
+import { STRAPI_URL, STRAPI_TOKEN } from "astro:env/server";
 
 // =============================================
 // Data Gateway Functions (Strapi only)
 // AstroDB fallback dinonaktifkan — Astro Studio sudah sunset
 // =============================================
 
+/** Header autentikasi untuk Strapi API */
+const strapiHeaders: HeadersInit = {
+    ...(STRAPI_TOKEN ? { Authorization: `Bearer ${STRAPI_TOKEN}` } : {}),
+};
+
 /**
  * Ambil data HomePage dari Strapi.
  *
  * AstroDB fallback di-comment — bisa diaktifkan kembali jika ada solusi DB hosted.
  */
+console.log("TOKEN:", STRAPI_TOKEN);
+console.log("HEADER:", strapiHeaders);
+
 export async function getHomePage() {
-    const res = await fetch(`${STRAPI_URL}/api/home-page?populate=*`, { method: "GET" });
+    const res = await fetch(`${STRAPI_URL}/api/home-page?populate=*`, { method: "GET", headers: strapiHeaders });
     if (!res.ok) throw new Error(`Strapi error: ${res.status}`);
     const json = await res.json();
     const data = json.data as any;

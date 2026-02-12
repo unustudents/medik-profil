@@ -3,7 +3,6 @@
 
 export const SITE_TITLE = 'RSU Afdila';
 export const SITE_DESCRIPTION = 'Rumah Sakit Umum Afdila Cilacap';
-export const SITE_URL = 'https://rsuafdila.com';
 export const COPYRIGHT = 'IT Department RSU Afdila';
 
 export const ADDRESS = 'Jln. Soekarno Hatta No.79 - Rejasari, Cilacap';
