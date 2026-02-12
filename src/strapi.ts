@@ -13,7 +13,7 @@ import { STRAPI_URL } from "astro:env/server";
  */
 export async function getHomePage() {
     try {
-        const res = await fetch(`${STRAPI_URL}/api/home-page?populate=*`);
+        const res = await fetch(`${STRAPI_URL}/api/home-page?populate=*`, { method: "GET" });
         if (!res.ok) throw new Error(`Strapi error: ${res.status}`);
         const json = await res.json();
         const data = json.data as any;
@@ -50,7 +50,7 @@ export async function getHomePage() {
             });
         }
 
-        console.log({ data, aboutImageUrl }, "✅ HomePage: data dari Strapi tersinkron ke DB lokal");
+        console.log({ data, aboutImageUrl, heroImageUrls }, "✅ HomePage: data dari Strapi tersinkron ke DB lokal");
         return { ...data, about_image: aboutImageUrl, hero_images: heroImageUrls };
     } catch (e) {
         console.warn("⚠️ Strapi tidak tersedia, menggunakan data dari DB lokal");

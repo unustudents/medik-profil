@@ -5,34 +5,35 @@ import sitemap from '@astrojs/sitemap';
 import db from '@astrojs/db';
 import { defineConfig, envField } from 'astro/config';
 import tailwindcss from "@tailwindcss/vite";
-// https://astro.build/config
 import { loadEnv } from 'vite';
 
-const env = loadEnv(process.env.NODE_ENV || 'development', process.cwd(), '');
-const STRAPI_URL = process.env.STRAPI_URL || env.STRAPI_URL;
-const SITE_URL = process.env.SITE_URL || env.SITE_URL;
+import vercel from '@astrojs/vercel';
 
-let strapiHost = '172.192.7.10';
-if (STRAPI_URL) {
-	try {
-		strapiHost = new URL(STRAPI_URL).hostname;
-	} catch {
-		strapiHost = STRAPI_URL;
-	}
-}
+// https://docs.astro.build/en/guides/environment-variables/#in-the-astro-config-file
+// import.meta.env tidak tersedia di astro.config.mjs, gunakan Vite loadEnv
+const { STRAPI_URL, SITE_URL } = loadEnv(process.env.NODE_ENV, process.cwd(), '');
 
+// https://astro.build/config
 export default defineConfig({
 	env: {
 		schema: {
-			STRAPI_URL: envField.string({ context: 'server', access: 'public', optional: false }),
+			// Type-safe env vars — use via: import { STRAPI_URL } from "astro:env/server"
+			STRAPI_URL: envField.string({ context: 'server', access: 'public', default: "http://172.192.7.10:1337" }),
+			SITE_URL: envField.string({ context: 'server', access: 'public', default: "https://medik-profil.vercel.app/" }),
 		}
 	},
+
 	site: SITE_URL,
 	integrations: [mdx(), sitemap(), db()],
+
 	image: {
-		domains: [strapiHost],
+		domains: [STRAPI_URL],
 	},
+
 	vite: {
 		plugins: [tailwindcss()],
 	},
+
+	output: "server",
+	adapter: vercel(),
 });
