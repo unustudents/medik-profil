@@ -2,7 +2,7 @@
 
 import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
-import db from '@astrojs/db';
+// import db from '@astrojs/db'; // AstroDB dinonaktifkan — Astro Studio sudah sunset
 import { defineConfig, envField } from 'astro/config';
 import tailwindcss from "@tailwindcss/vite";
 import { loadEnv } from 'vite';
@@ -24,7 +24,7 @@ export default defineConfig({
 	},
 
 	site: SITE_URL,
-	integrations: [mdx(), sitemap(), db()],
+	integrations: [mdx(), sitemap() /*, db({ mode: "web" }) */], // AstroDB dinonaktifkan
 
 	image: {
 		domains: [STRAPI_URL],

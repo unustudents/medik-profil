@@ -1,3 +1,7 @@
+// AstroDB dinonaktifkan — Astro Studio sudah sunset
+// Bisa diaktifkan kembali jika ada solusi DB hosted (misal Turso)
+
+/*
 import { db, HomePage } from 'astro:db';
 
 export default async function () {
@@ -13,3 +17,4 @@ export default async function () {
         about_image: "https://lh3.googleusercontent.com/aida-public/AB6AXuA9-LSyX3Ixg7FXiiDzYkie2EfOadb9QILN6WWyfDX9hw4O7Aib5AB4xRmNl9VAU6aoViDgCHa39L9GHBOoL33GMPqZuyCyGjoE-2NlQ-jtbyBzUtWWA-ueigdNA37IF1lJGajscHBNVTezKsU4VX3F1la5pwrZNV3Ab52F3EMhWfglpsVY1Q1KgbatP-R4YZTzWoHpM0b2yW24DyCB6DTR3agSVVoz-HeTGJ0bBTrHyvGJGfD3M3wLyvzHDOAlwQ76amImFxJKWYw",
     });
 }
+*/

@@ -1,3 +1,7 @@
+// AstroDB dinonaktifkan — Astro Studio sudah sunset
+// Bisa diaktifkan kembali jika ada solusi DB hosted (misal Turso)
+
+/*
 import { defineDb, defineTable, column } from 'astro:db';
 
 const HomePage = defineTable({
@@ -17,3 +21,4 @@ const HomePage = defineTable({
 export default defineDb({
     tables: { HomePage },
 });
+*/
