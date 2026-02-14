@@ -1,13 +1,11 @@
 // @ts-nocheck
 
-import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
-// import db from '@astrojs/db'; // AstroDB dinonaktifkan — Astro Studio sudah sunset
 import { defineConfig, envField } from 'astro/config';
 import tailwindcss from "@tailwindcss/vite";
 import { loadEnv } from 'vite';
 
-import node from '@astrojs/node';
+import vercel from '@astrojs/vercel';
 
 // https://docs.astro.build/en/guides/environment-variables/#in-the-astro-config-file
 // import.meta.env tidak tersedia di astro.config.mjs, gunakan Vite loadEnv
@@ -27,7 +25,7 @@ export default defineConfig({
 	site: SITE_URL,
 
 	// AstroDB dinonaktifkan
-	integrations: [mdx(), sitemap() /*, db({ mode: "web" }) */],
+	integrations: [sitemap()],
 
 	image: {
 		domains: [STRAPI_URL],
@@ -39,7 +37,5 @@ export default defineConfig({
 
 	output: "server",
 
-	adapter: node({
-		mode: 'standalone',
-	}),
+	adapter: vercel(),
 });
