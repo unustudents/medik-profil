@@ -70,10 +70,15 @@ export class StrapiClient {
         this.baseUrl = options.baseUrl.replace(/\/+$/, "");
         this.debug = options.debug ?? false;
 
+        const hasToken = !!options.token?.trim();
+
         this.headers = {
             "Content-Type": "application/json",
-            ...(options.token ? { Authorization: `Bearer ${options.token}` } : {}),
+            ...(hasToken ? { Authorization: `Bearer ${options.token!.trim()}` } : {}),
         };
+
+        console.log(`[Strapi] Base URL: ${this.baseUrl}`);
+        console.log(`[Strapi] Auth: ${hasToken ? "Bearer token ✅" : "No token ❌"}`);
     }
 
     // ── Internal helpers ────────────────────────────────────
@@ -109,6 +114,8 @@ export class StrapiClient {
             } catch {
                 // Response bukan JSON — gunakan status text
             }
+
+            console.error(`[Strapi] ❌ ${method} ${url} → ${res.status}`, errorBody?.error ?? res.statusText);
 
             throw new StrapiError(
                 res.status,

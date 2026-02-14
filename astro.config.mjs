@@ -16,8 +16,8 @@ export default defineConfig({
 	env: {
 		schema: {
 			// Type-safe env vars — use via: import { STRAPI_URL, STRAPI_TOKEN } from "astro:env/server"
-			STRAPI_URL: envField.string({ context: 'server', access: 'public', default: "http://localhost:1337" }),
-			STRAPI_TOKEN: envField.string({ context: 'server', access: 'public', optional: true, default: "" }),
+			STRAPI_URL: envField.string({ context: 'server', access: 'secret', default: "http://localhost:1337" }),
+			STRAPI_TOKEN: envField.string({ context: 'server', access: 'secret', optional: true, default: "" }),
 			SITE_URL: envField.string({ context: 'server', access: 'public', default: "https://medik-profil.vercel.app/" }),
 		}
 	},
