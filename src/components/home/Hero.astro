@@ -1,9 +1,5 @@
 ---
-// const images = [
-//     "https://lh3.googleusercontent.com/aida-public/AB6AXuCYeTvbISu54ik2pcZ25iA6gI8MC-PoX9w_5MOeAd3dFbGirygNFrSxWNvJc9zE27P5FO1hkl1dQDeGVvDESKLsiqvacK_UsNinPXOIdO5PFYxBTvj5AxqV4kW2UOyrwTBTdq7t2aMccKK8hQpR4ANfDYMK7_KDZr6PRFNItmCxhAbR9SfRvwnLjhtiFgRhY9kRw-pl6ZD-lVoQ0dSxKGFbZxgsRcp2aK08d5Pf3nCtKccdT38hr3NDXNTHuOXvRt8PHdQfRnljQMg",
-//     "https://lh3.googleusercontent.com/aida-public/AB6AXuBeI2yNA_EdmwyZ_axwnNB0JaEGMzJQDYTgMiKHQoTOxTviV6uohVi2Mwdx26VVTzth0-vuVI40EDs1g0L9j5iBhsMfXdlGJ6JP3QTa8HaQStq4FYZIx-_BiM6L18mxVG2b8L1bueHmRWztCZ3-0Bh09NAJB-Y0aIs8Hipd9qg6pgjOmwU4mdrywZqB4ZVAodUOilpXMKA0U0JnA3b4exTv_O1LB1OmsHEd5KW2vRnm0oGsw2IcxJleYXKEiQdhyBFIop8ieuOoVgs",
-//     "https://lh3.googleusercontent.com/aida-public/AB6AXuCC1KUdrr8n3U5L7Y2Wje2AUjLI7VSwsQSARdfBZOzMdhc6O0n30fzfc0iLbibHag57HPXmgnzay2Y7B8CEMLOQ25LlcOcgrgkASqXOd-uL6kxqYQls4sTjn8UcFsYnSt4ljwxXjnILNPI6IXsjrj9akek86wToyyKnLoD5PalVI2Hn2wVyAE0oVBdU4L19kNzgMa8yhMa86tA_IlahGr1jbs61BcvGhGrqvO07YJKaJQFPcsPNZRyHiJpSmw9jrwYZZ-F_jWK0ApE",
-// ];
+import { Picture } from "astro:assets";
 
 interface Props {
     images?: string[];
@@ -14,12 +10,14 @@ const { images } = Astro.props;
 <section class="relative h-[500px] overflow-hidden group">
     {
         images?.map((img, index) => (
-            <img
+            <Picture
                 alt={`Hero Image ${index + 1}`}
                 class={`w-full h-full object-cover absolute inset-0 transition-opacity duration-1000 ${index === 0 ? "opacity-100" : "opacity-0"}`}
                 src={img}
+                formats={["avif", "webp"]}
                 data-hero-image
                 data-index={index}
+                inferSize
             />
         ))
     }

@@ -25,7 +25,7 @@
 services:
   # ─── Development ───────────────────────────────────────────
   dev:
-    profiles: ["dev"]
+    profiles: [ "dev" ]
     build:
       context: .
       dockerfile: Dockerfile.dev
@@ -44,16 +44,10 @@ services:
       - .:/app
       # Jangan mount node_modules dari host (pakai yang di container)
       - /app/node_modules
+    networks:
+      - medika-dev
     healthcheck:
-      test:
-        [
-          "CMD",
-          "wget",
-          "--no-verbose",
-          "--tries=1",
-          "--spider",
-          "http://localhost:4321/",
-        ]
+      test: [ "CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:4321/" ]
       interval: 30s
       timeout: 5s
       retries: 3
@@ -61,7 +55,7 @@ services:
 
   # ─── Production ────────────────────────────────────────────
   prod:
-    profiles: ["prod"]
+    profiles: [ "prod" ]
     build:
       context: .
       dockerfile: Dockerfile
@@ -79,17 +73,20 @@ services:
       - PORT=4321
       - STRAPI_URL=${STRAPI_URL:-http://localhost:1337}
       - STRAPI_TOKEN=${STRAPI_TOKEN:-}
+    networks:
+      - medika-prod
     healthcheck:
-      test:
-        [
-          "CMD",
-          "wget",
-          "--no-verbose",
-          "--tries=1",
-          "--spider",
-          "http://localhost:4321/",
-        ]
+      test: [ "CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:4321/" ]
       interval: 30s
       timeout: 5s
       retries: 3
       start_period: 10s
+
+# ─── Networks ──────────────────────────────────────────────
+networks:
+  medika-dev:
+    name: medika-dev
+    external: true
+  medika-prod:
+    name: medika-prod
+    external: true

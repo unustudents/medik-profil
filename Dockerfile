@@ -32,7 +32,7 @@
 # ============================================================
 
 # ── Stage 1: Base ────────────────────────────────────────────
-FROM oven/bun:1-alpine AS base
+FROM oven/bun:1-slim AS base
 WORKDIR /app
 
 # Salin hanya package manifest + lockfile.
@@ -66,7 +66,7 @@ RUN bun run build
 # ── Stage 5: Runtime ────────────────────────────────────────
 # Bun bisa menjalankan output @astrojs/node tanpa masalah.
 # Lebih ringan dan cepat dibanding Node.js.
-FROM oven/bun:1-alpine AS runtime
+FROM oven/bun:1-slim AS runtime
 WORKDIR /app
 
 # Production node_modules dari stage 2

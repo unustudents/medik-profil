@@ -1,5 +1,5 @@
 ---
-import { Image } from "astro:assets";
+import { Picture } from "astro:assets";
 
 interface Props {
     title?: string;
@@ -46,12 +46,14 @@ const partners = Array.from({ length: 20 }, (_, i) => ({
                 <!-- https://lh3.googleusercontent.com/aida-public/AB6AXuA9-LSyX3Ixg7FXiiDzYkie2EfOadb9QILN6WWyfDX9hw4O7Aib5AB4xRmNl9VAU6aoViDgCHa39L9GHBOoL33GMPqZuyCyGjoE-2NlQ-jtbyBzUtWWA-ueigdNA37IF1lJGajscHBNVTezKsU4VX3F1la5pwrZNV3Ab52F3EMhWfglpsVY1Q1KgbatP-R4YZTzWoHpM0b2yW24DyCB6DTR3agSVVoz-HeTGJ0bBTrHyvGJGfD3M3wLyvzHDOAlwQ76amImFxJKWYw -->
                 {
                     image && (
-                        <Image
+                        <Picture
                             src={image}
-                            alt="Medical Staff"
+                            alt="Director"
                             class="rounded-2xl shadow-xl mb-8"
-                            width={500}
-                            height={500}
+                            widths={[320, 500, 768]}
+                            formats={["avif", "webp"]}
+                            sizes="(max-width: 768px) 100vw, 500px"
+                            fit="cover"
                             inferSize
                         />
                     )
