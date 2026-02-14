@@ -15,10 +15,14 @@
 import { STRAPI_URL, STRAPI_TOKEN } from "astro:env/server";
 import { StrapiClient } from "./client";
 
+// Fallback ke process.env jika astro:env/server return empty
+const resolvedUrl = STRAPI_URL || process.env.STRAPI_URL || "http://localhost:1337";
+const resolvedToken = STRAPI_TOKEN || process.env.STRAPI_TOKEN || undefined;
+
 // ── Singleton instance ──────────────────────────────────────
 export const strapi = new StrapiClient({
-    baseUrl: STRAPI_URL,
-    token: STRAPI_TOKEN || undefined,
+    baseUrl: resolvedUrl,
+    token: resolvedToken,
     debug: import.meta.env.DEV,
 });
 
