@@ -1,0 +1,17 @@
+# https://docs.astro.build/en/recipes/docker/#adding-a-dockerignore
+.DS_Store
+node_modules
+dist
+.astro
+.git
+.github
+.env
+.env.development
+.env.production
+.env.*
+!.env.example
+*.log
+Dockerfile
+Dockerfile.dev
+docker-compose.yml
+.dockerignore

@@ -1,47 +1,50 @@
 ---
+// SSR — data homepage dari Strapi di-fetch setiap request
+// (output: "server" → SSR by default, tidak perlu prerender = false)
+
 import Layout from "@/layouts/Layout.astro";
 import Header from "@/components/Header.astro";
 import ContactInfo from "@/components/ContactInfo.astro";
 import Footer from "@/components/Footer.astro";
 import { SITE_TITLE, SITE_DESCRIPTION } from "@/consts";
 import {
-	Hero,
-	EmergencyAndSchedule,
-	RoomAvailability,
-	About,
-	DoctorsList,
-	Gallery,
-	RoomPrices,
-	MedicalServices,
+  Hero,
+  EmergencyAndSchedule,
+  RoomAvailability,
+  About,
+  DoctorsList,
+  Gallery,
+  RoomPrices,
+  MedicalServices,
 } from "@/components/home";
-import { getHomePage } from "@/strapi";
+import { getHomePage } from "@/services";
 
 const homePage = await getHomePage();
 ---
 
 <Layout
-	title={SITE_TITLE + " - " + SITE_DESCRIPTION}
-	description={SITE_DESCRIPTION}
+  title={SITE_TITLE + " - " + SITE_DESCRIPTION}
+  description={SITE_DESCRIPTION}
 >
-	<Header />
-	<main>
-		<Hero images={homePage?.hero_images} />
-		<EmergencyAndSchedule />
-		<RoomAvailability />
-		<About
-			title={homePage?.about_title}
-			description={homePage?.about_description}
-			image={homePage?.about_image}
-			stats_doctors={homePage?.stats_doctors}
-			stats_medics={homePage?.stats_medics}
-			stats_rooms={homePage?.stats_rooms}
-			stats_capacity={homePage?.stats_capacity}
-		/>
-		<DoctorsList />
-		<Gallery />
-		<RoomPrices />
-		<MedicalServices />
-		<ContactInfo />
-	</main>
-	<Footer />
+  <Header />
+  <main>
+    <Hero images={homePage?.hero_images} />
+    <EmergencyAndSchedule />
+    <RoomAvailability />
+    <About
+      title={homePage?.about_title}
+      description={homePage?.about_description}
+      image={homePage?.about_image}
+      stats_doctors={homePage?.stats_doctors}
+      stats_medics={homePage?.stats_medics}
+      stats_rooms={homePage?.stats_rooms}
+      stats_capacity={homePage?.stats_capacity}
+    />
+    <DoctorsList />
+    <Gallery />
+    <RoomPrices />
+    <MedicalServices />
+    <ContactInfo />
+  </main>
+  <Footer />
 </Layout>

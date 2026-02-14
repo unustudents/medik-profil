@@ -1,0 +1,30 @@
+# ============================================================
+# Dockerfile.dev — Astro Development Server (Hot Reload)
+# ============================================================
+#
+# Image ringan untuk development. Source code di-mount via
+# volume, sehingga perubahan langsung terdeteksi (hot reload).
+#
+# Penggunaan:
+#   docker compose --profile dev up
+#
+# ============================================================
+
+FROM oven/bun:1-alpine
+
+WORKDIR /app
+
+# Install dependencies terlebih dahulu (cache layer)
+COPY package.json bun.lock ./
+RUN bun install --frozen-lockfile
+
+# Source code akan di-mount via volume dari docker-compose,
+# jadi tidak perlu COPY source code ke image.
+
+ENV HOST=0.0.0.0
+ENV PORT=4321
+
+EXPOSE 4321
+
+# Jalankan Astro dev server dengan --host agar bisa diakses dari host
+CMD ["bun", "run", "dev"]

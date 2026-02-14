@@ -44,9 +44,9 @@ Any static assets, like images, can be placed in the `public/` directory.
 
 All commands are run from the root of the project, from a terminal:
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `bun install`             | Installs dependencies                            |
+| Command               | Action                                           |
+| :-------------------- | :----------------------------------------------- |
+| `bun install`         | Installs dependencies                            |
 | `bun dev`             | Starts local dev server at `localhost:4321`      |
 | `bun build`           | Build your production site to `./dist/`          |
 | `bun preview`         | Preview your build locally, before deploying     |
@@ -63,6 +63,111 @@ This theme is based off of the lovely [Bear Blog](https://github.com/HermanMarti
 
 ---
 
+# 🐳 Docker — Development & Production
+
+Proyek ini menggunakan Docker Compose dengan **profiles** untuk memisahkan mode dev dan prod dalam 1 file.
+
+## Prasyarat
+
+- [Docker](https://docs.docker.com/get-docker/) & Docker Compose terinstall
+- File `.env` di root project
+
+## Environment Variables
+
+Salin file sesuai environment, lalu rename ke `.env`:
+
+```bash
+# Development
+cp .env.development .env
+
+# Production
+cp .env.production .env
+```
+
+| Variable       | Keterangan                                  |
+| :------------- | :------------------------------------------ |
+| `STRAPI_URL`   | URL Strapi CMS (tanpa trailing slash)       |
+| `STRAPI_TOKEN` | API Token dari Strapi admin panel           |
+| `SITE_URL`     | URL publik site (untuk sitemap & canonical) |
+
+## Development (Hot Reload)
+
+```bash
+cp .env.development .env
+docker compose --profile dev up
+```
+
+- Menggunakan `Dockerfile.dev` + `oven/bun`
+- Source code di-mount via volume → perubahan langsung terdeteksi
+- Akses di `http://localhost:4321`
+
+Stop:
+
+```bash
+docker compose --profile dev down
+```
+
+## Production
+
+```bash
+cp .env.production .env
+docker compose --profile prod up -d --build
+```
+
+- Menggunakan `Dockerfile` (multi-stage build) + `oven/bun`
+- Image optimal, hanya berisi build output + production deps
+- Akses di `http://localhost:4321`
+
+Perintah lain:
+
+```bash
+# Lihat logs
+docker compose --profile prod logs -f
+
+# Restart
+docker compose --profile prod restart
+
+# Stop
+docker compose --profile prod down
+```
+
+## Tanpa Docker Compose (Manual)
+
+```bash
+# Build image
+docker build -t medika-astro \
+  --build-arg STRAPI_URL=https://dev.rsuafdila.com \
+  --build-arg STRAPI_TOKEN=xxx \
+  --build-arg SITE_URL=https://domain.com .
+
+# Jalankan container
+docker run -p 4321:4321 \
+  -e STRAPI_URL=https://dev.rsuafdila.com \
+  -e STRAPI_TOKEN=xxx \
+  medika-astro
+```
+
+## File Docker
+
+| File                 | Fungsi                                 |
+| :------------------- | :------------------------------------- |
+| `Dockerfile`         | Production — multi-stage build (Bun)   |
+| `Dockerfile.dev`     | Development — hot reload (Bun)         |
+| `docker-compose.yml` | Orchestration dev & prod via profiles  |
+| `.dockerignore`      | Exclude file yang tidak perlu di image |
+| `.env.example`       | Template environment variables         |
+| `.env.development`   | Preset untuk development               |
+| `.env.production`    | Preset untuk production                |
+
+## SSR & SSG
+
+- `output: "server"` → semua halaman SSR by default
+- Halaman yang ingin di-prerender (SSG): tambahkan `export const prerender = true`
+- Halaman SSG butuh env vars saat **build time** (via build args)
+- Halaman SSR butuh env vars saat **runtime** (via environment)
+
+---
+
 # 🛠 Panduan Sinkronisasi Clean Code (Dev ke Main)
 
 Panduan ini menjelaskan cara memindahkan perubahan fitur dari branch `dev` ke branch `main` tanpa membawa file sampah, referensi, atau riwayat commit yang berantakan.
@@ -74,6 +179,7 @@ Metode yang digunakan adalah **Diff & Patch** (menggunakan `git checkout dev -- 
 ### 1. Persiapan di Branch Main
 
 Pastikan kamu berada di branch `main` dan versinya sudah sinkron dengan repository pusat (remote).
+
 ```
 git checkout main
 git pull origin main
@@ -82,6 +188,7 @@ git pull origin main
 ### 2. Mengambil Perubahan dari Dev
 
 Gunakan perintah di bawah ini untuk menyalin seluruh status file dari branch `dev` ke branch `main`. Perintah ini tidak akan membuat _merge commit_, melainkan hanya menaruh file di staging area.
+
 ```
 git checkout dev -- .
 ```
@@ -118,7 +225,7 @@ Cek kembali file apa saja yang akan masuk ke branch `main`:
 git status
 ```
 
-*Pastikan hanya file fitur yang "Clean" yang ada di daftar "Changes to be committed".*
+_Pastikan hanya file fitur yang "Clean" yang ada di daftar "Changes to be committed"._
 
 ### 5. Commit dan Push
 
@@ -134,7 +241,6 @@ git push origin main
 
 1. **Main Tetap Suci:** Tidak ada file dokumentasi/referensi yang tidak sengaja ter-push ke produksi.
 
-2. **Riwayat Rapi:** Menghindari *merge bubbles* atau riwayat commit `dev` yang mungkin isinya banyak "trial and error".
+2. **Riwayat Rapi:** Menghindari _merge bubbles_ atau riwayat commit `dev` yang mungkin isinya banyak "trial and error".
 
 3. **Kendali Penuh:** Kamu bisa memilih secara detail apa saja yang ingin dimasukkan ke branch stabil.
-

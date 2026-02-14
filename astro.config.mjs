@@ -1,45 +1,74 @@
 // @ts-nocheck
+// https://docs.astro.build/en/reference/configuration-reference/
 
-import mdx from '@astrojs/mdx';
-import sitemap from '@astrojs/sitemap';
-// import db from '@astrojs/db'; // AstroDB dinonaktifkan — Astro Studio sudah sunset
-import { defineConfig, envField } from 'astro/config';
+import sitemap from "@astrojs/sitemap";
+import node from "@astrojs/node";
+import { defineConfig, envField } from "astro/config";
 import tailwindcss from "@tailwindcss/vite";
-import { loadEnv } from 'vite';
+import { loadEnv } from "vite";
 
-import node from '@astrojs/node';
+// loadEnv dibutuhkan agar STRAPI_URL dan SITE_URL bisa dipakai di config level
+// (env.schema hanya tersedia di runtime, bukan saat config di-resolve)
+const { STRAPI_URL, SITE_URL } = loadEnv(
+	process.env.NODE_ENV ?? "",
+	process.cwd(),
+	""
+);
 
-// https://docs.astro.build/en/guides/environment-variables/#in-the-astro-config-file
-// import.meta.env tidak tersedia di astro.config.mjs, gunakan Vite loadEnv
-const { STRAPI_URL, SITE_URL, STRAPI_TOKEN } = loadEnv(process.env.NODE_ENV, process.cwd(), '');
-
-// https://astro.build/config
+// ─── Astro Configuration ───────────────────────────────────
 export default defineConfig({
+	// === Type-safe environment variables ===
+	// https://docs.astro.build/en/reference/configuration-reference/#env
 	env: {
 		schema: {
-			// Type-safe env vars — use via: import { STRAPI_URL, STRAPI_TOKEN } from "astro:env/server"
-			STRAPI_URL: envField.string({ context: 'server', access: 'public', default: "http://localhost:1337" }),
-			STRAPI_TOKEN: envField.string({ context: 'server', access: 'public', optional: true, default: "" }),
-			SITE_URL: envField.string({ context: 'server', access: 'public', default: "https://medik-profil.vercel.app/" }),
-		}
+			STRAPI_URL: envField.string({
+				context: "server",
+				access: "secret",
+				default: "http://localhost:1337",
+			}),
+			STRAPI_TOKEN: envField.string({
+				context: "server",
+				access: "secret",
+				optional: true,
+				default: "",
+			}),
+		},
 	},
 
-	site: SITE_URL,
+	// === Site URL (untuk sitemap & canonical URLs) ===
+	// https://docs.astro.build/en/reference/configuration-reference/#site
+	site: SITE_URL || "http://localhost:4321",
 
-	// AstroDB dinonaktifkan
-	integrations: [mdx(), sitemap() /*, db({ mode: "web" }) */],
+	// === Integrations ===
+	// https://docs.astro.build/en/reference/configuration-reference/#integrations
+	integrations: [sitemap()],
 
+	// === Image optimization — izinkan domain Strapi ===
+	// https://docs.astro.build/en/reference/configuration-reference/#imagedomains
 	image: {
-		domains: [STRAPI_URL],
+		domains: [STRAPI_URL ? new URL(STRAPI_URL).hostname : "localhost"],
 	},
 
+	// === Vite plugins ===
+	// https://docs.astro.build/en/reference/configuration-reference/#vite
 	vite: {
 		plugins: [tailwindcss()],
 	},
 
+	// === Output mode ===
+	// Astro 5 hanya support "static" atau "server"
+	// https://docs.astro.build/en/reference/configuration-reference/#output
+	//
+	// "server" = semua halaman di-render on-demand (SSR) by default.
+	// Untuk halaman yang ingin di-prerender (SSG), tambahkan:
+	//   export const prerender = true
+	// di halaman tersebut.
+	// https://docs.astro.build/en/guides/on-demand-rendering/#server-mode
 	output: "server",
 
+	// === Node.js adapter (standalone) ===
+	// https://docs.astro.build/en/guides/integrations-guide/node/
 	adapter: node({
-		mode: 'standalone',
+		mode: "standalone",
 	}),
 });
