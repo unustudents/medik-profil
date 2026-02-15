@@ -14,6 +14,11 @@ FROM oven/bun:1-slim
 
 WORKDIR /app
 
+# Install curl untuk healthcheck
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    curl \
+    && rm -rf /var/lib/apt/lists/*
+
 # Install dependencies terlebih dahulu (cache layer)
 COPY package.json bun.lock ./
 RUN bun install --frozen-lockfile

@@ -69,6 +69,11 @@ RUN bun run build
 FROM oven/bun:1-slim AS runtime
 WORKDIR /app
 
+# Install curl untuk healthcheck
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    curl \
+    && rm -rf /var/lib/apt/lists/*
+
 # Production node_modules dari stage 2
 COPY --from=prod-deps /app/node_modules ./node_modules
 
