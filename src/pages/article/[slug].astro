@@ -8,6 +8,7 @@ import Footer from "@/components/Footer.astro";
 import { articles } from "@/data/articles";
 import type { GetStaticPaths } from "astro";
 import FormattedDate from "@/components/FormattedDate.astro";
+import { sanitizeHtml } from "@/lib/sanitize";
 
 export const getStaticPaths = (async () => {
     return articles.map((article) => ({
@@ -22,7 +23,14 @@ const { article } = Astro.props;
 const relatedArticles = articles.filter((a) => a.id !== article.id).slice(0, 3);
 ---
 
-<Layout title={`${article.title} - RSU Afdila`}>
+<Layout
+    title={`${article.title} - RSU Afdila`}
+    description={`${article.title} - Artikel kesehatan RSU Afdila Cilacap. Baca selengkapnya tentang ${article.category.toLowerCase()}.`}
+    image={article.image}
+    type="article"
+    publishedAt={new Date(article.date).toISOString()}
+    author={article.author.name}
+>
     <Header />
     <main
         class="bg-background-light dark:bg-background-dark font-display text-[#111717] dark:text-white transition-colors duration-200"
@@ -100,7 +108,7 @@ const relatedArticles = articles.filter((a) => a.id !== article.id).slice(0, 3);
                     <!-- Content -->
                     <div
                         class="article-content text-lg leading-relaxed dark:text-gray-300 prose prose-lg prose-headings:text-primary prose-a:text-primary prose-blockquote:border-primary prose-blockquote:bg-primary/5 prose-blockquote:text-gray-700 dark:prose-invert dark:prose-headings:text-white dark:prose-blockquote:bg-primary/10 dark:prose-blockquote:text-gray-200"
-                        set:html={article.content}
+                        set:html={sanitizeHtml(article.content)}
                     />
 
                     <!-- Footer Article / Tags & Share -->

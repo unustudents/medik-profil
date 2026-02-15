@@ -2,6 +2,15 @@
 import { ADDRESS, CONTACTS, MENU } from "@/consts";
 import { Image } from "astro:assets";
 import { logo } from "@/assets";
+
+// Tanggal dinamis (server-side)
+const now = new Date();
+const todayDate = new Intl.DateTimeFormat('id-ID', {
+    weekday: 'long',
+    day: 'numeric',
+    month: 'short',
+    year: 'numeric',
+}).format(now);
 ---
 
 <header
@@ -33,7 +42,7 @@ import { logo } from "@/assets";
 					>
 					<div class="text-[10px] leading-tight">
 						<p class="font-bold text-slate-400 uppercase">
-							Selasa, 27 Jan 2026
+							{todayDate}
 						</p>
 						<p class="text-slate-600 dark:text-slate-300 font-bold">
 							08:00 - 22:00 <span
@@ -132,6 +141,7 @@ import { logo } from "@/assets";
 				<button
 					id="mobile-menu-btn"
 					class="bg-primary text-white p-2 rounded-lg lg:hidden hover:bg-primary/90 transition-colors"
+					aria-label="Toggle menu navigasi"
 				>
 					<span class="material-icons-outlined">menu</span>
 				</button>

@@ -10,6 +10,7 @@ import type { AgendaEvent } from "@/data/agenda";
 import type { GetStaticPaths, Page } from "astro";
 import AgendaCard from "@/components/AgendaCard.astro";
 import Pagination from "@/components/Pagination.astro";
+import { FILTEREDEVENTSPAGINATE } from "@/consts";
 
 // Pagination Logic
 export const getStaticPaths = (async ({ paginate }) => {
@@ -39,7 +40,7 @@ export const getStaticPaths = (async ({ paginate }) => {
         return paginate(filteredEvents, {
             params: { category: category.slug },
             props: { categoryTitle: category.title },
-            pageSize: 8,
+            pageSize: FILTEREDEVENTSPAGINATE,
         });
     });
 }) satisfies GetStaticPaths;
@@ -53,7 +54,10 @@ const { page, categoryTitle } = Astro.props;
 const { category } = Astro.params;
 ---
 
-<Layout title={`${categoryTitle} - Halaman ${page.currentPage} - RSU Afdila`}>
+<Layout
+    title={`${categoryTitle} - Halaman ${page.currentPage} - RSU Afdila`}
+    description={`Daftar ${categoryTitle.toLowerCase()} di RSU Afdila Cilacap. Agenda kegiatan kesehatan untuk masyarakat.`}
+>
     <Header />
 
     <header

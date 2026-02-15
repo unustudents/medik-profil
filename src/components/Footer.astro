@@ -8,10 +8,10 @@ import { COPYRIGHT } from "@/consts";
 	>
 		<p>Copyright © {COPYRIGHT}</p>
 		<div class="flex space-x-6 mt-4 md:mt-0">
-			<a class="hover:underline" href="#">Profile RS</a>
-			<a class="hover:underline" href="#">Daftar Nakes</a>
-			<a class="hover:underline" href="#">Latest News</a>
-			<a class="hover:underline" href="#">Artikel</a>
+			<a class="hover:underline" href="/about">Profile RS</a>
+			<a class="hover:underline" href="/jadwal-dokter">Daftar Nakes</a>
+			<a class="hover:underline" href="/agenda">Latest News</a>
+			<a class="hover:underline" href="/article">Artikel</a>
 		</div>
 	</div>
 </footer>
@@ -26,6 +26,7 @@ import { COPYRIGHT } from "@/consts";
          z-[100] text-primary
          transition-transform active:scale-95"
 	onclick="toggleTheme()"
+	aria-label="Toggle dark mode"
 >
 	<span
 		id="icon"

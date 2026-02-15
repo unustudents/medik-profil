@@ -45,7 +45,7 @@ const formatPrice = (price: number) => {
 };
 ---
 
-<Layout title={`Detail Kamar ${room.name} - RSU Afdila`}>
+<Layout title={`Detail Kamar ${room.name} - RSU Afdila`} description={`Informasi lengkap kamar ${room.name} di RSU Afdila. Tipe ${room.type}, kapasitas ${room.capacity}, harga ${formatPrice(room.price)}/malam. Fasilitas dan ketersediaan.`}>
     <Header />
     <main class="max-w-6xl mx-auto px-6 py-12">
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start mb-16">

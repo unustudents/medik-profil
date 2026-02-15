@@ -44,3 +44,8 @@ export const MENU = [
     { name: "Artikel", href: "/article" },
     { name: "Rekanan", href: "/rekanan" },
 ];
+
+// PAGINASION
+export const AGENDAEVENTSPAGINATE = 8;
+export const FILTEREDEVENTSPAGINATE = 8;
+export const ARTICLESPAGINATE = 8;

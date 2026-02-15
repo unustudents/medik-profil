@@ -8,6 +8,7 @@ import ContactInfo from "@/components/ContactInfo.astro";
 import { Image } from "astro:assets";
 import { agendaEvents } from "@/data/agenda";
 import type { GetStaticPaths } from "astro";
+import { sanitizeHtml } from "@/lib/sanitize";
 
 export const getStaticPaths = (async () => {
     return agendaEvents.map((event) => ({
@@ -44,7 +45,13 @@ const getStatusConfig = (status: string) => {
 const statusConfig = getStatusConfig(event.status);
 ---
 
-<Layout title={`${event.title} - Agenda RSU Afdila`}>
+<Layout
+    title={`${event.title} - Agenda RSU Afdila`}
+    description={`${event.title} - ${event.date} ${event.time}. Agenda kegiatan RSU Afdila.`}
+    image={typeof event.image === 'string' ? event.image : undefined}
+    type="article"
+    publishedAt={new Date(event.date).toISOString()}
+>
     <Header />
 
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
@@ -124,7 +131,7 @@ const statusConfig = getStatusConfig(event.status);
 
                     <article
                         class="prose prose-slate dark:prose-invert max-w-none"
-                        set:html={event.content}
+                        set:html={sanitizeHtml(event.content)}
                     />
 
                     <div

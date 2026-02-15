@@ -8,13 +8,13 @@ import Footer from "@/components/Footer.astro";
 import ArticleCard from "@/components/ArticleCard.astro";
 import { articles } from "@/data/articles";
 import Pagination from "@/components/Pagination.astro";
-
+import { ARTICLESPAGINATE } from "@/consts";
 import type { GetStaticPaths } from "astro";
 
 export const getStaticPaths = (async ({ paginate }) => {
     // Sort articles by date or ID if needed, here we just use the array order
     // Pagination: 8 items per page
-    return paginate(articles, { pageSize: 8 });
+    return paginate(articles, { pageSize: ARTICLESPAGINATE });
 }) satisfies GetStaticPaths;
 
 const { page } = Astro.props;
@@ -22,6 +22,7 @@ const { page } = Astro.props;
 
 <Layout
     title={`Informasi & Edukasi Kesehatan - Halaman ${page.currentPage} - RSU Afdila`}
+    description="Artikel kesehatan terpercaya dan berita terbaru seputar layanan RSU Afdila Cilacap. Tips kesehatan, edukasi medis, dan informasi rumah sakit."
 >
     <Header />
     <main class="min-h-screen py-16 px-4 md:px-8">

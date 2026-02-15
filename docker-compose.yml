@@ -36,7 +36,7 @@ services:
     environment:
       - HOST=0.0.0.0
       - PORT=4321
-      - STRAPI_URL=${STRAPI_URL:-http://localhost:1337}
+      - STRAPI_URL=${STRAPI_URL:-http://strapi-dev:1337}
       - STRAPI_TOKEN=${STRAPI_TOKEN:-}
       - SITE_URL=${SITE_URL:-http://localhost:4321}
     volumes:
@@ -60,7 +60,7 @@ services:
       context: .
       dockerfile: Dockerfile
       args:
-        STRAPI_URL: ${STRAPI_URL:-http://localhost:1337}
+        STRAPI_URL: ${STRAPI_URL:-http://strapi-prod:1337}
         STRAPI_TOKEN: ${STRAPI_TOKEN:-}
         SITE_URL: ${SITE_URL:-http://localhost:4321}
     container_name: medika-astro
@@ -71,7 +71,7 @@ services:
       # Runtime env — untuk halaman SSR (on-demand rendering)
       - HOST=0.0.0.0
       - PORT=4321
-      - STRAPI_URL=${STRAPI_URL:-http://localhost:1337}
+      - STRAPI_URL=${STRAPI_URL:-http://strapi-prod:1337}
       - STRAPI_TOKEN=${STRAPI_TOKEN:-}
     networks:
       - medika-prod

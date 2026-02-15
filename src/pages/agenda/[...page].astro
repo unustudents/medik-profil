@@ -9,19 +9,23 @@ import { agendaEvents } from "@/data/agenda";
 import type { GetStaticPaths } from "astro";
 import AgendaCard from "@/components/AgendaCard.astro";
 import Pagination from "@/components/Pagination.astro";
+import { AGENDAEVENTSPAGINATE } from "@/consts";
 
 // Pagination Logic
 export const getStaticPaths = (async ({ paginate }) => {
     // Sort logic if needed
     // Assuming agendaEvents is already sorted by date or needs sorting
     // For now, using it directly as requested
-    return paginate(agendaEvents, { pageSize: 8 });
+    return paginate(agendaEvents, { pageSize: AGENDAEVENTSPAGINATE });
 }) satisfies GetStaticPaths;
 
 const { page } = Astro.props;
 ---
 
-<Layout title={`Agenda Kegiatan - Halaman ${page.currentPage} - RSU Afdila`}>
+<Layout
+    title={`Agenda Kegiatan - Halaman ${page.currentPage} - RSU Afdila`}
+    description="Agenda dan kegiatan kesehatan RSU Afdila Cilacap. Seminar, bakti sosial, dan acara kesehatan untuk masyarakat."
+>
     <Header />
 
     <header
@@ -53,5 +57,3 @@ const { page } = Astro.props;
     <ContactInfo />
     <Footer />
 </Layout>
-<ContactInfo />
-<Footer />

@@ -176,57 +176,12 @@ export class StrapiClient {
         return this.request<StrapiSingleResponse<T>>("GET", contentType, params);
     }
 
-    /**
-     * POST — /api/{pluralApiId}
-     *
-     * @example
-     *   const res = await strapi.create<Article>("articles", {
-     *       data: { title: "Hello", content: "World" }
-     *   });
-     */
-    async create<T>(
-        contentType: string,
-        body: { data: Record<string, unknown> },
-        params?: StrapiQueryParams,
-    ): Promise<StrapiSingleResponse<T>> {
-        return this.request<StrapiSingleResponse<T>>("POST", contentType, params, body);
-    }
-
-    /**
-     * PUT — /api/{pluralApiId}/{documentId}
-     *
-     * @example
-     *   await strapi.update("articles", "abc123", { data: { title: "Updated" } });
-     */
-    async update<T>(
-        contentType: string,
-        documentId: string | number,
-        body: { data: Record<string, unknown> },
-        params?: StrapiQueryParams,
-    ): Promise<StrapiSingleResponse<T>> {
-        return this.request<StrapiSingleResponse<T>>(
-            "PUT",
-            `${contentType}/${documentId}`,
-            params,
-            body,
-        );
-    }
-
-    /**
-     * DELETE — /api/{pluralApiId}/{documentId}
-     *
-     * @example
-     *   await strapi.delete("articles", "abc123");
-     */
-    async remove(
-        contentType: string,
-        documentId: string | number,
-    ): Promise<StrapiSingleResponse<unknown>> {
-        return this.request<StrapiSingleResponse<unknown>>(
-            "DELETE",
-            `${contentType}/${documentId}`,
-        );
-    }
+    // ── Write methods dihapus untuk keamanan ────────────────
+    // Frontend publik hanya membutuhkan operasi READ.
+    // Method create(), update(), dan remove() sengaja tidak disediakan
+    // agar token API yang bocor tidak bisa digunakan untuk mutasi data CMS.
+    // Jika dibutuhkan di masa depan, gunakan API route terpisah dengan
+    // autentikasi yang lebih ketat.
 
     // ── Utilities ───────────────────────────────────────────
 

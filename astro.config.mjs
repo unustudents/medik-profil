@@ -24,7 +24,7 @@ export default defineConfig({
 			STRAPI_URL: envField.string({
 				context: "server",
 				access: "secret",
-				default: "http://localhost:1337",
+				default: "http://strapi-dev:1337",
 			}),
 			STRAPI_TOKEN: envField.string({
 				context: "server",
