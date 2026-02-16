@@ -1,5 +1,5 @@
 ---
-import { Picture } from "astro:assets";
+import { Image, Picture } from "astro:assets";
 
 interface Props {
   title?: string;
@@ -38,15 +38,9 @@ const partners = Array.from({ length: 20 }, (_, i) => ({
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="grid lg:grid-cols-2 gap-12">
       <div>
-        <!-- <img
-                    alt="Medical Staff"
-                    class="rounded-2xl shadow-xl mb-8"
-                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuA9-LSyX3Ixg7FXiiDzYkie2EfOadb9QILN6WWyfDX9hw4O7Aib5AB4xRmNl9VAU6aoViDgCHa39L9GHBOoL33GMPqZuyCyGjoE-2NlQ-jtbyBzUtWWA-ueigdNA37IF1lJGajscHBNVTezKsU4VX3F1la5pwrZNV3Ab52F3EMhWfglpsVY1Q1KgbatP-R4YZTzWoHpM0b2yW24DyCB6DTR3agSVVoz-HeTGJ0bBTrHyvGJGfD3M3wLyvzHDOAlwQ76amImFxJKWYw"
-                /> -->
-        <!-- https://lh3.googleusercontent.com/aida-public/AB6AXuA9-LSyX3Ixg7FXiiDzYkie2EfOadb9QILN6WWyfDX9hw4O7Aib5AB4xRmNl9VAU6aoViDgCHa39L9GHBOoL33GMPqZuyCyGjoE-2NlQ-jtbyBzUtWWA-ueigdNA37IF1lJGajscHBNVTezKsU4VX3F1la5pwrZNV3Ab52F3EMhWfglpsVY1Q1KgbatP-R4YZTzWoHpM0b2yW24DyCB6DTR3agSVVoz-HeTGJ0bBTrHyvGJGfD3M3wLyvzHDOAlwQ76amImFxJKWYw -->
         {
           image && (
-            <div class="aspect-square w-full overflow-hidden rounded-2xl shadow-xl mb-8">
+            <div class="aspect-4/3 w-full overflow-hidden rounded-2xl shadow-xl mb-8">
               <Picture
                 src={image}
                 alt="Director"
@@ -74,25 +68,7 @@ const partners = Array.from({ length: 20 }, (_, i) => ({
       </div>
       <div class="grid grid-cols-2 gap-4">
         <div class="bg-primary/90 p-6 rounded-2xl text-white">
-          <div class="flex items-center justify-between">
-            <div class="flex -space-x-2">
-              <div
-                class="w-6 h-6 rounded-full bg-slate-200 border-2 border-primary overflow-hidden"
-              >
-                <img
-                  alt="Doctor"
-                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuDwBXmE3TuFTxixxAGi-L2fPOJf_Czx-AhA4jgvkT0xafYJ378WEvtZxDUnubCwggXk0jAhvhLP9p_gx2kpsNXHRXGgZoTAIFuCJ8wfCq2zwZi-ez0TUNtdTBm9PMaXCuXgbEMug4TVexEwkgm825fpPrVv5d-2QdM12woygnbfM7QoIZaVik7OtVXScBnJC4JzYb49AWDTqKZeHZNC7jEiJO7NfECgC9nhu3Z2OfIEhnSSpksp1A2vQ2zu6hZmdqWf-aJSgsUzUj8"
-                />
-              </div>
-              <div
-                class="w-6 h-6 rounded-full bg-slate-300 border-2 border-primary overflow-hidden"
-              >
-                <img
-                  alt="Doctor"
-                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuD4rjq7ruF8DKmvOqPK1dJG4YJn81omEH6IrdN51I1agJRpnqILJSCOJpZIN6RCsRidgbwcxLgB_BTRakfR0JfkTMViXsmnrY4ruuO7394qOB4WCRi8CTDaJfeLdg-orF2mnQ4Qjn_8ffpnqHJJsHKzGHxdDuyWQOWmD3m51qcx6vQSUeESeNbWiVT3FkyQGw-wfFAP_ZkQyPT-HrL-yOBbsgVM8k_S70lxbPgZBYjuA-Vuv2PgovYXxB6w14alkP5dsJbu8vo9C-0"
-                />
-              </div>
-            </div>
+          <div class="flex items-center justify-end">
             <span class="text-4xl font-bold">{stats_doctors}</span>
           </div>
           <div class="mt-4">

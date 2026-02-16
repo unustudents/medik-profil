@@ -1,5 +1,13 @@
 ---
+import { doctors } from "@/data/doctors";
+import { Image } from "astro:assets";
 
+const LIMIT = 8; // Jumlah dokter yang ingin ditampilkan
+// Acak urutan dokter
+const shuffledDoctors = [...doctors].sort(() => 0.5 - Math.random());
+
+// Ambil 8 dokter saja
+const featuredDoctors = shuffledDoctors.slice(0, LIMIT);
 ---
 
 <section class="py-20 bg-white dark:bg-slate-900">
@@ -8,85 +16,128 @@
             <h2 class="text-4xl font-extrabold">Daftar Dokter</h2>
             <div class="flex space-x-2">
                 <button
-                    class="w-10 h-10 rounded-full bg-primary/20 text-primary flex items-center justify-center hover:bg-primary hover:text-white transition-all"
+                    class="embla__prev w-10 h-10 rounded-full bg-primary/20 text-primary flex items-center justify-center hover:bg-primary hover:text-white transition-all"
+                    aria-label="Previous doctor"
                 >
                     <span class="material-icons-outlined">chevron_left</span>
                 </button>
                 <button
-                    class="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center hover:bg-primary/80 transition-all"
+                    class="embla__next w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center hover:bg-primary/80 transition-all"
+                    aria-label="Next doctor"
                 >
                     <span class="material-icons-outlined">chevron_right</span>
                 </button>
             </div>
         </div>
-        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-            <div
-                class="group relative overflow-hidden rounded-2xl aspect-[3/4]"
-            >
-                <img
-                    alt="Dr. Amanda Lee"
-                    class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                />
-                <div
-                    class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4"
-                >
-                    <p class="text-white text-sm font-bold">Dr. Amanda Lee</p>
-                </div>
-            </div>
-            <div
-                class="group relative overflow-hidden rounded-2xl aspect-[3/4]"
-            >
-                <img
-                    alt="Dr. Sarah Johnson"
-                    class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                />
-                <div
-                    class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4"
-                >
-                    <p class="text-white text-sm font-bold">
-                        Dr. Sarah Johnson
+
+        {
+            featuredDoctors.length === 0 ? (
+                <div class="text-center py-16">
+                    <span class="material-icons-outlined text-slate-300 dark:text-slate-600 text-6xl mb-4">
+                        person
+                    </span>
+                    <p class="text-slate-500 dark:text-slate-400">
+                        Belum ada data dokter yang tersedia
                     </p>
                 </div>
-            </div>
-            <div
-                class="group relative overflow-hidden rounded-2xl aspect-[3/4]"
-            >
-                <img
-                    alt="Dr. Michael Chen"
-                    class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                />
-                <div
-                    class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4"
-                >
-                    <p class="text-white text-sm font-bold">Dr. Michael Chen</p>
+            ) : (
+                <div class="embla-doctors">
+                    <div class="embla__viewport">
+                        <div class="embla__container">
+                            {featuredDoctors.map((doctor) => (
+                                <div class="embla__slide">
+                                    <div class="group relative overflow-hidden rounded-2xl aspect-[3/4]">
+                                        <Image
+                                            src={doctor.image}
+                                            alt={doctor.name}
+                                            width={300}
+                                            height={400}
+                                            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                                            fetchpriority={"low"}
+                                        />
+                                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
+                                            <div>
+                                                <p class="text-white text-sm font-bold">
+                                                    {doctor.name}
+                                                </p>
+                                                <p class="text-white/80 text-xs">
+                                                    {doctor.specialist}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))}
+
+                            {/* Kartu "Lihat Semua" di posisi ke-9 */}
+                            <div class="embla__slide">
+                                <a
+                                    href="/jadwal-dokter"
+                                    class="group relative flex flex-col items-center justify-center rounded-2xl aspect-[3/4] bg-primary/10 dark:bg-primary/20 hover:bg-primary hover:text-white transition-all duration-300 border-2 border-dashed border-primary/30 text-primary dark:text-primary-light"
+                                >
+                                    <div class="w-16 h-16 rounded-full bg-white/50 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform shadow-sm">
+                                        <span class="material-icons-outlined text-3xl">
+                                            arrow_forward
+                                        </span>
+                                    </div>
+                                    <h3 class="font-bold text-lg text-center px-4">
+                                        Lihat Semua Dokter
+                                    </h3>
+                                    <p class="text-xs text-center mt-2 opacity-80 group-hover:text-white">
+                                        {doctors.length - LIMIT}+ Dokter Lainnya
+                                    </p>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div
-                class="group relative overflow-hidden rounded-2xl aspect-[3/4]"
-            >
-                <img
-                    alt="Dr. David Miller"
-                    class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                />
-                <div
-                    class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4"
-                >
-                    <p class="text-white text-sm font-bold">Dr. David Miller</p>
-                </div>
-            </div>
-            <div
-                class="group relative overflow-hidden rounded-2xl aspect-[3/4]"
-            >
-                <img
-                    alt="Dr. Robert Brown"
-                    class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                />
-                <div
-                    class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4"
-                >
-                    <p class="text-white text-sm font-bold">Dr. Robert Brown</p>
-                </div>
-            </div>
-        </div>
+            )
+        }
     </div>
 </section>
+
+<style>
+    .embla-doctors {
+        position: relative;
+    }
+
+    .embla__viewport {
+        overflow: hidden;
+    }
+
+    .embla__container {
+        display: flex;
+        touch-action: pan-y pinch-zoom;
+        margin-left: -1rem;
+    }
+
+    .embla__slide {
+        flex: 0 0 50%;
+        min-width: 0;
+        padding-left: 1rem;
+    }
+
+    @media (min-width: 768px) {
+        .embla__slide {
+            flex: 0 0 33.333333%;
+        }
+    }
+
+    @media (min-width: 1024px) {
+        .embla__slide {
+            flex: 0 0 20%;
+        }
+    }
+</style>
+
+<script>
+    import { initCarousel } from "../../lib/carousel";
+
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", () =>
+            initCarousel(".embla-doctors"),
+        );
+    } else {
+        initCarousel(".embla-doctors");
+    }
+</script>

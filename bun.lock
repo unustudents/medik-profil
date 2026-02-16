@@ -11,6 +11,8 @@
         "@astrojs/sitemap": "^3.7.0",
         "@tailwindcss/vite": "^4.1.18",
         "astro": "^5.16.14",
+        "embla-carousel": "^8.6.0",
+        "embla-carousel-autoplay": "^8.6.0",
         "sharp": "^0.34.5",
         "tailwindcss": "^4.1.18",
         "typescript": "^5.9.3",
@@ -438,6 +440,10 @@
     "dset": ["dset@3.1.4", "", {}, ""],
 
     "ee-first": ["ee-first@1.1.1", "", {}, "sha512-WMwm9LhRUo+WUaRN+vRuETqG89IgZphVSNkdFgeb6sS/E4OrDIN7t48CAewSHXc6C8lefD8KKfr5vY61brQlow=="],
+
+    "embla-carousel": ["embla-carousel@8.6.0", "", {}, "sha512-SjWyZBHJPbqxHOzckOfo8lHisEaJWmwd23XppYFYVh10bU66/Pn5tkVkbkCMZVdbUE5eTCI2nD8OyIP4Z+uwkA=="],
+
+    "embla-carousel-autoplay": ["embla-carousel-autoplay@8.6.0", "", { "peerDependencies": { "embla-carousel": "8.6.0" } }, "sha512-OBu5G3nwaSXkZCo1A6LTaFMZ8EpkYbwIaH+bPqdBnDGQ2fh4+NbzjXjs2SktoPNKCtflfVMc75njaDHOYXcrsA=="],
 
     "emmet": ["emmet@2.4.11", "", { "dependencies": { "@emmetio/abbreviation": "^2.3.3", "@emmetio/css-abbreviation": "^2.1.8" } }, ""],
 

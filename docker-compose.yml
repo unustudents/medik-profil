@@ -30,7 +30,7 @@ services:
       context: .
       dockerfile: Dockerfile.dev
     container_name: medika-astro-dev
-    restart: unless-stopped
+    restart: no
     ports:
       - "${PORT:-4321}:4321"
     environment:
