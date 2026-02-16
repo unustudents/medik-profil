@@ -63,7 +63,7 @@ services:
         STRAPI_URL: ${STRAPI_URL:-http://strapi-prod:1337}
         STRAPI_TOKEN: ${STRAPI_TOKEN:-}
         SITE_URL: ${SITE_URL:-http://localhost:4321}
-    container_name: medika-astro
+    container_name: medika-astro-prod
     restart: unless-stopped
     ports:
       - "${PORT:-4321}:4321"
