@@ -9,6 +9,7 @@ import { Image } from "astro:assets";
 import { agendaEvents } from "@/data/agenda";
 import type { GetStaticPaths } from "astro";
 import { sanitizeHtml } from "@/lib/sanitize";
+import { parseDate } from "@/lib/date";
 
 export const getStaticPaths = (async () => {
     return agendaEvents.map((event) => ({
@@ -50,7 +51,7 @@ const statusConfig = getStatusConfig(event.status);
     description={`${event.title} - ${event.date} ${event.time}. Agenda kegiatan RSU Afdila.`}
     image={typeof event.image === 'string' ? event.image : undefined}
     type="article"
-    publishedAt={new Date(event.date).toISOString()}
+    publishedAt={parseDate(event.date).toISOString()}
 >
     <Header />
 
