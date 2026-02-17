@@ -61,6 +61,8 @@ ENV STRAPI_URL=${STRAPI_URL}
 ENV STRAPI_TOKEN=${STRAPI_TOKEN}
 ENV SITE_URL=${SITE_URL}
 
+RUN rm -rf node_modules/.astro
+
 RUN bun run build
 
 # ── Stage 5: Runtime ────────────────────────────────────────
