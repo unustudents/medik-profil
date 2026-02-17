@@ -28,21 +28,6 @@ const { images } = Astro.props;
             }
         </div>
     </div>
-
-    <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
-        <div class="flex space-x-2 z-10 pointer-events-auto">
-            {
-                images?.map((_, index) => (
-                    <button
-                        class={`w-3 h-3 rounded-full transition-all duration-300 ${index === 0 ? "bg-white scale-125" : "border-2 border-white bg-transparent"}`}
-                        data-hero-indicator
-                        data-index={index}
-                        aria-label={`Go to slide ${index + 1}`}
-                    />
-                ))
-            }
-        </div>
-    </div>
 </section>
 
 <style>
@@ -63,9 +48,9 @@ const { images } = Astro.props;
 
     if (document.readyState === "loading") {
         document.addEventListener("DOMContentLoaded", () => {
-             initHeroCarousel(".embla-hero", { delay: 10000 });
+            initHeroCarousel(".embla-hero", { delay: 10000 });
         });
     } else {
-         initHeroCarousel(".embla-hero", { delay: 10000 });
+        initHeroCarousel(".embla-hero", { delay: 10000 });
     }
 </script>

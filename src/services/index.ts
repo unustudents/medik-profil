@@ -15,3 +15,4 @@ export { getAgendaEvents, getAgendaBySlug } from "./agenda.service";
 export { getRooms, getRoomBySlug } from "./rooms.service";
 export { getPartners } from "./partners.service";
 export { getPaymentMethods } from "./payment.service";
+export { getMedicalServices, getMedicalServiceById } from "./medicalServices.service";
