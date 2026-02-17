@@ -24,3 +24,39 @@ export function initCarousel(containerClass: string) {
 
     return emblaApi;
 }
+
+export function initHeroCarousel(containerClass: string, options: { delay?: number } = {}) {
+    const emblaNode = document.querySelector(containerClass);
+    if (!emblaNode) return;
+
+    const viewportNode = emblaNode.querySelector('.embla__viewport') as HTMLElement;
+    if (!viewportNode) return;
+
+    const indicators = emblaNode.querySelectorAll('[data-hero-indicator]');
+
+    const emblaApi = EmblaCarousel(viewportNode, { loop: true }, [
+        Autoplay({ delay: options.delay || 5000, stopOnInteraction: false }),
+    ]);
+
+    const updateIndicators = () => {
+        const selectedIndex = emblaApi.selectedScrollSnap();
+        indicators.forEach((ind, index) => {
+            if (index === selectedIndex) {
+                ind.classList.remove('bg-transparent', 'border-2', 'border-white');
+                ind.classList.add('bg-white', 'scale-125');
+            } else {
+                ind.classList.remove('bg-white', 'scale-125');
+                ind.classList.add('bg-transparent', 'border-2', 'border-white');
+            }
+        });
+    };
+
+    emblaApi.on('select', updateIndicators);
+    updateIndicators();
+
+    indicators.forEach((ind, index) => {
+        ind.addEventListener('click', () => emblaApi.scrollTo(index));
+    });
+
+    return emblaApi;
+}

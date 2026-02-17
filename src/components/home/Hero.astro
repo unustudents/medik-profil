@@ -7,25 +7,30 @@ interface Props {
 const { images } = Astro.props;
 ---
 
-<section class="relative h-[500px] overflow-hidden group">
-    {
-        images?.map((img, index) => (
-            <Picture
-                alt={`Hero Image ${index + 1}`}
-                class={`w-full h-full object-cover absolute inset-0 transition-opacity duration-1000 ${index === 0 ? "opacity-100" : "opacity-0"}`}
-                src={img}
-                formats={["avif", "webp"]}
-                data-hero-image
-                data-index={index}
-                fetchpriority={"high"}
-                inferSize
-            />
-        ))
-    }
-    <div class="absolute inset-0 hero-gradient"></div>
+<section class="embla-hero relative h-[500px] overflow-hidden group">
+    <div class="embla__viewport h-full w-full">
+        <div class="embla__container h-full">
+            {
+                images?.map((img, index) => (
+                    <div class="embla__slide relative min-w-full h-full">
+                        <Picture
+                            alt={`Hero Image ${index + 1}`}
+                            class="w-full h-full object-cover"
+                            src={img}
+                            formats={["avif", "webp"]}
+                            loading={index === 0 ? "eager" : "lazy"}
+                            fetchpriority={index === 0 ? "high" : "auto"}
+                            inferSize
+                        />
+                        <div class="absolute inset-0 hero-gradient" />
+                    </div>
+                ))
+            }
+        </div>
+    </div>
 
-    <div class="absolute inset-0 flex items-center justify-center">
-        <div class="flex space-x-2 z-10">
+    <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+        <div class="flex space-x-2 z-10 pointer-events-auto">
             {
                 images?.map((_, index) => (
                     <button
@@ -40,55 +45,27 @@ const { images } = Astro.props;
     </div>
 </section>
 
+<style>
+    .embla__viewport {
+        overflow: hidden;
+    }
+    .embla__container {
+        display: flex;
+    }
+    .embla__slide {
+        flex: 0 0 100%;
+        min-width: 0;
+    }
+</style>
+
 <script>
-    const images = document.querySelectorAll("[data-hero-image]");
-    const indicators = document.querySelectorAll("[data-hero-indicator]");
-    let currentIndex = 0;
-    const totalImages = images.length;
-    const INTERVAL = 10000; // 10000 = 10 seconds
+    import { initHeroCarousel } from "../../lib/carousel";
 
-    function updateSlider(index: number) {
-        // Update images
-        images.forEach((img, i) => {
-            if (i === index) {
-                img.classList.remove("opacity-0");
-                img.classList.add("opacity-100");
-            } else {
-                img.classList.remove("opacity-100");
-                img.classList.add("opacity-0");
-            }
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", () => {
+             initHeroCarousel(".embla-hero", { delay: 10000 });
         });
-
-        // Update indicators
-        indicators.forEach((ind, i) => {
-            if (i === index) {
-                ind.classList.remove("border-2", "bg-transparent");
-                ind.classList.add("bg-white", "scale-125");
-            } else {
-                ind.classList.remove("bg-white", "scale-125");
-                ind.classList.add("border-2", "border-white", "bg-transparent");
-            }
-        });
-
-        currentIndex = index;
+    } else {
+         initHeroCarousel(".embla-hero", { delay: 10000 });
     }
-
-    function nextSlide() {
-        const nextIndex = (currentIndex + 1) % totalImages;
-        updateSlider(nextIndex);
-    }
-
-    let slideInterval = setInterval(nextSlide, INTERVAL);
-
-    // Optional: Pause on manual interaction (if buttons were interactive for click)
-    indicators.forEach((btn) => {
-        btn.addEventListener("click", (e) => {
-            const index = parseInt(
-                (e.target as HTMLElement).dataset.index || "0",
-            );
-            updateSlider(index);
-            clearInterval(slideInterval);
-            slideInterval = setInterval(nextSlide, INTERVAL);
-        });
-    });
 </script>
