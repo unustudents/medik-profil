@@ -12,21 +12,21 @@ export const medicalServices: MedicalService[] = [
     title: "Poliklinik Kesehatan THT",
     description: "Pelayanan kesehatan telinga, hidung, dan tenggorokan dengan peralatan modern dan dokter spesialis berpengalaman.",
     icon: "hearing",
-    image: "https://lh3.googleusercontent.com/aida-public/AB6AXuDqmyaAs-eUzLN-Bt6q66z6wyPa9DsUL35dDgjaX5KHd_EwPY6oidO_7UXlbrNwXwijZroYybboghaXiOGRQ_jU3z746xiXzgmLP5wnfKupWZteDBCM6GqFRBcQ_tmCxVXhsuD2ZK5jskAjv_kgEYE8jfkQk4uIwfVUU2dhAKDmvd9rpiV-DzyZrxOvKmxg9oJsrKFgD4TQ8EMIeQuM5qWPanbBOqgCGILvpv__lbtIc1fNbZG51_9bYBGn8tUxAs6RE8kX9X-0mSw"
+    image: "https://images.unsplash.com/photo-1743767587847-08c42b31cdec?q=80&w=1655&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
   },
   {
     id: 2,
     title: "Poliklinik Jantung & Hati",
     description: "Layanan pemeriksaan dan perawatan jantung dengan teknologi kardiologi terkini untuk kesehatan jantung optimal.",
     icon: "favorite",
-    image: "https://lh3.googleusercontent.com/aida-public/AB6AXuCqQrmsNmdYH9JBdXAzE-Rj7L3qStxrojuCIdUpTxXU2MTc7VgeURalpAEnx-8Y1hKKVRpimGDnFIKB02kZorgSMZld9vCN7GhWHnF_0j-aUW1twKMPGo7cQTmLjsdU5i7seFBfn0xITIXRnq44qrED7oBNISufcRv-W_v_QwSSXUBIjDRxpfnn-W73XmB9PRmsyyUJ9DkITNOym8R6F1pJlRfGA3KEQK4II2O8QSB2eangRabmcaR_X-BOA_kZTABrrqo44CCywPM"
+    image: "https://images.unsplash.com/photo-1676313030076-4ac0b37050fd?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
   },
   {
     id: 3,
     title: "Poliklinik Spesialis Kandungan",
     description: "Layanan kesehatan ibu dan anak dengan dokter spesialis kandungan yang berpengalaman menangani berbagai kasus.",
     icon: "child_care",
-    image: "https://lh3.googleusercontent.com/aida-public/AB6AXuANQkwADZpGv8dCxF9MtsHpiqNWa57F-fq7KESw0McJb31TnyE5PukVj-t4CdKJVIwYBhvhxY4eYKYjXGK1aH40-pgRRcknsbIlUKcBIJkBD1Fn5R7eUkZ7L1qkPBvEgPkdGt5l3teJeZDZ7jrAnTTMSXjXAMJQX0XIa_MCUyreQrz3NsgXyYExQqq12aymIMoI0L40eyqp-54kB8QcA-9mvi37ctSBlFzvb8RKRFlhCNHZj4MrT4rVMYwkEM5r3kDPzSWzfDaY3Ws"
+    image: "https://images.unsplash.com/photo-1706065264583-55f1a8549769?q=80&w=1171&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
   },
   {
     id: 4,

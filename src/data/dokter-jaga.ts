@@ -10,7 +10,7 @@ export interface DokterJaga {
 export const todayDoctors: DokterJaga[] = [
     {
         name: "Dr Rahmat Shihabuddin Sp.OK",
-        image: "https://lh3.googleusercontent.com/aida-public/AB6AXuBrqDpNyN5qgvfn1KNA-Z-2B9zuVBufNdsUIy4pEnpv4ALiroKT6-57OSY4rDBTnhfwIRM_fYvGEvIwlu7B5aDIMqNfnjMwi8l-yimYEr6XTpgohb7zHpya2uJJVkXP8UJag6CA9nIio1Jw7HaKMv_nshhPxAdJFAHcrbZpBr3D_TzSk4KiLEPBY6E0Gbz3HXiZo-c2wKCKgAVyAeqfMkYO4i6YZEDi6fzOI_Vrgyj8B2DFyn9RVps-RP0t89HKLRQ5QYsSPQqtXrk",
+        image: "https://images.unsplash.com/photo-1637059824899-a441006a6875?q=80&w=752&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
         details: [
             { icon: "medical_services", label: "Pediatric" },
             { icon: "assignment", label: "Poliklinik Gigi" },
@@ -22,7 +22,7 @@ export const todayDoctors: DokterJaga[] = [
     },
     {
         name: "Dr Fira Bella Iskandar Sp.AN",
-        image: "https://lh3.googleusercontent.com/aida-public/AB6AXuBAHo-T_Jp37dXrTHXUYpLA65xb9J1Yl5KcTtEoYR-2Vspg40hSeNrpxJhDflwUxQf5g-1XQWlUFNOnD7VgDPqafWCXi4SOSIGhsyTP6hpmTobL-4TnqRARLNiHXf3g-th-UbRfY6qJsXT48mxgkELVYJyv-a-kJi1wf_LG23W8YghHoQE8tebtJFTkOGwMCzDIA-cHTmhMrt98lyoo-hH65cBC-lKhFjll5Jt0vtrb6aF7TQni64uc6zKtO8zqyPzL3YVaZ8Bi8hU",
+        image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?q=80&w=752&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
         details: [
             { icon: "spa", label: "Kulit Dan Kelamin" },
             { icon: "child_care", label: "Poliklinik Anak" },
@@ -33,7 +33,7 @@ export const todayDoctors: DokterJaga[] = [
     },
     {
         name: "Dr Intan Ayu Ratnasari Sp.KK",
-        image: "https://lh3.googleusercontent.com/aida-public/AB6AXuBAdQSM6UwHHJpVIaLEbrGr1ne5iYFwR2-qZOcCvOCYxY1EpT0ZEsGIhIiqsbjm36IFr423H_kqbJ-XZv12bHkqkWaOevCkq-RHwfCKur9F1zet-LvDoPshO7JUO_CtVamQapf_Kc4vE1i-tESfkZIsiFiEh8qyOTw7CTsT7FGhc4D3jWOLFT2mZstst37O47g4XtdrYiYuDb97shxwbGy5MShtgzw9CUwSTffXh70YSSioYj_hA94L76tZKqTLkVqKzBjfrPorEyI",
+        image: "https://images.unsplash.com/photo-1582719478688-4c00f0c2b3f3?q=80&w=752&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
         details: [
             { icon: "spa", label: "Kulit Dan Kelamin" },
             { icon: "monitor_heart", label: "Poliklinik Kesehatan Dalam" },
@@ -44,7 +44,7 @@ export const todayDoctors: DokterJaga[] = [
     },
     {
         name: "Dr. Marlon Barker",
-        image: "https://lh3.googleusercontent.com/aida-public/AB6AXuDZkOkRFV9Ez_CLT2CD65pUAbRwJwfAT4JbwrYmGztWjcpEeOoQg6eyml9i5G1ODi2awF_NePcm5UuIy8Ysc5Srfz85RTSQ1_otJ0FPNO70XE1uu6qw5s2lHcXH6dDDgo4wsqq251IRPwajzy01QbGDrfZL9SPd91ZyadXRrFjHuEir-Cy_GBjvSVUcZS6SzPbjjRGwUlVeeouTFEiFqtkiMhqjZXY1V07YTCWYYUPzemYtogcbinPchZK9N7h3MnZV3cdbixQHYy8",
+        image: "https://images.unsplash.com/photo-1637059824899-a441006a6875?q=80&w=752&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
         details: [
             { icon: "healing", label: "Bedah Umum" },
             { icon: "emergency", label: "Instalasi Gawat Darurat" },
@@ -54,7 +54,7 @@ export const todayDoctors: DokterJaga[] = [
     },
     {
         name: "Dr. Ahmad Fauzan Sp.PD",
-        image: "https://lh3.googleusercontent.com/aida-public/AB6AXuBrqDpNyN5qgvfn1KNA-Z-2B9zuVBufNdsUIy4pEnpv4ALiroKT6-57OSY4rDBTnhfwIRM_fYvGEvIwlu7B5aDIMqNfnjMwi8l-yimYEr6XTpgohb7zHpya2uJJVkXP8UJag6CA9nIio1Jw7HaKMv_nshhPxAdJFAHcrbZpBr3D_TzSk4KiLEPBY6E0Gbz3HXiZo-c2wKCKgAVyAeqfMkYO4i6YZEDi6fzOI_Vrgyj8B2DFyn9RVps-RP0t89HKLRQ5QYsSPQqtXrk",
+        image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?q=80&w=752&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
         details: [
             { icon: "monitor_heart", label: "Penyakit Dalam" },
             { icon: "local_hospital", label: "Poliklinik Umum" },
@@ -65,7 +65,7 @@ export const todayDoctors: DokterJaga[] = [
     },
     {
         name: "Dr. Siti Aminah Sp.OG",
-        image: "https://lh3.googleusercontent.com/aida-public/AB6AXuBAHo-T_Jp37dXrTHXUYpLA65xb9J1Yl5KcTtEoYR-2Vspg40hSeNrpxJhDflwUxQf5g-1XQWlUFNOnD7VgDPqafWCXi4SOSIGhsyTP6hpmTobL-4TnqRARLNiHXf3g-th-UbRfY6qJsXT48mxgkELVYJyv-a-kJi1wf_LG23W8YghHoQE8tebtJFTkOGwMCzDIA-cHTmhMrt98lyoo-hH65cBC-lKhFjll5Jt0vtrb6aF7TQni64uc6zKtO8zqyPzL3YVaZ8Bi8hU",
+        image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?q=80&w=752&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
         details: [
             { icon: "pregnant_woman", label: "Obstetri & Ginekologi" },
             { icon: "child_friendly", label: "Poliklinik Kandungan" },
@@ -75,7 +75,7 @@ export const todayDoctors: DokterJaga[] = [
     },
     {
         name: "Dr. Budi Santoso Sp.JP",
-        image: "https://lh3.googleusercontent.com/aida-public/AB6AXuBAdQSM6UwHHJpVIaLEbrGr1ne5iYFwR2-qZOcCvOCYxY1EpT0ZEsGIhIiqsbjm36IFr423H_kqbJ-XZv12bHkqkWaOevCkq-RHwfCKur9F1zet-LvDoPshO7JUO_CtVamQapf_Kc4vE1i-tESfkZIsiFiEh8qyOTw7CTsT7FGhc4D3jWOLFT2mZstst37O47g4XtdrYiYuDb97shxwbGy5MShtgzw9CUwSTffXh70YSSioYj_hA94L76tZKqTLkVqKzBjfrPorEyI",
+        image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?q=80&w=752&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
         details: [
             { icon: "favorite", label: "Jantung & Pembuluh Darah" },
             { icon: "monitor_heart", label: "Poliklinik Jantung" },
@@ -86,7 +86,7 @@ export const todayDoctors: DokterJaga[] = [
     },
     {
         name: "Dr. Maya Putri Sp.M",
-        image: "https://lh3.googleusercontent.com/aida-public/AB6AXuDZkOkRFV9Ez_CLT2CD65pUAbRwJwfAT4JbwrYmGztWjcpEeOoQg6eyml9i5G1ODi2awF_NePcm5UuIy8Ysc5Srfz85RTSQ1_otJ0FPNO70XE1uu6qw5s2lHcXH6dDDgo4wsqq251IRPwajzy01QbGDrfZL9SPd91ZyadXRrFjHuEir-Cy_GBjvSVUcZS6SzPbjjRGwUlVeeouTFEiFqtkiMhqjZXY1V07YTCWYYUPzemYtogcbinPchZK9N7h3MnZV3cdbixQHYy8",
+        image: "https://images.unsplash.com/photo-1582719478688-4c00f0c2b3f3?q=80&w=752&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
         details: [
             { icon: "visibility", label: "Mata" },
             { icon: "remove_red_eye", label: "Poliklinik Mata" },
@@ -96,7 +96,7 @@ export const todayDoctors: DokterJaga[] = [
     },
     {
         name: "Dr. Hendra Wijaya Sp.THT",
-        image: "https://lh3.googleusercontent.com/aida-public/AB6AXuBrqDpNyN5qgvfn1KNA-Z-2B9zuVBufNdsUIy4pEnpv4ALiroKT6-57OSY4rDBTnhfwIRM_fYvGEvIwlu7B5aDIMqNfnjMwi8l-yimYEr6XTpgohb7zHpya2uJJVkXP8UJag6CA9nIio1Jw7HaKMv_nshhPxAdJFAHcrbZpBr3D_TzSk4KiLEPBY6E0Gbz3HXiZo-c2wKCKgAVyAeqfMkYO4i6YZEDi6fzOI_Vrgyj8B2DFyn9RVps-RP0t89HKLRQ5QYsSPQqtXrk",
+        image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?q=80&w=752&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
         details: [
             { icon: "hearing", label: "Telinga Hidung Tenggorokan" },
             { icon: "medical_services", label: "Poliklinik THT" },
@@ -107,7 +107,7 @@ export const todayDoctors: DokterJaga[] = [
     },
     {
         name: "Dr. Rina Kartika Sp.A",
-        image: "https://lh3.googleusercontent.com/aida-public/AB6AXuBAHo-T_Jp37dXrTHXUYpLA65xb9J1Yl5KcTtEoYR-2Vspg40hSeNrpxJhDflwUxQf5g-1XQWlUFNOnD7VgDPqafWCXi4SOSIGhsyTP6hpmTobL-4TnqRARLNiHXf3g-th-UbRfY6qJsXT48mxgkELVYJyv-a-kJi1wf_LG23W8YghHoQE8tebtJFTkOGwMCzDIA-cHTmhMrt98lyoo-hH65cBC-lKhFjll5Jt0vtrb6aF7TQni64uc6zKtO8zqyPzL3YVaZ8Bi8hU",
+        image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?q=80&w=752&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
         details: [
             { icon: "child_care", label: "Anak" },
             { icon: "vaccines", label: "Poliklinik Anak" },

@@ -46,7 +46,7 @@ export default defineConfig({
 	// === Image optimization — izinkan domain Strapi ===
 	// https://docs.astro.build/en/reference/configuration-reference/#imagedomains
 	image: {
-		domains: [STRAPI_URL ? new URL(STRAPI_URL).hostname : "localhost", "lh3.googleusercontent.com"],
+		domains: [STRAPI_URL ? new URL(STRAPI_URL).hostname : "localhost", "https://images.unsplash.com"],
 	},
 
 	// === Vite plugins ===

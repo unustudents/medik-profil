@@ -20,7 +20,7 @@ export const doctors: Doctor[] = [
         id: 1,
         name: "Dr Fira Bella Iskandar Sp.AN",
         specialist: "Kulit & Kelamin",
-        image: "https://lh3.googleusercontent.com/aida-public/AB6AXuBXaf7CEQ2YVTHRrQorheTKdKVSzJOCk2gv5b8MVyoLzoiN7GT3Y4vF5g09LVNG4PsWeX5vMxtepIxV_anJwtYRPlZWhW6yjKe887r50DJQ5qOeouSXojwNBw4QFfGM_VTUVVHsXjWHzdhIb1f1VbaFvgyng2OiZacqxj7GRRi5D4gHWzncICalGVW39DkQgrKg-ERBz6v8Ig7ogmUPh8AhdlCZgDYNXnim76xf-MG0-Cs-19kRKClgO8tLU1iL4a0kqeduFkKa0-E",
+        image: "https://images.unsplash.com/photo-1637059824899-a441006a6875?q=80&w=752&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
         schedule: {
             monday: "04:00 - 10:00",
             tuesday: "04:00 - 09:00",
@@ -33,7 +33,7 @@ export const doctors: Doctor[] = [
         id: 2,
         name: "Dr Intan Ayu Ratnasari Sp.KK",
         specialist: "Kulit & Kelamin",
-        image: "https://lh3.googleusercontent.com/aida-public/AB6AXuCp_aHblgUMI6F7P44f3ImlxisXj-rdRjdiUxlJ0VxRgpJH2eh59bmdtz907yw4oPUqhTG-eW9SExu3_ixDANGmfzDlb_6gliX1_LRSrYXXDf-URVGOpXnlyaCzHJWua0PVqUJHgFG8WhESy6nkzFwWujpx_N6Ju-PRXvvwk-3Yhyo7OtnJe4YUXZ4M4plOVm_oeWnGmaKzKxN3yi7TABrG0Q_PHeMiWtoLqHW94s7ONpS7F7sEJDH2fwZOncKOZloFX5bUsWENNiA",
+        image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?q=80&w=752&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
         schedule: {
             monday: "04:00 - 09:30",
             tuesday: "11:00 - 16:00",
@@ -47,7 +47,7 @@ export const doctors: Doctor[] = [
         id: 3,
         name: "Dr Rahmat Shihabuddin Sp.OK",
         specialist: "Pediatrik",
-        image: "https://lh3.googleusercontent.com/aida-public/AB6AXuCG8eNLOWj98ww50vdnR3yX7AwcMeMcOCG4rHw35Zy9x-qOUatbnEU7psGR42euwsjXaa8OlOTETN_kmLsB0CBMsJP28p-EwLztdbHQtLTtBFG5OORyTeiEqCvs5kRb4ssqI-4024AWNkBZyRvPEV-FbYTAgGP8gNRPlHHAeaGizfCVRap2ABEfIF0nyknlv1gfU4IWlZCcyIM_RCI67_4mm6g0Wlow2uGBNYwFzAZdD1CncHrQTGXE-KbKLpXKDfWIHemq2KFfkIw",
+        image: "https://images.unsplash.com/photo-1592800273800-7c4f8c1b2c5f?q=80&w=752&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
         schedule: {
             monday: "08:30 - 11:30",
             tuesday: "10:00 - 15:00",
@@ -63,7 +63,7 @@ export const doctors: Doctor[] = [
         id: 4,
         name: "Dr Stevanie Miller Sp.Og",
         specialist: "Bedah Syaraf",
-        image: "https://lh3.googleusercontent.com/aida-public/AB6AXuBtbi1ugkJ8mU6f801icEyvgeZLPp6p3FszuWkmOqC79fm5OxBDsePRdatBmDte2XMUdw3gCsoki6q_R6mREGphpQLbz-OkwAG7cHJA2M36LboWNEqu3u6mK_bbRR7-jo4HGxvyXPaqqkC1kvlRxzbv6jVp9BYe1SXOfZVfZBr10_z2zZT7Q0jswCEQKPsehSShaSlk5e3Dhih4Tdt80hfHFmZRtVh6QM0jKe8v_9-aPs5Q0BwDgzHL3v2LfelomYjo7Zu9_KV30l4",
+        image: "https://images.unsplash.com/photo-1637059824899-a441006a6875?q=80&w=752&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
         schedule: {
             tuesday: "04:30 - 09:00",
             thursday: "04:30 - 09:00",
@@ -76,7 +76,7 @@ export const doctors: Doctor[] = [
         id: 5,
         name: "Dr Wijaya Kusuma Sp.BA",
         specialist: "Spesialis Anak",
-        image: "https://lh3.googleusercontent.com/aida-public/AB6AXuCMoSJb5TLpFciEgwtuLekjBiN13uuPq-HiplvnWhKmR5Z1kkO8X-oFbUNThUou8S9BAFYNYMo3evW4GBzJPwzt65jNrr2_dIER6Fa8BSMPshx6BeebuaWpFh4phYBu3ouT0whJYF5XnExiERQm_4UwBxv2aGiC0G6g9LY4yM_O8NqCu80VfZZkIWQnwVP69zCpYqfWXJnGQ3iWdElIDlfsP2FflWh4khim0iYsgnZfJkhZxgN24wtdvZ1bdD3_Xig6KqAor7ejOsU",
+        image: "https://images.unsplash.com/photo-1582719478688-4c00f0c2b3f3?q=80&w=752&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
         schedule: {
             wednesday: "20:00 - 24:00",
             thursday: "20:00 - 24:00",
