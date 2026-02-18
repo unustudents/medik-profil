@@ -8,17 +8,22 @@
  * types ini agar konsisten dan type-safe.
  */
 
-// ── Strapi Media ────────────────────────────────────────────
+// // ── Strapi Media ────────────────────────────────────────────
 export interface StrapiMedia {
-    id: number;
-    url: string;
-    alternativeText: string | null;
-    caption: string | null;
-    width: number;
-    height: number;
-    formats: Record<string, StrapiMediaFormat> | null;
-    mime: string;
-    name: string;
+  url: string;
+
+  alternativeText?: string;
+  caption?: string;
+  width?: number;
+  height?: number;
+
+  name?: string;
+  hash?: string;
+  ext?: string;
+  mime?: string;
+  size?: number;
+  previewUrl?: string;
+  provider?: string;
 }
 
 export interface StrapiMediaFormat {

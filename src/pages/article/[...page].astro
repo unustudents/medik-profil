@@ -1,23 +1,42 @@
 ---
-export const prerender = true;
+export const prerender = false;
 
 import Layout from "@/layouts/Layout.astro";
 import Header from "@/components/Header.astro";
 import ContactInfo from "@/components/ContactInfo.astro";
 import Footer from "@/components/Footer.astro";
 import ArticleCard from "@/components/ArticleCard.astro";
-import { articles } from "@/data/articles";
 import Pagination from "@/components/Pagination.astro";
 import { ARTICLESPAGINATE } from "@/consts";
-import type { GetStaticPaths } from "astro";
+import { getArticles } from "@/services/articles.service";
 
-export const getStaticPaths = (async ({ paginate }) => {
-    // Sort articles by date or ID if needed, here we just use the array order
-    // Pagination: 8 items per page
-    return paginate(articles, { pageSize: ARTICLESPAGINATE });
-}) satisfies GetStaticPaths;
+// Ambil page dari URL params (e.g. /article/2 → page 2)
+const pageParam = Astro.params.page;
+const currentPage = pageParam ? parseInt(pageParam, 10) || 1 : 1;
 
-const { page } = Astro.props;
+// Fetch dari Strapi API
+const { data: articleList, pagination } = await getArticles({
+    page: currentPage,
+    pageSize: ARTICLESPAGINATE,
+});
+
+// Bangun object `page` yang kompatibel dengan komponen Pagination
+const page = {
+    data: articleList,
+    start: (pagination.page - 1) * pagination.pageSize,
+    end: (pagination.page - 1) * pagination.pageSize + articleList.length - 1,
+    currentPage: pagination.page,
+    lastPage: pagination.pageCount,
+    total: pagination.total,
+    size: pagination.pageSize,
+    url: {
+        current: currentPage === 1 ? "/article" : `/article/${currentPage}`,
+        prev: currentPage > 1 ? (currentPage === 2 ? "/article" : `/article/${currentPage - 1}`) : undefined,
+        next: currentPage < pagination.pageCount ? `/article/${currentPage + 1}` : undefined,
+        first: currentPage > 1 ? "/article" : undefined,
+        last: currentPage < pagination.pageCount ? `/article/${pagination.pageCount}` : undefined,
+    },
+};
 ---
 
 <Layout
@@ -39,9 +58,16 @@ const { page } = Astro.props;
                 </p>
             </header>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                {page.data.map((article) => <ArticleCard article={article} />)}
-            </div>
+            {articleList.length > 0 ? (
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    {articleList.map((article) => <ArticleCard article={article} />)}
+                </div>
+            ) : (
+                <div class="text-center py-20 text-slate-500 dark:text-slate-400">
+                    <span class="material-icons-outlined text-6xl mb-4 block">article</span>
+                    <p class="text-xl font-medium">Belum ada artikel tersedia.</p>
+                </div>
+            )}
 
             <Pagination page={page} baseUrl="/article" />
         </div>

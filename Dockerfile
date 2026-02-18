@@ -37,7 +37,7 @@ WORKDIR /app
 
 # Salin hanya package manifest + lockfile.
 # Perubahan source code tidak invalidate cache layer ini.
-COPY package.json bun.lock ./
+COPY package.json ./
 
 # ── Stage 2: Production Dependencies ────────────────────────
 FROM base AS prod-deps

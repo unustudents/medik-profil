@@ -1,10 +1,15 @@
+// import type { StrapiBlockField } from "node_modules/@sensinum/astro-strapi-blocks/src/types/strapi";
+// 🔥 disable strict typing untuk dummy data
+type StrapiBlockField = any[];
+type StrapiMedia = any;
+
 export interface Article {
     id: number;
     title: string;
     slug: string;
     category: string;
     image: string;
-    content: string;
+    content: string | StrapiBlockField;
     date: string;
     author: {
         name: string;
@@ -15,6 +20,7 @@ export interface Article {
     tags: string[];
 }
 
+// Dummy content ASLI (HTML string) - jangan diubah
 const dummyContent = `
     <p class="font-medium text-xl text-gray-700 dark:text-gray-200 mb-6">
         Penyakit jantung bukan lagi sekadar masalah bagi mereka yang lanjut usia. Data menunjukkan tren
@@ -68,6 +74,271 @@ const dummyContent = `
         terpercaya untuk deteksi dini.
     </p>
 `;
+
+// Dummy content dalam format Strapi v5 Blocks (JSON)
+// Dibuat untuk persiapan integrasi Strapi - gunakan ini saat koneksi ke Strapi sudah aktif
+const dummyContentBlocks: StrapiBlockField = [
+    {
+        type: "paragraph",
+        children: [
+            {
+                type: "text",
+                text: "Penyakit jantung bukan lagi sekadar masalah bagi mereka yang lanjut usia. Data menunjukkan tren peningkatan kasus gangguan kardiovaskular pada usia produktif.",
+                bold: true
+            }
+        ]
+    },
+    {
+        type: "paragraph",
+        children: [
+            {
+                type: "text",
+                text: "Jantung adalah organ vital yang bekerja tanpa henti memompa darah ke seluruh tubuh. Namun, gaya hidup modern yang cenderung sedenter, pola makan tidak sehat, dan tingkat stres yang tinggi seringkali menjadi pemicu utama kerusakan fungsi jantung secara perlahan namun pasti."
+            }
+        ]
+    },
+    {
+        type: "heading",
+        level: 2,
+        children: [
+            { type: "text", text: "Mengapa Harus Dimulai Sejak Dini?" }
+        ]
+    },
+    {
+        type: "paragraph",
+        children: [
+            {
+                type: "text",
+                text: "Proses penumpukan plak pada pembuluh darah atau aterosklerosis tidak terjadi dalam semalam. Ini adalah proses akumulatif yang dimulai bahkan sejak masa kanak-kanak. Dengan menjaga pola hidup sehat di usia muda, kita memberikan investasi terbaik bagi kualitas hidup kita di masa tua nanti."
+            }
+        ]
+    },
+    {
+        type: "quote",
+        children: [
+            {
+                type: "text",
+                text: "Mencegah jauh lebih mudah dan murah daripada mengobati. Jantung yang sehat adalah kunci dari umur panjang yang produktif."
+            }
+        ]
+    },
+    {
+        type: "heading",
+        level: 2,
+        children: [
+            { type: "text", text: "Langkah Praktis Menjaga Jantung" }
+        ]
+    },
+    {
+        type: "list",
+        format: "unordered",
+        children: [
+            {
+                type: "list-item",
+                children: [
+                    { type: "text", text: "Aktivitas Fisik Rutin: ", bold: true },
+                    { type: "text", text: "Minimal 30 menit jalan cepat setiap hari dapat memperkuat otot jantung." }
+                ]
+            },
+            {
+                type: "list-item",
+                children: [
+                    { type: "text", text: "Pola Makan DASH: ", bold: true },
+                    { type: "text", text: "Mengurangi asupan garam dan meningkatkan konsumsi sayuran serta buah-buahan." }
+                ]
+            },
+            {
+                type: "list-item",
+                children: [
+                    { type: "text", text: "Manajemen Stres: ", bold: true },
+                    { type: "text", text: "Meditasi atau hobi yang menyenangkan membantu menurunkan tekanan darah." }
+                ]
+            }
+        ]
+    },
+    {
+        type: "image",
+        image: {
+            url: "https://lh3.googleusercontent.com/aida-public/AB6AXuBRt8k39mbc0qfK0kEFCP5x8TgRZEXYTW2utkTi_EAd3-Ac-h7TOs5O__mO38iDyi7nNA95TzZihOzu2DEVWnm-uzMziRZeEm7EGuwovlP_EsPYAO2j3a44_65PGbosBv0ELZjg09RrA4dA1YfkgwYpzvXeKyrhVZGdNpTY5SSuTUMn8NRwCAlsc8vyxOoPfelQBryJgyZMGYOt8D1bVeqPlBn9_GVTapZDMCxodMikhzjzQmlfRg_BS8ajufMvbIJ-hHcQGausc6Y",
+            alternativeText: "Consultation with a cardiologist",
+            caption: "Pemeriksaan rutin dengan spesialis jantung sangat disarankan setiap 6 bulan sekali.",
+            width: 1200,
+            height: 514
+        },
+        children: [{ type: "text", text: "" }]
+    },
+    {
+        type: "paragraph",
+        children: [
+            {
+                type: "text",
+                text: "Sebagai penutup, jangan abaikan gejala-gejala kecil seperti nyeri dada saat beraktivitas atau sesak napas yang tidak biasa. Segera konsultasikan kondisi kesehatan Anda ke fasilitas kesehatan terpercaya untuk deteksi dini."
+            }
+        ]
+    }
+];
+
+// Dummy content dari real Strapi v5 API response (cop dari response API Strapi)
+// Data ini adalah contoh nyata format JSON yang dikirim Strapi ketika field "content" bertipe Blocks
+const dummyContentFromApi: StrapiBlockField = [
+    {
+        type: "heading",
+        level: 3,
+        children: [
+            {
+                type: "text",
+                text: "Penyakit jantung bukan lagi sekadar masalah bagi mereka yang lanjut usia. Data menunjukkan tren peningkatan kasus gangguan kardiovaskular pada usia produktif."
+            }
+        ]
+    },
+    {
+        type: "paragraph",
+        children: [
+            {
+                type: "text",
+                text: "Jantung adalah organ vital yang bekerja tanpa henti memompa darah ke seluruh tubuh. Namun, gaya hidup modern yang cenderung sedenter, pola makan tidak sehat, dan tingkat stres yang tinggi seringkali menjadi pemicu utama kerusakan fungsi jantung secara perlahan namun pasti."
+            }
+        ]
+    },
+    {
+        type: "heading",
+        level: 2,
+        children: [
+            {
+                type: "text",
+                text: "Mengapa Harus Dimulai Sejak Dini?"
+            }
+        ]
+    },
+    {
+        type: "paragraph",
+        children: [
+            {
+                type: "text",
+                text: "Proses penumpukan plak pada pembuluh darah atau aterosklerosis tidak terjadi dalam semalam. Ini adalah proses akumulatif yang dimulai bahkan sejak masa kanak-kanak. Dengan menjaga pola hidup sehat di usia muda, kita memberikan investasi terbaik bagi kualitas hidup kita di masa tua nanti."
+            }
+        ]
+    },
+    {
+        type: "quote",
+        children: [
+            {
+                type: "text",
+                text: "\"Mencegah jauh lebih mudah dan murah daripada mengobati. Jantung yang sehat adalah kunci dari umur panjang yang produktif.\""
+            }
+        ]
+    },
+    {
+        type: "heading",
+        level: 2,
+        children: [
+            {
+                type: "text",
+                text: "Langkah Praktis Menjaga Jantung"
+            }
+        ]
+    },
+    {
+        type: "list",
+        format: "unordered",
+        children: [
+            {
+                type: "list-item",
+                children: [
+                    { type: "text", text: "Aktivitas Fisik Rutin: ", bold: true },
+                    { type: "text", text: "Minimal 30 menit jalan cepat setiap hari dapat memperkuat otot jantung." }
+                ]
+            },
+            {
+                type: "list-item",
+                children: [
+                    { type: "text", text: "Pola Makan DASH: ", bold: true },
+                    { type: "text", text: "Mengurangi asupan garam dan meningkatkan konsumsi sayuran serta buah-buahan." }
+                ]
+            },
+            {
+                type: "list-item",
+                children: [
+                    { type: "text", text: "Manajemen Stres: ", bold: true },
+                    { type: "text", text: "Meditasi atau hobi yang menyenangkan membantu menurunkan tekanan darah." }
+                ]
+            }
+        ]
+    },
+    {
+        type: "image",
+        image: {
+            ext: ".jpg",
+            url: "http://localhost:1338/uploads/visa_ecc032f500.jpg",
+            hash: "visa_ecc032f500",
+            mime: "image/jpeg",
+            name: "visa.jpg",
+            size: 16.9,
+            width: 866,
+            height: 650,
+            caption: "Visa",
+            alternativeText: "Visa",
+            formats: {
+                small: {
+                    ext: ".jpg",
+                    url: "/uploads/small_visa_ecc032f500.jpg",
+                    hash: "small_visa_ecc032f500",
+                    mime: "image/jpeg",
+                    name: "small_visa.jpg",
+                    path: null,
+                    size: 8.39,
+                    width: 500,
+                    height: 375,
+                    sizeInBytes: 8391
+                },
+                medium: {
+                    ext: ".jpg",
+                    url: "/uploads/medium_visa_ecc032f500.jpg",
+                    hash: "medium_visa_ecc032f500",
+                    mime: "image/jpeg",
+                    name: "medium_visa.jpg",
+                    path: null,
+                    size: 13.94,
+                    width: 750,
+                    height: 563,
+                    sizeInBytes: 13937
+                },
+                thumbnail: {
+                    ext: ".jpg",
+                    url: "/uploads/thumbnail_visa_ecc032f500.jpg",
+                    hash: "thumbnail_visa_ecc032f500",
+                    mime: "image/jpeg",
+                    name: "thumbnail_visa.jpg",
+                    path: null,
+                    size: 3.18,
+                    width: 208,
+                    height: 156,
+                    sizeInBytes: 3182
+                }
+            }
+        },
+        children: [{ type: "text", text: "" }]
+    },
+    {
+        type: "paragraph",
+        children: [
+            {
+                type: "text",
+                text: "Pemeriksaan rutin dengan spesialis jantung sangat disarankan setiap 6 bulan sekali.",
+                italic: true
+            }
+        ]
+    },
+    {
+        type: "paragraph",
+        children: [
+            {
+                type: "text",
+                text: "Sebagai penutup, jangan abaikan gejala-gejala kecil seperti nyeri dada saat beraktivitas atau sesak napas yang tidak biasa. Segera konsultasikan kondisi kesehatan Anda ke fasilitas kesehatan terpercaya untuk deteksi dini."
+            }
+        ]
+    }
+];
 
 export const articles: Article[] = [
     {

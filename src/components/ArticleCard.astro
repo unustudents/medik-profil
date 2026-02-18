@@ -1,11 +1,18 @@
 ---
 import type { Article } from "@/data/articles";
+import type { ArticleItem } from "@/services/articles.service";
 
 interface Props {
-    article: Article;
+    article: Article | ArticleItem;
 }
 
 const { article } = Astro.props;
+
+// Resolve image: dummy data punya `image`, API data punya `thumbnailUrl`
+const imageUrl = 'image' in article ? article.image : article.thumbnailUrl;
+
+// Resolve link: dummy data punya `slug`, API data punya `documentId`
+const articleHref = 'slug' in article ? `/article/${article.slug}` : `/article/${article.documentId}`;
 ---
 
 <article
@@ -15,7 +22,7 @@ const { article } = Astro.props;
         <img
             alt={article.title}
             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-            src={article.image}
+            src={imageUrl}
             loading="lazy"
         />
     </div>
@@ -29,7 +36,7 @@ const { article } = Astro.props;
         <h3
             class="text-lg font-bold text-slate-800 dark:text-slate-100 leading-snug mb-3 line-clamp-3 group-hover:text-primary transition-colors"
         >
-            <a href={`/article/${article.slug}`}>
+            <a href={articleHref}>
                 {article.title}
             </a>
         </h3>

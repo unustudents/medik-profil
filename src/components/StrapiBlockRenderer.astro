@@ -1,0 +1,154 @@
+---
+import type { StrapiBlockField } from "@/services/articles.service";
+import { StrapiBlocks } from "@sensinum/astro-strapi-blocks";
+
+interface Props {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  content: StrapiBlockField;
+  class?: string;
+}
+
+const { content, class: classes = "" } = Astro.props;
+---
+
+<StrapiBlocks
+  data={content}
+  class={classes}
+  theme={{
+    overwrite: {
+      paragraph: {
+        block: [
+          "mb-4",
+          "text-gray-700",
+          "dark:text-gray-300",
+          "leading-relaxed",
+          "text-lg",
+        ],
+        strong: ["font-bold"],
+        italic: ["italic"],
+        underline: ["underline"],
+        strikethrough: ["line-through"],
+        link: [
+          "text-primary",
+          "underline",
+          "decoration-primary/30",
+          "underline-offset-4",
+          "hover:text-primary/80",
+          "transition-colors",
+        ],
+      },
+      heading: {
+        block: ["font-bold"],
+        h1: ["text-3xl", "text-gray-900", "dark:text-white", "mt-12", "mb-6"],
+        h2: ["text-2xl", "text-primary", "mt-10", "mb-4"],
+        h3: ["text-xl", "text-gray-800", "dark:text-white", "mt-8", "mb-3"],
+        h4: ["text-lg", "text-gray-800", "dark:text-white", "mt-6", "mb-2"],
+        h5: ["text-base", "text-gray-800", "dark:text-white", "mt-4", "mb-2"],
+        h6: ["text-sm", "text-gray-600", "dark:text-gray-300", "mt-4", "mb-2"],
+        content: {
+          block: [],
+          span: [],
+          strong: ["font-bold"],
+          italic: ["italic"],
+          underline: ["underline"],
+          strikethrough: ["line-through"],
+          link: ["text-primary", "underline", "hover:text-primary/80"],
+        },
+      },
+      quote: {
+        block: [
+          "border-l-4",
+          "border-primary",
+          "bg-primary/5",
+          "dark:bg-primary/10",
+          "p-6",
+          "my-8",
+          "rounded-r-xl",
+          "italic",
+          "text-gray-700",
+          "dark:text-gray-200",
+        ],
+        strong: ["font-bold"],
+        italic: ["italic"],
+        underline: ["underline"],
+        strikethrough: ["line-through"],
+        link: ["text-primary", "hover:text-primary/80"],
+      },
+      list: {
+        block: ["my-6"],
+        ordered: [
+          "list-decimal",
+          "pl-6",
+          "space-y-2",
+          "text-gray-700",
+          "dark:text-gray-300",
+          "text-lg",
+        ],
+        unordered: ["space-y-4", "list-none"],
+        item: ["text-gray-700", "dark:text-gray-300"],
+        nested: ["mt-2", "ml-4"],
+      },
+      code: {
+        block: [
+          "my-6",
+          "bg-gray-900",
+          "dark:bg-black/40",
+          "p-5",
+          "rounded-xl",
+          "text-sm",
+          "font-mono",
+          "overflow-x-auto",
+        ],
+        language: [
+          "inline-block",
+          "text-xs",
+          "font-sans",
+          "font-medium",
+          "bg-primary/10",
+          "text-primary",
+          "py-1",
+          "px-3",
+          "mb-3",
+          "rounded-full",
+        ],
+      },
+      image: {
+        block: ["my-10", "rounded-xl", "overflow-hidden", "shadow-lg"],
+        image: ["w-full", "h-auto", "object-cover"],
+        caption: [
+          "text-sm",
+          "text-center",
+          "text-gray-500",
+          "mt-3",
+          "italic",
+          "px-4",
+          "pb-2",
+        ],
+      },
+    },
+  }}
+/>
+
+<style is:global>
+  /*
+     * Override untuk unordered list item agar tampil seperti dummy data:
+     * dengan icon check_circle dari Material Icons.
+     * Karena @sensinum/astro-strapi-blocks merender <li> biasa,
+     * kita tambahkan pseudo-element via CSS global.
+     */
+  .strapi-list-unordered > li.text-gray-700 {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding-left: 0;
+  }
+
+  .strapi-list-unordered > li.text-gray-700::before {
+    content: "check_circle";
+    font-family: "Material Icons Outlined", "Material Icons";
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+    color: var(--color-primary, #0ea5e9);
+    flex-shrink: 0;
+  }
+</style>

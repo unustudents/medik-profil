@@ -20,7 +20,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
 # Install dependencies terlebih dahulu (cache layer)
-COPY package.json bun.lock ./
+COPY package.json ./
 RUN bun install --frozen-lockfile
 
 # Source code akan di-mount via volume dari docker-compose,

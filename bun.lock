@@ -9,6 +9,7 @@
         "@astrojs/node": "^9.5.3",
         "@astrojs/rss": "^4.0.15",
         "@astrojs/sitemap": "^3.7.0",
+        "@sensinum/astro-strapi-blocks": "^1.2.7",
         "@tailwindcss/vite": "^4.1.18",
         "astro": "^5.16.14",
         "embla-carousel": "^8.6.0",
@@ -236,6 +237,8 @@
     "@rollup/rollup-win32-x64-gnu": ["@rollup/rollup-win32-x64-gnu@4.57.1", "", { "os": "win32", "cpu": "x64" }, ""],
 
     "@rollup/rollup-win32-x64-msvc": ["@rollup/rollup-win32-x64-msvc@4.57.1", "", { "os": "win32", "cpu": "x64" }, ""],
+
+    "@sensinum/astro-strapi-blocks": ["@sensinum/astro-strapi-blocks@1.2.7", "", { "peerDependencies": { "astro": "^5.5.0" } }, "sha512-D8BOQpm5AU1q18uX+J+upraKHxNPjf0OoVZpdcoXtLFgsBXwrW+9xmTaSb0oPAD/Kzlx78X3NIhXWwy1xGxYyQ=="],
 
     "@shikijs/core": ["@shikijs/core@3.22.0", "", { "dependencies": { "@shikijs/types": "3.22.0", "@shikijs/vscode-textmate": "^10.0.2", "@types/hast": "^3.0.4", "hast-util-to-html": "^9.0.5" } }, ""],
 

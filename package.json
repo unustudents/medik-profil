@@ -13,6 +13,7 @@
     "@astrojs/node": "^9.5.3",
     "@astrojs/rss": "^4.0.15",
     "@astrojs/sitemap": "^3.7.0",
+    "@sensinum/astro-strapi-blocks": "^1.2.7",
     "@tailwindcss/vite": "^4.1.18",
     "astro": "^5.16.14",
     "embla-carousel": "^8.6.0",
