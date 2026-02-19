@@ -1,7 +1,8 @@
 ---
 import type { StrapiBlockField } from "@/services/articles.service";
 import { StrapiBlocks } from "@sensinum/astro-strapi-blocks";
-
+import CustomList from "./CustomList.astro";
+import CustomImage from "./CustomImage.astro";
 interface Props {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   content: StrapiBlockField;
@@ -14,6 +15,7 @@ const { content, class: classes = "" } = Astro.props;
 <StrapiBlocks
   data={content}
   class={classes}
+  blocks={{ list: CustomList, image: CustomImage } as any}
   theme={{
     overwrite: {
       paragraph: {
@@ -41,7 +43,7 @@ const { content, class: classes = "" } = Astro.props;
         block: ["font-bold"],
         h1: ["text-3xl", "text-gray-900", "dark:text-white", "mt-12", "mb-6"],
         h2: ["text-2xl", "text-primary", "mt-10", "mb-4"],
-        h3: ["text-xl", "text-gray-800", "dark:text-white", "mt-8", "mb-3"],
+        h3: ["text-xl", "text-gray-700", "dark:text-white", "mt-8", "mb-3"],
         h4: ["text-lg", "text-gray-800", "dark:text-white", "mt-6", "mb-2"],
         h5: ["text-base", "text-gray-800", "dark:text-white", "mt-4", "mb-2"],
         h6: ["text-sm", "text-gray-600", "dark:text-gray-300", "mt-4", "mb-2"],
@@ -74,20 +76,20 @@ const { content, class: classes = "" } = Astro.props;
         strikethrough: ["line-through"],
         link: ["text-primary", "hover:text-primary/80"],
       },
-      list: {
-        block: ["my-6"],
-        ordered: [
-          "list-decimal",
-          "pl-6",
-          "space-y-2",
-          "text-gray-700",
-          "dark:text-gray-300",
-          "text-lg",
-        ],
-        unordered: ["space-y-4", "list-none"],
-        item: ["text-gray-700", "dark:text-gray-300"],
-        nested: ["mt-2", "ml-4"],
-      },
+      // list: {
+      //   block: ["my-6"],
+      //   ordered: [
+      //     "list-decimal",
+      //     "pl-6",
+      //     "space-y-2",
+      //     "text-gray-700",
+      //     "dark:text-gray-300",
+      //     "text-lg",
+      //   ],
+      //   unordered: ["space-y-4", "list-none", "mb-8"],
+      //   item: ["text-gray-700", "dark:text-gray-300"],
+      //   nested: ["mt-2", "ml-4"],
+      // },
       code: {
         block: [
           "my-6",

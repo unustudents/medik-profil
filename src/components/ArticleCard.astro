@@ -1,44 +1,46 @@
 ---
-import type { Article } from "@/data/articles";
 import type { ArticleItem } from "@/services/articles.service";
+import { Picture } from "astro:assets";
 
 interface Props {
-    article: Article | ArticleItem;
+  article: ArticleItem;
 }
 
 const { article } = Astro.props;
 
-// Resolve image: dummy data punya `image`, API data punya `thumbnailUrl`
-const imageUrl = 'image' in article ? article.image : article.thumbnailUrl;
-
-// Resolve link: dummy data punya `slug`, API data punya `documentId`
-const articleHref = 'slug' in article ? `/article/${article.slug}` : `/article/${article.documentId}`;
+const imageUrl = article.thumbnailUrl;
+const articleHref = `/article/${article.documentId}`;
+const alt = article.title;
+const category = article.category;
 ---
 
 <article
-    class="bg-white dark:bg-slate-800 rounded-xl shadow-sm overflow-hidden flex flex-col group hover:shadow-md transition-all duration-300 h-full border border-slate-100 dark:border-slate-700"
+  class="bg-white dark:bg-slate-800 rounded-xl shadow-sm overflow-hidden flex flex-col group hover:shadow-md transition-all duration-300 h-full border border-slate-100 dark:border-slate-700"
 >
-    <div class="relative aspect-[4/3] overflow-hidden">
-        <img
-            alt={article.title}
-            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-            src={imageUrl}
-            loading="lazy"
-        />
+  <div class="relative aspect-[4/3] overflow-hidden">
+    <Picture
+      alt={alt}
+      class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+      src={imageUrl}
+      formats={["avif", "webp"]}
+      loading={"eager"}
+      fetchpriority={"high"}
+      inferSize
+    />
+  </div>
+  <div class="p-6 flex flex-col flex-grow">
+    <div class="mb-4">
+      <span
+        class="inline-block px-3 py-1 border border-primary text-primary text-[10px] font-bold tracking-widest rounded uppercase"
+        >{category}</span
+      >
     </div>
-    <div class="p-6 flex flex-col flex-grow">
-        <div class="mb-4">
-            <span
-                class="inline-block px-3 py-1 border border-primary text-primary text-[10px] font-bold tracking-widest rounded uppercase"
-                >{article.category}</span
-            >
-        </div>
-        <h3
-            class="text-lg font-bold text-slate-800 dark:text-slate-100 leading-snug mb-3 line-clamp-3 group-hover:text-primary transition-colors"
-        >
-            <a href={articleHref}>
-                {article.title}
-            </a>
-        </h3>
-    </div>
+    <h3
+      class="text-lg font-bold text-slate-800 dark:text-slate-100 leading-snug mb-3 line-clamp-3 group-hover:text-primary transition-colors"
+    >
+      <a href={articleHref}>
+        {article.title}
+      </a>
+    </h3>
+  </div>
 </article>

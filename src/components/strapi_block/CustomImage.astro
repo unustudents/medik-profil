@@ -1,0 +1,65 @@
+---
+import { renderPropertyClasses } from "@sensinum/astro-strapi-blocks";
+import { Picture } from "astro:assets";
+import { strapi } from "@/lib/api";
+
+type StrapiImage = {
+  url: string;
+  name: string;
+  alternativeText?: string;
+  caption?: string;
+  width?: number;
+  height?: number;
+};
+
+type StrapiBlockTheme = Parameters<typeof renderPropertyClasses>[0];
+
+type Props = {
+  data: StrapiImage;
+  class?: string;
+  theme: StrapiBlockTheme;
+  format?: string;
+  children?: Array<{ text?: string; type?: string }>;
+};
+
+const { data, class: classes = "", theme } = Astro.props;
+
+// URL dari Strapi content block bisa berupa:
+// - absolute URL dengan host yang salah: "http://localhost:1338/uploads/xxx.jpg"
+// - relative path: "/uploads/xxx.jpg"
+// Kita extract path-nya lalu resolve via strapi.mediaUrl() agar pakai host yang benar
+function resolveImageUrl(url: string): string {
+  if (!url) return "";
+  try {
+    // Jika URL absolute, ambil pathname-nya saja lalu resolve ulang
+    const parsed = new URL(url);
+    return strapi.mediaUrl(parsed.pathname);
+  } catch {
+    // Kalau bukan URL valid (relative path), langsung resolve
+    return strapi.mediaUrl(url);
+  }
+}
+
+const imageUrl = resolveImageUrl(data.url);
+const alt = data.alternativeText || data.name || "";
+
+console.log("[CustomImage] original URL:", data?.url);
+console.log("[CustomImage] resolved URL:", imageUrl);
+---
+
+<figure
+  class={renderPropertyClasses(theme, ["image", "block"]) +
+    " " +
+    classes +
+    " my-6"}
+>
+  <Picture
+    src={imageUrl}
+    alt={alt}
+    formats={["avif", "webp"]}
+    loading={"lazy"}
+    decoding={"async"}
+    inferSize
+    class="w-full h-auto rounded-lg"
+  />
+</figure>

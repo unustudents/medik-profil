@@ -1,31 +1,35 @@
 ---
-export const prerender = false;
-
 import Layout from "@/layouts/Layout.astro";
-import Header from "@/components/Header.astro";
-import ContactInfo from "@/components/ContactInfo.astro";
-import Footer from "@/components/Footer.astro";
-import FormattedDate from "@/components/FormattedDate.astro";
-import StrapiBlockRenderer from "@/components/StrapiBlockRenderer.astro";
-import { getArticleByDocumentId, getRelatedArticles } from "@/services/articles.service";
+import { Header, Footer, ContactInfo, FormattedDate } from "@/components/index";
+import StrapiBlockRenderer from "@/components/strapi_block/StrapiBlockRenderer.astro";
+import {
+  getAllCategories,
+  getArticleByDocumentId,
+  getRelatedArticles,
+} from "@/services/articles.service";
 import type { StrapiBlockField } from "@/services/articles.service";
+import { Picture } from "astro:assets";
 
 // documentId dari URL: /article/rhvah60maf7gj5mqt7bz7ui2
 const { slug: documentId } = Astro.params;
 
 if (!documentId) {
-    return Astro.redirect("/article");
+  return Astro.redirect("/article");
 }
 
-// Fetch artikel dari Strapi API
+// Fetch artikel by dokument
 const article = await getArticleByDocumentId(documentId);
-
 if (!article) {
-    return Astro.redirect("/article");
+  return Astro.redirect("/article");
 }
-
+// Fetch semua kategori untuk sidebar
+const category = await getAllCategories();
 // Fetch artikel terkait berdasarkan kategori
-const relatedArticles = await getRelatedArticles(article.category, article.documentId, 3);
+const relatedArticles = await getRelatedArticles(
+  article.category,
+  article.documentId,
+  3,
+);
 ---
 
 <Layout
@@ -54,10 +58,14 @@ const relatedArticles = await getRelatedArticles(article.category, article.docum
       <div
         class="relative w-full aspect-[21/9] rounded-2xl overflow-hidden mb-10 group"
       >
-        <img
+        <Picture
           alt={article.title}
           class="w-full h-full object-cover"
           src={article.thumbnailUrl}
+          formats={["avif", "webp"]}
+          loading={"eager"}
+          fetchpriority={"high"}
+          inferSize
         />
         <div
           class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-8 md:p-12"
@@ -89,9 +97,7 @@ const relatedArticles = await getRelatedArticles(article.category, article.docum
               <span><FormattedDate date={new Date(article.date)} /></span>
             </div>
             <div class="flex items-center gap-2">
-              <span class="material-icons-outlined text-primary"
-                >category</span
-              >
+              <span class="material-icons-outlined text-primary">category</span>
               <span>{article.category}</span>
             </div>
           </div>
@@ -107,7 +113,9 @@ const relatedArticles = await getRelatedArticles(article.category, article.docum
             class="mt-12 pt-8 border-t border-gray-100 dark:border-gray-800 flex flex-col md:flex-row md:items-center justify-between gap-6"
           >
             <div class="flex flex-wrap gap-2">
-              <span class="px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-full text-sm text-gray-600 dark:text-gray-400">
+              <span
+                class="px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-full text-sm text-gray-600 dark:text-gray-400"
+              >
                 {article.category}
               </span>
             </div>
@@ -183,7 +191,10 @@ const relatedArticles = await getRelatedArticles(article.category, article.docum
             <div class="space-y-6">
               {
                 relatedArticles.map((related) => (
-                  <a class="flex gap-4 group" href={`/article/${related.documentId}`}>
+                  <a
+                    class="flex gap-4 group"
+                    href={`/article/${related.documentId}`}
+                  >
                     <div class="size-20 rounded-lg overflow-hidden flex-shrink-0">
                       <img
                         class="w-full h-full object-cover group-hover:scale-110 transition-transform"
@@ -243,8 +254,17 @@ const relatedArticles = await getRelatedArticles(article.category, article.docum
             </h3>
             <div class="flex items-center gap-4">
               <div>
-                <h4 class="font-bold text-[#111717] dark:text-white">
-                  {article.category}
+                <h4 class="text-[#111717] dark:text-white">
+                  {
+                    category.map((data) => (
+                      <a
+                        href={`/article/category/${data.name.toLowerCase()}`}
+                        class="block py-1 hover:text-primary transition-colors"
+                      >
+                        {data.name}
+                      </a>
+                    ))
+                  }
                 </h4>
               </div>
             </div>

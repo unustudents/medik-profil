@@ -1,0 +1,45 @@
+---
+import { renderPropertyClasses } from "@sensinum/astro-strapi-blocks";
+
+type StrapiBlockNode = {
+  type: string;
+  text?: string;
+  bold?: boolean;
+  children?: Array<StrapiBlockNode>;
+};
+
+type StrapiBlockTheme = Parameters<typeof renderPropertyClasses>[0];
+
+type Props = {
+  data: Array<StrapiBlockNode>;
+  class?: string;
+  theme: StrapiBlockTheme;
+  format?: "unordered" | "ordered";
+};
+
+const { data, class: classes = "", theme, format = "unordered" } = Astro.props;
+
+const Tag = format === "ordered" ? "ol" : "ul";
+---
+
+<Tag
+  class={renderPropertyClasses(theme, ["list", "block"]) +
+    classes +
+    " list-none space-y-4 mb-8"}
+>
+  {
+    data.map((item) => (
+      <li class="flex gap-3">
+        <span class="material-icons-outlined text-primary flex-shrink-0">
+          check_circle
+        </span>
+
+        <span>
+          {item.children?.map((child: { bold?: boolean; text?: string }) =>
+            child.bold ? <strong>{child.text}</strong> : child.text,
+          )}
+        </span>
+      </li>
+    ))
+  }
+</Tag>

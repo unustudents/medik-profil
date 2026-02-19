@@ -17,24 +17,24 @@
  * Tag di luar daftar ini akan dihapus beserta kontennya (untuk tag berbahaya)
  * atau hanya tag-nya yang dihapus (konten dipertahankan).
  */
-const DANGEROUS_TAGS = [
-    "script",
-    "iframe",
-    "object",
-    "embed",
-    "applet",
-    "form",
-    "input",
-    "textarea",
-    "select",
-    "button",
-    "style",
-    "link",
-    "base",
-    "meta",
-    "svg",
-    "math",
-] as const;
+// const DANGEROUS_TAGS = [
+//     "script",
+//     "iframe",
+//     "object",
+//     "embed",
+//     "applet",
+//     "form",
+//     "input",
+//     "textarea",
+//     "select",
+//     "button",
+//     "style",
+//     "link",
+//     "base",
+//     "meta",
+//     "svg",
+//     "math",
+// ] as const;
 
 /**
  * Sanitasi HTML dari CMS untuk mencegah XSS.

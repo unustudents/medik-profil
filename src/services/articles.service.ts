@@ -4,11 +4,17 @@ import type { StrapiMedia } from "@/lib/api/types";
 export type StrapiBlockField = any[];
 // ── Types ────────────────────────────────────────────────────
 
+export interface KategoriArtikel {
+  id: number;
+  documentId: string;
+  name: string;
+}
+
 export interface ArticleRaw {
   id: number;
   documentId: string;
   title: string;
-  category: string;
+  kategori_artikel: KategoriArtikel | null;
   content: StrapiBlockField;
   published_date: string | null;
   createdAt: string;
@@ -30,7 +36,8 @@ export interface ArticleItem {
 
 // ── Populate config ──────────────────────────────────────────
 
-const ARTICLE_POPULATE: string[] = ["thumbnail"];
+const ARTICLE_POPULATE: string[] = ["thumbnail", "kategori_artikel"];
+const URL_SLUG = "articles";
 
 // ── Helpers ──────────────────────────────────────────────────
 
@@ -39,7 +46,7 @@ function normalizeArticle(raw: ArticleRaw): ArticleItem {
     id: raw.id,
     documentId: raw.documentId,
     title: raw.title,
-    category: raw.category,
+    category: raw.kategori_artikel?.name ?? "Umum",
     content: raw.content ?? [],
     date: raw.published_date ?? raw.publishedAt,
     thumbnailUrl: strapi.mediaUrl(raw.thumbnail?.url ?? null),
@@ -58,11 +65,26 @@ export async function getArticles(opts?: {
   const filters: Record<string, unknown> = {};
 
   if (opts?.category) {
-    filters.category = { $eqi: opts.category };
+    filters.kategori_artikel = { name: { $eqi: opts.category } };
   }
 
-  const res = await strapi.find<ArticleRaw>("articles", {
-    populate: ARTICLE_POPULATE,
+  const res = await strapi.find<ArticleRaw>(URL_SLUG, {
+    fields: ["documentId", "title"],
+    populate: {
+      thumbnail: {
+        fields: [
+          "documentId",
+          "name",
+          "alternativeText",
+          "width",
+          "height",
+          "url",
+        ],
+      },
+      kategori_artikel: {
+        fields: ["documentId", "name"],
+      },
+    },
     sort: [opts?.sort ?? "published_date:desc"],
     filters,
     pagination: {
@@ -81,7 +103,7 @@ export async function getArticleByDocumentId(
   documentId: string,
 ): Promise<ArticleItem | null> {
   try {
-    const res = await strapi.findOne<ArticleRaw>("articles", documentId, {
+    const res = await strapi.findOne<ArticleRaw>(URL_SLUG, documentId, {
       populate: ARTICLE_POPULATE,
     });
 
@@ -94,7 +116,7 @@ export async function getArticleByDocumentId(
 }
 
 export async function getAllArticleDocumentIds(): Promise<string[]> {
-  const res = await strapi.find<ArticleRaw>("articles", {
+  const res = await strapi.find<ArticleRaw>(URL_SLUG, {
     fields: ["documentId"],
     pagination: { pageSize: 100 },
     sort: ["published_date:desc"],
@@ -108,10 +130,10 @@ export async function getRelatedArticles(
   excludeDocumentId: string,
   limit = 3,
 ): Promise<ArticleItem[]> {
-  const res = await strapi.find<ArticleRaw>("articles", {
+  const res = await strapi.find<ArticleRaw>(URL_SLUG, {
     populate: ARTICLE_POPULATE,
     filters: {
-      category: { $eqi: category },
+      kategori_artikel: { name: { $eqi: category } },
       documentId: { $ne: excludeDocumentId },
     },
     sort: ["published_date:desc"],
@@ -119,4 +141,14 @@ export async function getRelatedArticles(
   });
 
   return res.data.map(normalizeArticle);
+}
+
+export async function getAllCategories(): Promise<KategoriArtikel[]> {
+  const res = await strapi.find<KategoriArtikel>("kategori-artikels", {
+    fields: ["documentId", "name"],
+    pagination: { pageSize: 100 },
+    sort: ["name:asc"],
+  });
+
+  return res.data;
 }
