@@ -1,16 +1,13 @@
 ---
-export const prerender = true;
-
 import Layout from "@/layouts/Layout.astro";
 import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
 import ContactInfo from "@/components/ContactInfo.astro";
-import { agendaEvents } from "@/data/agenda";
-import type { AgendaEvent } from "@/data/agenda";
+import { getAgendaEvents, type AgendaEvent } from "@/services/agenda.service"; // Use service
 import type { GetStaticPaths, Page } from "astro";
 import AgendaCard from "@/components/AgendaCard.astro";
 import Pagination from "@/components/Pagination.astro";
-import { FILTEREDEVENTSPAGINATE } from "@/consts";
+import { FILTERED_EVENTS_PAGINATE } from "@/consts";
 
 // Pagination Logic
 export const getStaticPaths = (async ({ paginate }) => {
@@ -32,15 +29,29 @@ export const getStaticPaths = (async ({ paginate }) => {
         },
     ];
 
+    const { data: allEvents } = await getAgendaEvents();
+
+    const getStatus = (dateStr: string) => {
+        const eventDate = new Date(dateStr);
+        const now = new Date();
+        const isUpcoming = eventDate > now;
+        const isSameDay = eventDate.toDateString() === now.toDateString();
+        
+        if (isUpcoming) return "Akan Datang";
+        if (isSameDay) return "Sedang Berlangsung";
+        return "Acara telah lewat";
+    };
+
     return categories.flatMap((category) => {
-        const filteredEvents = agendaEvents.filter(
-            (event) => event.status === category.status,
+        // Filter events based on calculated status
+        const filteredEvents = allEvents.filter(
+            (event) => getStatus(event.date) === category.status,
         );
 
         return paginate(filteredEvents, {
             params: { category: category.slug },
             props: { categoryTitle: category.title },
-            pageSize: FILTEREDEVENTSPAGINATE,
+            pageSize: FILTERED_EVENTS_PAGINATE,
         });
     });
 }) satisfies GetStaticPaths;

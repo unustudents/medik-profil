@@ -1,5 +1,18 @@
 import { strapi } from "@/lib/api";
 
+// Output interface matching service return
+export interface AgendaEvent {
+    documentId: string;
+    title: string;
+    slug: string;
+    date: string;
+    content: string | null;
+    place: string | null;
+    image: string;
+    imageWidth?: number;
+    imageHeight?: number;
+}
+
 export interface AgendaAttributes {
     documentId: string;
     title: string;
@@ -20,7 +33,7 @@ export interface AgendaAttributes {
 /**
  * Ambil semua agenda
  */
-export async function getAgendaEvents() {
+export async function getAgendaEvents(): Promise<{ data: AgendaEvent[]; meta: any }> {
     const res = await strapi.find<AgendaAttributes>("agendas", {
         fields: ["documentId", "title", "slug", "date", "content", "place"],
         populate: {
@@ -53,7 +66,7 @@ export async function getAgendaEvents() {
 /**
  * Ambil satu agenda berdasarkan slug.
  */
-export async function getAgendaBySlug(slug: string) {
+export async function getAgendaBySlug(slug: string): Promise<AgendaEvent | null> {
     const res = await strapi.find<AgendaAttributes>("agendas", {
         filters: { slug: { $eq: slug } },
         fields: ["documentId", "title", "slug", "date", "content", "place"],

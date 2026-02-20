@@ -9,12 +9,12 @@ import { getAgendaEvents } from "@/services/agenda.service";
 import type { GetStaticPaths } from "astro";
 import AgendaCard from "@/components/AgendaCard.astro";
 import Pagination from "@/components/Pagination.astro";
-import { AGENDAEVENTSPAGINATE } from "@/consts";
+import { AGENDA_EVENTS_PAGINATE } from "@/consts";
 
 // Pagination Logic
 export const getStaticPaths = (async ({ paginate }) => {
     const res = await getAgendaEvents();
-    return paginate(res.data, { pageSize: AGENDAEVENTSPAGINATE });
+    return paginate(res.data, { pageSize: AGENDA_EVENTS_PAGINATE });
 }) satisfies GetStaticPaths;
 
 const { page } = Astro.props;

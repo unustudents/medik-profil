@@ -2,18 +2,10 @@
 import { Image } from "astro:assets";
 import { formatKeWIB } from "@/lib/dateFormateer";
 
+import type { AgendaEvent } from "@/services/agenda.service";
+
 interface Props {
-    event: {
-        documentId: string;
-        title: string;
-        slug: string;
-        date: string;
-        content: string | null;
-        place: string | null;
-        image: string;
-        imageWidth: number;
-        imageHeight: number;
-    };
+    event: AgendaEvent;
 }
 
 const { event } = Astro.props;
@@ -63,8 +55,8 @@ if (isUpcoming) {
                         alt={event.title}
                         class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                         src={event.image}
-                    width={event.imageWidth}
-                    height={event.imageHeight}
+                        width={event.imageWidth!}
+                        height={event.imageHeight!}
                     />
                 ) : (
                     <div class="w-full h-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-400">

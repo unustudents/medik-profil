@@ -6,7 +6,7 @@ import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
 import ContactInfo from "@/components/ContactInfo.astro";
 import { Image } from "astro:assets";
-import { getAgendaEvents, getAgendaBySlug } from "@/services/agenda.service";
+import { getAgendaEvents, getAgendaBySlug, type AgendaEvent } from "@/services/agenda.service";
 import type { GetStaticPaths } from "astro";
 import { sanitizeHtml } from "@/lib/sanitize";
 import { parseDate } from "@/lib/date";
@@ -23,10 +23,14 @@ export const getStaticPaths = (async () => {
 const { slug } = Astro.params;
 const { event: propEvent } = Astro.props;
 
-let event = propEvent;
+let event: AgendaEvent | null = propEvent as AgendaEvent | null;
 
 if (!event && slug) {
-    event = await getAgendaBySlug(slug as string);
+    // Cast the result to unknown first then to AgendaEvent | null to avoid type overlap issues if any, 
+    // or just rely on the shape matching. 
+    // The service returns a shape that is compatible with our interface.
+    const result = await getAgendaBySlug(slug as string);
+    event = result as AgendaEvent | null;
 }
 
 if (!event) {
@@ -164,7 +168,7 @@ const statusConfig = getStatusConfig(derivedStatus);
 
                     <article
                         class="prose prose-slate dark:prose-invert max-w-none"
-                        set:html={sanitizeHtml(event.content)}
+                        set:html={sanitizeHtml(event.content || "")}
                     />
 
                     <div
