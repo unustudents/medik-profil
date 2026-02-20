@@ -1,24 +1,56 @@
 ---
-export const prerender = true;
+// export const prerender = true;
 
 import Layout from "@/layouts/Layout.astro";
 import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
 import ContactInfo from "@/components/ContactInfo.astro";
 import { Image } from "astro:assets";
-import { agendaEvents } from "@/data/agenda";
+import { getAgendaEvents, getAgendaBySlug } from "@/services/agenda.service";
 import type { GetStaticPaths } from "astro";
 import { sanitizeHtml } from "@/lib/sanitize";
 import { parseDate } from "@/lib/date";
+import { formatKeWIB } from "@/lib/dateFormateer";
 
 export const getStaticPaths = (async () => {
-    return agendaEvents.map((event) => ({
+    const { data } = await getAgendaEvents();
+    return data.map((event) => ({
         params: { slug: event.slug },
         props: { event },
     }));
 }) satisfies GetStaticPaths;
 
-const { event } = Astro.props;
+const { slug } = Astro.params;
+const { event: propEvent } = Astro.props;
+
+let event = propEvent;
+
+if (!event && slug) {
+    event = await getAgendaBySlug(slug as string);
+}
+
+if (!event) {
+    return Astro.redirect('/404');
+}
+
+// Derive derived properties for UI compatibility
+const eventDate = new Date(event.date);
+const now = new Date();
+const isUpcoming = eventDate > now;
+const isSameDay = eventDate.toDateString() === now.toDateString();
+
+let derivedStatus = "Telah Lewat";
+if (isUpcoming) derivedStatus = "Akan Datang";
+else if (isSameDay) derivedStatus = "Sedang Berlangsung";
+
+// Format time from date if possible, or use empty string
+const derivedTime = new Intl.DateTimeFormat("id-ID", {
+    hour: "2-digit",
+    minute: "2-digit",
+    timeZone: "Asia/Jakarta",
+}).format(eventDate);
+
+const displayDate = formatKeWIB(event.date);
 
 const getStatusConfig = (status: string) => {
     switch (status) {
@@ -43,12 +75,12 @@ const getStatusConfig = (status: string) => {
     }
 };
 
-const statusConfig = getStatusConfig(event.status);
+const statusConfig = getStatusConfig(derivedStatus);
 ---
 
 <Layout
-    title={`${event.title} - Agenda RSU Afdila`}
-    description={`${event.title} - ${event.date} ${event.time}. Agenda kegiatan RSU Afdila.`}
+    title={`${event.title} - ${displayDate} ${derivedTime}`}
+    description={`${event.title} - ${displayDate} ${derivedTime}. Agenda kegiatan RSU Afdila.`}
     image={typeof event.image === 'string' ? event.image : undefined}
     type="article"
     publishedAt={parseDate(event.date).toISOString()}
@@ -67,7 +99,7 @@ const statusConfig = getStatusConfig(event.status);
                         <span class="material-icons-outlined text-sm"
                             >{statusConfig.icon}</span
                         >
-                        {event.status}
+                        {derivedStatus}
                     </div>
                     <div
                         class="flex items-center gap-2 text-slate-500 dark:text-slate-400 mb-4"
@@ -76,7 +108,7 @@ const statusConfig = getStatusConfig(event.status);
                             >calendar_today</span
                         >
                         <span class="text-sm font-medium"
-                            >{event.date} - {event.time}</span
+                            >{displayDate} WIB</span
                         >
                     </div>
                     <h1

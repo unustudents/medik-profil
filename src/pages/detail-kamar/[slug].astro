@@ -45,7 +45,14 @@ const formatPrice = (price: number) => {
 };
 ---
 
-<Layout title={`Detail Kamar ${room.name} - RSU Afdila`} description={`Informasi lengkap kamar ${room.name} di RSU Afdila. Tipe ${room.type}, kapasitas ${room.capacity}, harga ${formatPrice(room.price)}/malam. Fasilitas dan ketersediaan.`}>
+<Layout
+    title={`Detail Kamar ${room.name} - RSU Afdila`}
+    description={`Informasi lengkap kamar ${room.name} di RSU Afdila. Tipe ${
+        room.type
+    }, kapasitas ${room.capacity}, harga ${formatPrice(
+        room.price
+    )}/malam. Fasilitas dan ketersediaan.`}
+>
     <Header />
     <main class="max-w-6xl mx-auto px-6 py-12">
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start mb-16">
@@ -67,8 +74,8 @@ const formatPrice = (price: number) => {
                         >chevron_right</span
                     >
                     <span class="font-medium text-slate-900 dark:text-slate-100"
-                        >{room.name}</span
-                    >
+                        >{room.name}
+                    </span>
                 </nav>
                 <h1
                     class="text-4xl font-extrabold text-slate-900 dark:text-white mb-4"
@@ -88,9 +95,9 @@ const formatPrice = (price: number) => {
                         <span class="material-symbols-rounded">group</span>
                         <span
                             >Kapasitas: <span class="font-semibold text-primary"
-                                >{room.capacity}</span
-                            ></span
-                        >
+                                >{room.capacity}
+                            </span>
+                        </span>
                     </div>
                 </div>
                 <div class="text-3xl font-bold text-primary mb-10">

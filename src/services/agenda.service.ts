@@ -1,52 +1,52 @@
-/**
- * ============================================================
- * Agenda Service
- * ============================================================
- */
-
 import { strapi } from "@/lib/api";
 
 export interface AgendaAttributes {
+    documentId: string;
     title: string;
     slug: string;
     date: string;
-    time: string;
-    status: string;
-    image: any;
-    content: string;
-    category: string;
+    content: string | null;
+    place: string | null;
+    image: {
+        documentId: string;
+        name: string;
+        url: string;
+        width: number;
+        height: number;
+    } | null;
     [key: string]: unknown;
 }
 
 /**
- * Ambil daftar agenda/event dengan pagination & opsional filter kategori.
+ * Ambil semua agenda
  */
-export async function getAgendaEvents(opts?: {
-    page?: number;
-    pageSize?: number;
-    category?: string;
-    status?: string;
-}) {
-    const filters: Record<string, unknown> = {};
-    if (opts?.category) filters.category = { $eqi: opts.category };
-    if (opts?.status) filters.status = { $eqi: opts.status };
-
+export async function getAgendaEvents() {
     const res = await strapi.find<AgendaAttributes>("agendas", {
-        populate: "*",
+        fields: ["documentId", "title", "slug", "date", "content", "place"],
+        populate: {
+            image: {
+                fields: ["name", "url", "width", "height", "documentId"],
+            },
+        },
         sort: ["date:desc"],
-        filters,
         pagination: {
-            page: opts?.page ?? 1,
-            pageSize: opts?.pageSize ?? 10,
+            pageSize: 100, // Fetch many for SSG
         },
     });
 
     return {
         data: res.data.map((event) => ({
-            ...event,
+            documentId: event.documentId,
+            title: event.title,
+            slug: event.slug,
+            date: event.date,
+            content: event.content,
+            place: event.place,
             image: strapi.mediaUrl(event.image?.url),
+            imageWidth: event.image?.width,
+            imageHeight: event.image?.height,
         })),
-        pagination: res.meta.pagination!,
+        meta: res.meta,
     };
 }
 
@@ -56,7 +56,12 @@ export async function getAgendaEvents(opts?: {
 export async function getAgendaBySlug(slug: string) {
     const res = await strapi.find<AgendaAttributes>("agendas", {
         filters: { slug: { $eq: slug } },
-        populate: "*",
+        fields: ["documentId", "title", "slug", "date", "content", "place"],
+        populate: {
+            image: {
+                fields: ["name", "url", "width", "height", "documentId"],
+            },
+        },
         pagination: { limit: 1 },
     });
 
@@ -64,7 +69,14 @@ export async function getAgendaBySlug(slug: string) {
     if (!event) return null;
 
     return {
-        ...event,
+        documentId: event.documentId,
+        title: event.title,
+        slug: event.slug,
+        date: event.date,
+        content: event.content,
+        place: event.place,
         image: strapi.mediaUrl(event.image?.url),
+        imageWidth: event.image?.width,
+        imageHeight: event.image?.height,
     };
 }

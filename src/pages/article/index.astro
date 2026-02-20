@@ -7,18 +7,21 @@ import ContactInfo from "@/components/ContactInfo.astro";
 import Footer from "@/components/Footer.astro";
 import ArticleCard from "@/components/ArticleCard.astro";
 import Pagination from "@/components/Pagination.astro";
-import { ARTICLESPAGINATE } from "@/consts";
+import { ARTICLES_PAGINATE } from "@/consts";
 import { getArticles } from "@/services/articles.service";
 
-// Ambil page dari URL params (e.g. /article/2 → page 2)
-const pageParam = Astro.params.page;
-const currentPage = pageParam ? parseInt(pageParam, 10) || 1 : 1;
+// Halaman utama artikel selalu page 1
+const currentPage = 1;
 
 // Fetch dari Strapi API
 const { data: articleList, pagination } = await getArticles({
     page: currentPage,
-    pageSize: ARTICLESPAGINATE,
+    pageSize: ARTICLES_PAGINATE,
 });
+
+// URL Configuration
+const baseUrl = "/article/page";
+const homeUrl = "/article";
 
 // Bangun object `page` yang kompatibel dengan komponen Pagination
 const page = {
@@ -30,11 +33,11 @@ const page = {
     total: pagination.total,
     size: pagination.pageSize,
     url: {
-        current: currentPage === 1 ? "/article" : `/article/${currentPage}`,
-        prev: currentPage > 1 ? (currentPage === 2 ? "/article" : `/article/${currentPage - 1}`) : undefined,
-        next: currentPage < pagination.pageCount ? `/article/${currentPage + 1}` : undefined,
-        first: currentPage > 1 ? "/article" : undefined,
-        last: currentPage < pagination.pageCount ? `/article/${pagination.pageCount}` : undefined,
+        current: homeUrl,
+        prev: undefined,
+        next: pagination.pageCount > 1 ? `${baseUrl}/2` : undefined,
+        first: undefined,
+        last: pagination.pageCount > 1 ? `${baseUrl}/${pagination.pageCount}` : undefined,
     },
 };
 ---
@@ -69,7 +72,7 @@ const page = {
                 </div>
             )}
 
-            <Pagination page={page} baseUrl="/article" />
+            <Pagination page={page} baseUrl={baseUrl} firstPageUrl={homeUrl} />
         </div>
     </main>
     <ContactInfo />

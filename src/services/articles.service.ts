@@ -14,6 +14,7 @@ export interface ArticleRaw {
   id: number;
   documentId: string;
   title: string;
+  slug: string;
   kategori_artikel: KategoriArtikel | null;
   content: StrapiBlockField;
   published_date: string | null;
@@ -27,6 +28,7 @@ export interface ArticleItem {
   id: number;
   documentId: string;
   title: string;
+  slug: string;
   category: string;
   content: StrapiBlockField;
   date: string;
@@ -46,6 +48,7 @@ function normalizeArticle(raw: ArticleRaw): ArticleItem {
     id: raw.id,
     documentId: raw.documentId,
     title: raw.title,
+    slug: raw.slug,
     category: raw.kategori_artikel?.name ?? "Umum",
     content: raw.content ?? [],
     date: raw.published_date ?? raw.publishedAt,
@@ -69,7 +72,7 @@ export async function getArticles(opts?: {
   }
 
   const res = await strapi.find<ArticleRaw>(URL_SLUG, {
-    fields: ["documentId", "title"],
+    fields: ["documentId", "title", "slug", "published_date", "publishedAt"],
     populate: {
       thumbnail: {
         fields: [
@@ -89,7 +92,7 @@ export async function getArticles(opts?: {
     filters,
     pagination: {
       page: opts?.page ?? 1,
-      pageSize: opts?.pageSize ?? 10,
+      pageSize: opts?.pageSize ?? 8,
     },
   });
 
@@ -99,31 +102,50 @@ export async function getArticles(opts?: {
   };
 }
 
-export async function getArticleByDocumentId(
-  documentId: string,
+// export async function getArticleByDocumentId(
+//   documentId: string,
+// ): Promise<ArticleItem | null> {
+//   try {
+//     const res = await strapi.findOne<ArticleRaw>(URL_SLUG, documentId, {
+//       populate: ARTICLE_POPULATE,
+//     });
+
+//     if (!res.data) return null;
+
+//     return normalizeArticle(res.data);
+//   } catch {
+//     return null;
+//   }
+// }
+
+export async function getArticleBySlug(
+  slug: string,
 ): Promise<ArticleItem | null> {
   try {
-    const res = await strapi.findOne<ArticleRaw>(URL_SLUG, documentId, {
+    const res = await strapi.find<ArticleRaw>(URL_SLUG, {
+      filters: { slug: { $eq: slug } },
       populate: ARTICLE_POPULATE,
+      pagination: { limit: 1 },
     });
 
-    if (!res.data) return null;
+    const article = res.data[0];
+    if (!article) return null;
 
-    return normalizeArticle(res.data);
+    return normalizeArticle(article);
   } catch {
     return null;
   }
 }
 
-export async function getAllArticleDocumentIds(): Promise<string[]> {
-  const res = await strapi.find<ArticleRaw>(URL_SLUG, {
-    fields: ["documentId"],
-    pagination: { pageSize: 100 },
-    sort: ["published_date:desc"],
-  });
+// export async function getAllArticleDocumentIds(): Promise<string[]> {
+//   const res = await strapi.find<ArticleRaw>(URL_SLUG, {
+//     fields: ["documentId"],
+//     pagination: { pageSize: 100 },
+//     sort: ["published_date:desc"],
+//   });
 
-  return res.data.map((a) => a.documentId);
-}
+//   return res.data.map((a) => a.documentId);
+// }
 
 export async function getRelatedArticles(
   category: string,
@@ -146,7 +168,7 @@ export async function getRelatedArticles(
 export async function getAllCategories(): Promise<KategoriArtikel[]> {
   const res = await strapi.find<KategoriArtikel>("kategori-artikels", {
     fields: ["documentId", "name"],
-    pagination: { pageSize: 100 },
+    pagination: { pageSize: 8 },
     sort: ["name:asc"],
   });
 

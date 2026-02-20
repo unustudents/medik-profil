@@ -1,0 +1,90 @@
+---
+export const prerender = false;
+
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/Header.astro";
+import ContactInfo from "@/components/ContactInfo.astro";
+import Footer from "@/components/Footer.astro";
+import ArticleCard from "@/components/ArticleCard.astro";
+import Pagination from "@/components/Pagination.astro";
+import { ARTICLES_PAGINATE } from "@/consts";
+import { getArticles } from "@/services/articles.service";
+
+// Get page param
+const pageParam = Astro.params.page;
+const currentPage = pageParam ? parseInt(pageParam, 10) : 1;
+
+// Redirect invalid or page 1 to home
+if (!currentPage || isNaN(currentPage) || currentPage <= 1) {
+    return Astro.redirect("/article");
+}
+
+// Fetch Strapi
+const { data: articleList, pagination } = await getArticles({
+    page: currentPage,
+    pageSize: ARTICLES_PAGINATE,
+});
+
+// If page out of range
+if (articleList.length === 0 && currentPage > 1) {
+    return Astro.redirect("/404");
+}
+
+const baseUrl = "/article/page";
+const homeUrl = "/article";
+
+// Build page object
+const page = {
+    data: articleList,
+    start: (pagination.page - 1) * pagination.pageSize,
+    end: (pagination.page - 1) * pagination.pageSize + articleList.length - 1,
+    currentPage: pagination.page,
+    lastPage: pagination.pageCount,
+    total: pagination.total,
+    size: pagination.pageSize,
+    url: {
+        current: `${baseUrl}/${currentPage}`,
+        prev: currentPage > 1 ? (currentPage === 2 ? homeUrl : `${baseUrl}/${currentPage - 1}`) : undefined,
+        next: currentPage < pagination.pageCount ? `${baseUrl}/${currentPage + 1}` : undefined,
+        first: homeUrl, 
+        last: currentPage < pagination.pageCount ? `${baseUrl}/${pagination.pageCount}` : undefined,
+    },
+};
+---
+
+<Layout
+    title={`Informasi & Edukasi Kesehatan - Halaman ${page.currentPage} - RSU Afdila`}
+    description="Artikel kesehatan terpercaya dan berita terbaru seputar layanan RSU Afdila Cilacap. Tips kesehatan, edukasi medis, dan informasi rumah sakit."
+>
+    <Header />
+    <main class="min-h-screen py-16 px-4 md:px-8">
+        <div class="max-w-7xl mx-auto">
+            <header class="mb-12">
+                <h1
+                    class="text-3xl md:text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white mb-4"
+                >
+                    Informasi & Edukasi Kesehatan
+                </h1>
+                <p class="text-lg text-slate-600 dark:text-slate-400 max-w-2xl">
+                    Dapatkan artikel kesehatan terpercaya dan berita terbaru
+                    seputar layanan RSU Afdila.
+                </p>
+            </header>
+
+            {articleList.length > 0 ? (
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    {articleList.map((article) => <ArticleCard article={article} />)}
+                </div>
+            ) : (
+                <div class="text-center py-20 text-slate-500 dark:text-slate-400">
+                    <span class="material-icons-outlined text-6xl mb-4 block">article</span>
+                    <p class="text-xl font-medium">Belum ada artikel tersedia.</p>
+                </div>
+            )}
+
+            <Pagination page={page} baseUrl={baseUrl} firstPageUrl={homeUrl} />
+        </div>
+    </main>
+    <ContactInfo />
+    <Footer />
+</Layout>

@@ -4,9 +4,10 @@ import type { Page } from "astro";
 interface Props {
     page: Page<any>;
     baseUrl: string;
+    firstPageUrl?: string;
 }
 
-const { page, baseUrl } = Astro.props;
+const { page, baseUrl, firstPageUrl } = Astro.props;
 
 // Pagination Helper
 type PageItem =
@@ -28,7 +29,7 @@ for (let i = 1; i <= page.lastPage; i++) {
         pageItems.push({
             type: "page",
             num: i,
-            href: i === 1 ? baseUrl : `${baseUrl}/${i}`,
+            href: i === 1 ? (firstPageUrl ?? baseUrl) : `${baseUrl}/${i}`,
             isCurrent: i === page.currentPage,
         });
     }

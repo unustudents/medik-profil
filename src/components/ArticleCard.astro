@@ -9,7 +9,7 @@ interface Props {
 const { article } = Astro.props;
 
 const imageUrl = article.thumbnailUrl;
-const articleHref = `/article/${article.documentId}`;
+const articleHref = `/article/${article.slug}`;
 const alt = article.title;
 const category = article.category;
 ---

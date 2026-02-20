@@ -4,23 +4,23 @@ import { Header, Footer, ContactInfo, FormattedDate } from "@/components/index";
 import StrapiBlockRenderer from "@/components/strapi_block/StrapiBlockRenderer.astro";
 import {
   getAllCategories,
-  getArticleByDocumentId,
+  getArticleBySlug,
   getRelatedArticles,
 } from "@/services/articles.service";
 import type { StrapiBlockField } from "@/services/articles.service";
 import { Picture } from "astro:assets";
 
-// documentId dari URL: /article/rhvah60maf7gj5mqt7bz7ui2
-const { slug: documentId } = Astro.params;
+// slug dari URL: /article/judul-artikel
+const { slug } = Astro.params;
 
-if (!documentId) {
-  return Astro.redirect("/article");
+if (!slug) {
+  return Astro.redirect("/404");
 }
 
-// Fetch artikel by dokument
-const article = await getArticleByDocumentId(documentId);
+// Fetch artikel by slug
+const article = await getArticleBySlug(slug);
 if (!article) {
-  return Astro.redirect("/article");
+  return Astro.redirect("/404");
 }
 // Fetch semua kategori untuk sidebar
 const category = await getAllCategories();
@@ -193,7 +193,7 @@ const relatedArticles = await getRelatedArticles(
                 relatedArticles.map((related) => (
                   <a
                     class="flex gap-4 group"
-                    href={`/article/${related.documentId}`}
+                    href={`/article/${related.slug}`}
                   >
                     <div class="size-20 rounded-lg overflow-hidden flex-shrink-0">
                       <img

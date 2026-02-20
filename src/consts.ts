@@ -45,7 +45,7 @@ export const MENU = [
     { name: "Rekanan", href: "/rekanan" },
 ];
 
-// PAGINASION
-export const AGENDAEVENTSPAGINATE = 8;
-export const FILTEREDEVENTSPAGINATE = 8;
-export const ARTICLESPAGINATE = 8;
+// PAGINATION
+export const AGENDA_EVENTS_PAGINATE = 8;
+export const FILTERED_EVENTS_PAGINATE = 8;
+export const ARTICLES_PAGINATE = 8;
