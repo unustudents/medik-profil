@@ -49,3 +49,4 @@ export const MENU = [
 export const AGENDA_EVENTS_PAGINATE = 8;
 export const FILTERED_EVENTS_PAGINATE = 8;
 export const ARTICLES_PAGINATE = 8;
+export const BATCH_SIZE = 8;

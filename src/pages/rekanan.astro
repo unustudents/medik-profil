@@ -3,9 +3,9 @@ import Layout from "@/layouts/Layout.astro";
 import { Header, Footer, ContactInfo } from "@/components";
 import { getPartners } from "@/services/partners.service";
 import { Picture } from "astro:assets";
+import BATCH_SIZE from "@/consts";
 
 const partners = await getPartners();
-const BATCH_SIZE = 8;
 const hasMore = partners.length > BATCH_SIZE;
 ---
 
