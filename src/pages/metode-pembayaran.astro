@@ -42,9 +42,9 @@ const paymentMethods = await getPaymentMethods();
               <Picture
                 src={method.image}
                 alt={method.alt}
-                width={method.width}
-                height={method.height}
-                formats={["avif", "webp"]}
+                format={"avif"}
+                fit={"cover"}
+                inferSize
                 class="w-full h-full object-cover"
                 loading={index >= BATCH_SIZE ? "lazy" : "eager"}
                 decoding={index >= BATCH_SIZE ? "async" : "auto"}
