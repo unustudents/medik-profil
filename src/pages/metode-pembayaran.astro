@@ -3,7 +3,7 @@ import { Picture } from "astro:assets";
 import Layout from "@/layouts/Layout.astro";
 import { Header, Footer, ContactInfo } from "@/components";
 import { getPaymentMethods } from "@/services/payment.service";
-import BATCH_SIZE from "@/consts";
+import { BATCH_SIZE } from "@/consts";
 
 const paymentMethods = await getPaymentMethods();
 const hasMore = paymentMethods.length > BATCH_SIZE;
