@@ -31,9 +31,16 @@ export interface AgendaAttributes {
 }
 
 /**
- * Ambil semua agenda
+ * Ambil agenda dengan paginasi server-side
  */
-export async function getAgendaEvents(): Promise<{ data: AgendaEvent[]; meta: any }> {
+export async function getAgendaEvents(opts?: {
+    page?: number;
+    pageSize?: number;
+    sort?: string;
+}): Promise<{
+    data: AgendaEvent[];
+    pagination: { page: number; pageSize: number; pageCount: number; total: number };
+}> {
     const res = await strapi.find<AgendaAttributes>("agendas", {
         fields: ["documentId", "title", "slug", "date", "content", "place"],
         populate: {
@@ -41,9 +48,10 @@ export async function getAgendaEvents(): Promise<{ data: AgendaEvent[]; meta: an
                 fields: ["name", "url", "width", "height", "documentId"],
             },
         },
-        sort: ["date:desc"],
+        sort: [opts?.sort ?? "date:desc"],
         pagination: {
-            pageSize: 100, // Fetch many for SSG
+            page: opts?.page ?? 1,
+            pageSize: opts?.pageSize ?? 8,
         },
     });
 
@@ -59,7 +67,7 @@ export async function getAgendaEvents(): Promise<{ data: AgendaEvent[]; meta: an
             imageWidth: event.image?.width,
             imageHeight: event.image?.height,
         })),
-        meta: res.meta,
+        pagination: res.meta.pagination!,
     };
 }
 
@@ -93,3 +101,42 @@ export async function getAgendaBySlug(slug: string): Promise<AgendaEvent | null>
         imageHeight: event.image?.height,
     };
 }
+
+// export async function getAgenda(opts?: { page?: number; pageSize?: number, category?: string; sort?: string }) {
+//     const filters: Record<string, unknown> = {};
+
+//     // if (opts?.category) {
+//     //     filters.kategori_artikel = { name: { $eqi: opts.category } };
+//     // }
+
+//     const res = await strapi.find<AgendaAttributes>("agendas", {
+//         fields: ["documentId", "title", "slug", "date", "content", "place"],
+//         populate: {
+//             image: {
+//                 fields: ["name", "url", "width", "height", "documentId"],
+//             },
+//         },
+//         sort: [opts?.sort ?? "date:desc"],
+//         filters,
+//         pagination: {
+//             page: opts?.page ?? 1,
+//             pageSize: opts?.pageSize ?? 8,
+//         },
+//     });
+
+//     return {
+//         data: res.data.map((event) => ({
+//             documentId: event.documentId,
+//             title: event.title,
+//             slug: event.slug,
+//             date: event.date,
+//             content: event.content,
+//             place: event.place,
+//             image: strapi.mediaUrl(event.image?.url),
+//             imageWidth: event.image?.width,
+//             imageHeight: event.image?.height,
+//         })),
+//         meta: res.meta,
+//         pagination: res.meta.pagination!,
+//     };
+// }

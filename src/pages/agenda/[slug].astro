@@ -1,37 +1,21 @@
 ---
-// export const prerender = true;
+export const prerender = false;
 
 import Layout from "@/layouts/Layout.astro";
-import Header from "@/components/Header.astro";
-import Footer from "@/components/Footer.astro";
-import ContactInfo from "@/components/ContactInfo.astro";
+import {Header, Footer,ContactInfo} from "@/components";
 import { Image } from "astro:assets";
-import { getAgendaEvents, getAgendaBySlug, type AgendaEvent } from "@/services/agenda.service";
-import type { GetStaticPaths } from "astro";
+import { getAgendaBySlug, type AgendaEvent } from "@/services/agenda.service";
 import { sanitizeHtml } from "@/lib/sanitize";
 import { parseDate } from "@/lib/date";
 import { formatKeWIB } from "@/lib/dateFormateer";
 
-export const getStaticPaths = (async () => {
-    const { data } = await getAgendaEvents();
-    return data.map((event) => ({
-        params: { slug: event.slug },
-        props: { event },
-    }));
-}) satisfies GetStaticPaths;
-
 const { slug } = Astro.params;
-const { event: propEvent } = Astro.props;
 
-let event: AgendaEvent | null = propEvent as AgendaEvent | null;
-
-if (!event && slug) {
-    // Cast the result to unknown first then to AgendaEvent | null to avoid type overlap issues if any, 
-    // or just rely on the shape matching. 
-    // The service returns a shape that is compatible with our interface.
-    const result = await getAgendaBySlug(slug as string);
-    event = result as AgendaEvent | null;
+if (!slug) {
+    return Astro.redirect('/404');
 }
+
+const event: AgendaEvent | null = await getAgendaBySlug(slug as string);
 
 if (!event) {
     return Astro.redirect('/404');
@@ -149,7 +133,7 @@ const statusConfig = getStatusConfig(derivedStatus);
             </div>
         </section>
 
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+        <!-- <div class="grid grid-cols-1 lg:grid-cols-12 gap-10"> -->
             <div class="lg:col-span-8">
                 <div
                     class="bg-white dark:bg-slate-900 p-8 lg:p-10 rounded-xl shadow-sm border border-slate-100 dark:border-slate-800"
@@ -229,7 +213,7 @@ const statusConfig = getStatusConfig(derivedStatus);
                     </div>
                 </div>
             </div>
-            <aside class="lg:col-span-4 space-y-8">
+            <!-- <aside class="lg:col-span-4 space-y-8">
                 <div
                     class="bg-white dark:bg-slate-900 rounded-xl overflow-hidden shadow-sm border border-slate-100 dark:border-slate-800 border-t-4 border-t-primary"
                 >
@@ -276,8 +260,8 @@ const statusConfig = getStatusConfig(derivedStatus);
                         </ul>
                     </div>
                 </div>
-            </aside>
-        </div>
+            </aside> -->
+        <!-- </div> -->
     </main>
 
     <ContactInfo />
