@@ -1,4 +1,9 @@
 {
-    "css.lint.unknownAtRules": "ignore",
-    "scss.lint.unknownAtRules": "ignore"
+  "css.lint.unknownAtRules": "ignore",
+  "scss.lint.unknownAtRules": "ignore",
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "[astro]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
 }

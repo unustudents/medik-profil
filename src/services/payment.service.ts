@@ -19,41 +19,41 @@ import { strapi, StrapiError } from "@/lib/api";
 
 /** Shape data dari Strapi (sebelum di-transform) */
 interface StrapiPaymentMethod {
-    name: string;
-    image: {
-        url: string;
-        alternativeText: string | null;
-        width: number;
-        height: number;
-    } | null;
+  name: string;
+  image: {
+    url: string;
+    alternativeText: string | null;
+    width: number;
+    height: number;
+  } | null;
 }
 
 // ── Output Shape ────────────────────────────────────────────
 
 /** Data yang dikembalikan ke halaman (sudah di-transform) */
 export interface PaymentMethod {
-    /** Nama metode pembayaran */
-    name: string;
-    /** URL absolut gambar (sudah di-resolve dari Strapi) */
-    image: string;
-    /** Alt text dari Strapi, fallback ke name */
-    alt: string;
-    /** Dimensi asli gambar */
-    width: number;
-    height: number;
+  /** Nama metode pembayaran */
+  name: string;
+  /** URL absolut gambar (sudah di-resolve dari Strapi) */
+  image: string;
+  /** Alt text dari Strapi, fallback ke name */
+  alt: string;
+  /** Dimensi asli gambar */
+  width: number;
+  height: number;
 }
 
 // ── Fallback ────────────────────────────────────────────────
 
 /** Fallback data jika Strapi belum tersedia / content-type belum dibuat */
 const FALLBACK: PaymentMethod[] = [
-    {
-        name: "QRIS",
-        image: "https://upload.wikimedia.org/wikipedia/commons/a/a2/Logo_QRIS.svg",
-        alt: "QRIS",
-        width: 200,
-        height: 74,
-    },
+  {
+    name: "QRIS",
+    image: "https://upload.wikimedia.org/wikipedia/commons/a/a2/Logo_QRIS.svg",
+    alt: "QRIS",
+    width: 200,
+    height: 74,
+  },
 ];
 
 // ── Service Function ────────────────────────────────────────
@@ -68,31 +68,33 @@ const FALLBACK: PaymentMethod[] = [
  * return fallback agar halaman tetap tampil.
  */
 export async function getPaymentMethods(): Promise<PaymentMethod[]> {
-    try {
-        const res = await strapi.find<StrapiPaymentMethod>("metode-pembayarans", {
-            fields: ["name"],
-            populate: {
-                image: {
-                    fields: ["url", "alternativeText", "width", "height"],
-                },
-            },
-            pagination: { pageSize: 100 },
-        });
+  try {
+    const res = await strapi.find<StrapiPaymentMethod>("metode-pembayarans", {
+      fields: ["name"],
+      populate: {
+        image: {
+          fields: ["url", "alternativeText", "width", "height"],
+        },
+      },
+      pagination: { pageSize: 100 },
+    });
 
-        return res.data
-            .filter((method) => method.image?.url) // skip entri tanpa gambar
-            .map((method) => ({
-                name: method.name,
-                image: strapi.mediaUrl(method.image!.url),
-                alt: method.image!.alternativeText || method.name,
-                width: method.image!.width ?? 200,
-                height: method.image!.height ?? 100,
-            }));
-    } catch (err) {
-        if (err instanceof StrapiError && err.status === 404) {
-            console.warn("[PaymentService] Content-type 'metode-pembayarans' not found, using fallback.");
-            return FALLBACK;
-        }
-        throw err;
+    return res.data
+      .filter((method) => method.image?.url) // skip entri tanpa gambar
+      .map((method) => ({
+        name: method.name,
+        image: strapi.mediaUrl(method.image!.url),
+        alt: method.image!.alternativeText || method.name,
+        width: method.image!.width ?? 200,
+        height: method.image!.height ?? 100,
+      }));
+  } catch (err) {
+    if (err instanceof StrapiError && err.status === 404) {
+      console.warn(
+        "[PaymentService] Content-type 'metode-pembayarans' not found, using fallback."
+      );
+      return FALLBACK;
     }
+    throw err;
+  }
 }

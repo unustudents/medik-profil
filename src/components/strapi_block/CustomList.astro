@@ -36,7 +36,7 @@ const Tag = format === "ordered" ? "ol" : "ul";
 
         <span>
           {item.children?.map((child: { bold?: boolean; text?: string }) =>
-            child.bold ? <strong>{child.text}</strong> : child.text,
+            child.bold ? <strong>{child.text}</strong> : child.text
           )}
         </span>
       </li>

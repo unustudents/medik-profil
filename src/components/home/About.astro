@@ -34,17 +34,17 @@ const partners = Array.from({ length: 20 }, (_, i) => ({
 }));
 ---
 
-<section class="py-20 bg-background-light dark:bg-background-dark">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="grid lg:grid-cols-2 gap-12">
+<section class="bg-background-light dark:bg-background-dark py-20">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="grid gap-12 lg:grid-cols-2">
       <div>
         {
           image && (
-            <div class="aspect-4/3 w-full overflow-hidden rounded-2xl shadow-xl mb-8">
+            <div class="mb-8 aspect-4/3 w-full overflow-hidden rounded-2xl shadow-xl">
               <Picture
                 src={image}
                 alt="Director"
-                class="w-full h-full object-cover"
+                class="h-full w-full object-cover"
                 width={768}
                 height={768}
                 widths={[320, 500, 768]}
@@ -55,39 +55,39 @@ const partners = Array.from({ length: 20 }, (_, i) => ({
             </div>
           )
         }
-        <h2 class="text-3xl font-bold mb-4">{title}</h2>
+        <h2 class="mb-4 text-3xl font-bold">{title}</h2>
         <p
-          class="text-slate-500 dark:text-slate-400 mb-6 text-sm leading-relaxed"
+          class="mb-6 text-sm leading-relaxed text-slate-500 dark:text-slate-400"
         >
           {description}
         </p>
         <button
-          class="bg-primary text-white px-6 py-3 rounded-lg font-bold text-sm"
+          class="bg-primary rounded-lg px-6 py-3 text-sm font-bold text-white"
           >Baca Lengkapnya</button
         >
       </div>
       <div class="grid grid-cols-2 gap-4">
-        <div class="bg-primary/90 p-6 rounded-2xl text-white">
+        <div class="bg-primary/90 rounded-2xl p-6 text-white">
           <div class="flex items-center justify-end">
             <span class="text-4xl font-bold">{stats_doctors}</span>
           </div>
           <div class="mt-4">
-            <p class="text-lg font-bold opacity-80 uppercase tracking-widest">
+            <p class="text-lg font-bold tracking-widest uppercase opacity-80">
               Dokter Kami
             </p>
           </div>
         </div>
-        <div class="bg-primary/90 p-6 rounded-2xl text-white">
+        <div class="bg-primary/90 rounded-2xl p-6 text-white">
           <div class="flex items-center justify-end">
             <span class="text-4xl font-bold">{stats_medics}</span>
           </div>
           <div class="mt-4">
-            <p class="text-lg font-bold opacity-80 uppercase tracking-widest">
+            <p class="text-lg font-bold tracking-widest uppercase opacity-80">
               Tenaga Medis
             </p>
           </div>
         </div>
-        <div class="bg-primary/90 p-6 rounded-2xl text-white">
+        <div class="bg-primary/90 rounded-2xl p-6 text-white">
           <div class="flex items-center justify-end">
             <span class="text-4xl font-bold">{stats_rooms}</span>
           </div>
@@ -95,12 +95,12 @@ const partners = Array.from({ length: 20 }, (_, i) => ({
             <p class="text-xs opacity-80">
               ICU Room, Kelas I, Kelas II, Kelas III...
             </p>
-            <p class="text-lg font-bold uppercase tracking-widest mt-1">
+            <p class="mt-1 text-lg font-bold tracking-widest uppercase">
               Fasilitas Kamar
             </p>
           </div>
         </div>
-        <div class="bg-primary/90 p-6 rounded-2xl text-white">
+        <div class="bg-primary/90 rounded-2xl p-6 text-white">
           <div class="flex items-center justify-end">
             <span class="text-4xl font-bold">{stats_capacity}</span>
           </div>
@@ -108,27 +108,27 @@ const partners = Array.from({ length: 20 }, (_, i) => ({
             <p class="text-xs opacity-80">
               Ruang Tulip (8), Neonatus Incubator (4)...
             </p>
-            <p class="text-lg font-bold uppercase tracking-widest mt-1">
+            <p class="mt-1 text-lg font-bold tracking-widest uppercase">
               Kapasitas Kamar
             </p>
           </div>
         </div>
 
-        <div class="col-span-2 mt-8 overflow-hidden relative">
+        <div class="relative col-span-2 mt-8 overflow-hidden">
           <p
-            class="text-sm font-bold text-slate-400 uppercase tracking-widest mb-4"
+            class="mb-4 text-sm font-bold tracking-widest text-slate-400 uppercase"
           >
             Asuransi
           </p>
           <!-- Partner Carousel Container -->
           <div
-            class="flex space-x-4 partner-track transition-transform duration-500 ease-in-out"
+            class="partner-track flex space-x-4 transition-transform duration-500 ease-in-out"
             id="partnerTrack"
           >
             {
               partners.map((partner) => (
-                <div class="bg-white dark:bg-slate-800 p-4 rounded-xl flex items-center justify-center grayscale opacity-50 min-w-[120px] shrink-0">
-                  <span class="font-black italic text-slate-500">
+                <div class="flex min-w-[120px] shrink-0 items-center justify-center rounded-xl bg-white p-4 opacity-50 grayscale dark:bg-slate-800">
+                  <span class="font-black text-slate-500 italic">
                     {partner.logo}
                   </span>
                 </div>

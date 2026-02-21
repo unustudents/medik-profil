@@ -1,118 +1,122 @@
 ---
 import Layout from "@/layouts/Layout.astro";
-import {Header,Footer, ContactInfo} from "@/components";
+import { Header, Footer, ContactInfo } from "@/components";
 import { getPartners } from "@/services/partners.service";
 import { Picture } from "astro:assets";
 
 const partners = await getPartners();
 const BATCH_SIZE = 8;
+const hasMore = partners.length > BATCH_SIZE;
 ---
 
-<Layout title="Rekanan Kami - RSU Afdila" description="Daftar mitra kesehatan dan rekanan yang bekerja sama dengan RSU Afdila Cilacap. BPJS, asuransi, dan lembaga kesehatan.">
-    <Header />
+<Layout
+  title="Rekanan Kami - RSU Afdila"
+  description="Daftar mitra kesehatan dan rekanan yang bekerja sama dengan RSU Afdila Cilacap. BPJS, asuransi, dan lembaga kesehatan."
+>
+  <Header />
 
-    <main
-        class="bg-slate-50 dark:bg-slate-900 min-h-screen transition-colors duration-300"
-    >
-        <div class="max-w-6xl mx-auto px-4 py-12">
-            <div class="mb-10">
-                <h1
-                    class="text-3xl font-bold text-slate-900 dark:text-white mb-2"
-                >
-                    Asuransi
-                </h1>
-                <p class="text-slate-500 dark:text-slate-400 text-lg">
-                    Asuransi yang bekerja sama dengan kami
-                </p>
-            </div>
+  <main
+    class="min-h-screen bg-slate-50 transition-colors duration-300 dark:bg-slate-900"
+  >
+    <div class="mx-auto max-w-6xl px-4 py-12">
+      <div class="mb-10">
+        <h1 class="mb-2 text-3xl font-bold text-slate-900 dark:text-white">
+          Asuransi
+        </h1>
+        <p class="text-lg text-slate-500 dark:text-slate-400">
+          Asuransi yang bekerja sama dengan kami
+        </p>
+      </div>
 
+      <div
+        class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4"
+        id="partner-grid"
+      >
+        {
+          partners.map((partner, index) => (
             <div
-                class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
-                id="partner-grid"
+              class={`group partner-card-shadow partner-item relative h-32 overflow-hidden rounded-2xl border-2 border-slate-100 bg-white transition-all duration-200 hover:border-teal-500/50 hover:shadow-lg ${index >= BATCH_SIZE ? "hidden translate-y-4 opacity-0" : "translate-y-0 opacity-100"} flex items-center justify-center p-4`}
+              aria-label={partner.name}
+              title={partner.description}
             >
-                {
-                    partners.map((partner, index) => (
-                        <div
-                            class={`relative group bg-white border-2 border-slate-100 rounded-2xl overflow-hidden h-32 transition-all duration-200 hover:border-teal-500/50 hover:shadow-lg partner-card-shadow partner-item ${index >= BATCH_SIZE ? "hidden opacity-0 translate-y-4" : "opacity-100 translate-y-0"} flex items-center justify-center p-4`}
-                            aria-label={partner.name}
-                            title={partner.description}
-                        >
-                            <Picture
-                                src={partner.image}
-                                alt={partner.name}
-                                class="max-w-full max-h-full w-auto h-auto object-contain transition-transform duration-300 group-hover:scale-110"
-                                loading={index >= BATCH_SIZE ? "lazy" : "eager"}
-                                decoding={index >= BATCH_SIZE ? "async" : "auto"}
-                                format={"avif"}
-                                fit={"cover"}
-                                inferSize
-                            />
-                        </div>
-                    ))
-                }
+              <Picture
+                src={partner.image}
+                alt={partner.name}
+                class="h-auto max-h-full w-auto max-w-full object-contain transition-transform duration-300 group-hover:scale-110"
+                loading={index >= BATCH_SIZE ? "lazy" : "eager"}
+                decoding={index >= BATCH_SIZE ? "async" : "auto"}
+                format={"avif"}
+                fit={"cover"}
+                inferSize
+              />
             </div>
-            {
-                partners.length > BATCH_SIZE && (
-                    <div class="mt-12 text-center" id="load-more-container">
-                        <button
-                            id="load-more-btn"
-                            class="px-8 py-3 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-full font-bold hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors shadow-sm text-slate-700 dark:text-slate-300 cursor-pointer"
-                        >
-                            Lebih Banyak
-                        </button>
-                    </div>
-                )
-            }
-        </div>
-    </main>
+          ))
+        }
+      </div>
+      {
+        hasMore && (
+          <div class="mt-12 text-center" id="load-more-container">
+            <button
+              id="load-more-btn"
+              class="cursor-pointer rounded-full border border-slate-200 bg-white px-8 py-3 font-bold text-slate-700 shadow-sm transition-colors hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 dark:hover:bg-slate-800"
+            >
+              Lebih Banyak
+            </button>
+          </div>
+        )
+      }
+    </div>
+  </main>
 
-    <ContactInfo />
-    <Footer />
+  <ContactInfo />
+  <Footer />
 </Layout>
 
 <style>
-    .partner-card-shadow {
-        box-shadow:
-            0 4px 6px -1px rgba(0, 0, 0, 0.05),
-            0 2px 4px -1px rgba(0, 0, 0, 0.03);
-    }
+  .partner-card-shadow {
+    box-shadow:
+      0 4px 6px -1px rgba(0, 0, 0, 0.05),
+      0 2px 4px -1px rgba(0, 0, 0, 0.03);
+  }
 </style>
 
-<script>
+<script is:inline define:vars={{ BATCH_SIZE, hasMore }}>
+  if (hasMore) {
     const loadMoreBtn = document.getElementById("load-more-btn");
     const loadMoreContainer = document.getElementById("load-more-container");
     const partnerGrid = document.getElementById("partner-grid");
     const BATCH_SIZE = 8;
 
     function updateButtonVisibility() {
-        const hiddenItems =
-            partnerGrid?.querySelectorAll(".partner-item.hidden") || [];
-        if (hiddenItems.length === 0 && loadMoreContainer) {
-            loadMoreContainer.style.display = "none";
-        }
+      const hiddenItems =
+        partnerGrid?.querySelectorAll(".partner-item.hidden") || [];
+      if (hiddenItems.length === 0 && loadMoreContainer) {
+        loadMoreContainer.style.display = "none";
+      }
     }
 
     // Initial check
     updateButtonVisibility();
 
     if (loadMoreBtn) {
-        loadMoreBtn.addEventListener("click", () => {
-            const hiddenItems =
-                partnerGrid?.querySelectorAll(".partner-item.hidden") || [];
-            const itemsToShow = Array.from(hiddenItems).slice(0, BATCH_SIZE);
+      loadMoreBtn.addEventListener("click", () => {
+        const hiddenItems =
+          partnerGrid?.querySelectorAll(".partner-item.hidden") || [];
+        const itemsToShow = Array.from(hiddenItems).slice(0, BATCH_SIZE);
 
-            itemsToShow.forEach((item, index) => {
-                item.classList.remove("hidden");
-                // Add small delay for stagger effect
-                setTimeout(() => {
-                    item.classList.remove("opacity-0", "translate-y-4");
-                    item.classList.add("opacity-100", "translate-y-0");
-                }, index * 50);
-            });
-
-            // Update visibility after animations would start
-            const maxDelay = itemsToShow.length * 50;
-            setTimeout(updateButtonVisibility, maxDelay + 100);
+        itemsToShow.forEach((item, index) => {
+          item.classList.remove("hidden");
+          // Add small delay for stagger effect
+          setTimeout(() => {
+            item.classList.remove("opacity-0", "translate-y-4");
+            item.classList.add("opacity-100", "translate-y-0");
+          }, index * 50);
         });
+
+        // Update visibility after animations would start
+        const maxDelay = itemsToShow.length * 50;
+        setTimeout(updateButtonVisibility, maxDelay + 100);
+      });
     }
+  }
 </script>

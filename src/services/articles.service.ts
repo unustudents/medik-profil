@@ -119,7 +119,7 @@ export async function getArticles(opts?: {
 // }
 
 export async function getArticleBySlug(
-  slug: string,
+  slug: string
 ): Promise<ArticleItem | null> {
   try {
     const res = await strapi.find<ArticleRaw>(URL_SLUG, {
@@ -150,7 +150,7 @@ export async function getArticleBySlug(
 export async function getRelatedArticles(
   category: string,
   excludeDocumentId: string,
-  limit = 3,
+  limit = 3
 ): Promise<ArticleItem[]> {
   const res = await strapi.find<ArticleRaw>(URL_SLUG, {
     populate: ARTICLE_POPULATE,

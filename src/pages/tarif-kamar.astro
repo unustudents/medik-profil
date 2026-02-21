@@ -11,59 +11,58 @@ const roomRates = rooms;
 const initialCount = 8;
 
 const formatPrice = (price: number) => {
-    return new Intl.NumberFormat("id-ID", {
-        style: "currency",
-        currency: "IDR",
-        minimumFractionDigits: 0,
-        maximumFractionDigits: 0,
-    }).format(price);
+  return new Intl.NumberFormat("id-ID", {
+    style: "currency",
+    currency: "IDR",
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0,
+  }).format(price);
 };
 
 const slugify = (text: string) => {
-    return text
-        .toString()
-        .toLowerCase()
-        .replace(/\s+/g, "-") // Replace spaces with -
-        .replace(/[^\w\-]+/g, "") // Remove all non-word chars
-        .replace(/\-\-+/g, "-") // Replace multiple - with single -
-        .replace(/^-+/, "") // Trim - from start of text
-        .replace(/-+$/, ""); // Trim - from end of text
+  return text
+    .toString()
+    .toLowerCase()
+    .replace(/\s+/g, "-") // Replace spaces with -
+    .replace(/[^\w\-]+/g, "") // Remove all non-word chars
+    .replace(/\-\-+/g, "-") // Replace multiple - with single -
+    .replace(/^-+/, "") // Trim - from start of text
+    .replace(/-+$/, ""); // Trim - from end of text
 };
 ---
 
 <Layout
-    title="Tarif Kamar Rawat Inap - RSU Afdila"
-    description="Informasi tarif dan harga kamar rawat inap RSU Afdila Cilacap. Kelas I, II, III, VIP, VVIP dengan fasilitas lengkap."
+  title="Tarif Kamar Rawat Inap - RSU Afdila"
+  description="Informasi tarif dan harga kamar rawat inap RSU Afdila Cilacap. Kelas I, II, III, VIP, VVIP dengan fasilitas lengkap."
 >
-    <Header />
-    <main
-        class="min-h-screen bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-slate-100 p-6 md:p-12 transition-colors duration-200"
-    >
-        <div class="max-w-7xl mx-auto">
-            <header class="mb-10 text-center lg:text-left">
-                <h1
-                    class="text-3xl font-bold tracking-tight text-slate-900 dark:text-white sm:text-4xl"
-                >
-                    Layanan Kamar Rawat Inap
-                </h1>
-                <p class="mt-4 text-lg text-slate-600 dark:text-slate-400">
-                    Pilih kenyamanan terbaik untuk pemulihan kesehatan Anda di
-                    RSU Afdila.
-                </p>
-            </header>
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                {
-                    roomRates.map((room: RoomSummary, index: number) => (
-                        <a
-                            href={`/detail-kamar/${slugify(room.name)}`}
-                            class={`room-item bg-white dark:bg-slate-800 rounded-xl shadow-md overflow-hidden flex flex-col hover:shadow-lg transition-shadow duration-500 group ${
-                                index >= initialCount
-                                    ? "hidden opacity-0 translate-y-4"
-                                    : "opacity-100 translate-y-0"
-                            }`}
-                        >
-                            <div class="h-48 overflow-hidden relative">
-                                {/* <img
+  <Header />
+  <main
+    class="min-h-screen bg-slate-50 p-6 text-slate-900 transition-colors duration-200 md:p-12 dark:bg-slate-900 dark:text-slate-100"
+  >
+    <div class="mx-auto max-w-7xl">
+      <header class="mb-10 text-center lg:text-left">
+        <h1
+          class="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl dark:text-white"
+        >
+          Layanan Kamar Rawat Inap
+        </h1>
+        <p class="mt-4 text-lg text-slate-600 dark:text-slate-400">
+          Pilih kenyamanan terbaik untuk pemulihan kesehatan Anda di RSU Afdila.
+        </p>
+      </header>
+      <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        {
+          roomRates.map((room: RoomSummary, index: number) => (
+            <a
+              href={`/detail-kamar/${slugify(room.name)}`}
+              class={`room-item group flex flex-col overflow-hidden rounded-xl bg-white shadow-md transition-shadow duration-500 hover:shadow-lg dark:bg-slate-800 ${
+                index >= initialCount
+                  ? "hidden translate-y-4 opacity-0"
+                  : "translate-y-0 opacity-100"
+              }`}
+            >
+              <div class="relative h-48 overflow-hidden">
+                {/* <img
                                     alt={room.name}
                                     class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                                     src={room.image}
@@ -74,99 +73,99 @@ const slugify = (text: string) => {
                                         index >= initialCount ? "async" : "auto"
                                     }
                                 /> */}
-                                <Image
-                                    src={room.image}
-                                    alt={room.name}
-                                    width={800}
-                                    height={600}
-                                    class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                                />
-                                <div class="absolute inset-0 bg-black opacity-0 group-hover:opacity-10 transition-opacity duration-300" />
-                            </div>
-                            <div class="p-5 flex-grow">
-                                <div class="flex gap-2 mb-3">
-                                    <span class="px-2 py-0.5 border border-primary text-primary text-[10px] font-bold tracking-wider rounded uppercase">
-                                        {room.type}
-                                    </span>
-                                    <span class="px-2 py-0.5 border border-primary text-primary text-[10px] font-bold tracking-wider rounded uppercase">
-                                        Kap : {room.capacity}
-                                    </span>
-                                </div>
-                                <h3 class="text-lg font-bold text-slate-800 dark:text-white mb-1">
-                                    {room.name}
-                                </h3>
-                                <p class="text-xl font-bold text-slate-700 dark:text-slate-300">
-                                    {formatPrice(room.price)}
-                                </p>
-                            </div>
-                        </a>
-                    ))
-                }
-            </div>
+                <Image
+                  src={room.image}
+                  alt={room.name}
+                  width={800}
+                  height={600}
+                  class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+                />
+                <div class="absolute inset-0 bg-black opacity-0 transition-opacity duration-300 group-hover:opacity-10" />
+              </div>
+              <div class="flex-grow p-5">
+                <div class="mb-3 flex gap-2">
+                  <span class="border-primary text-primary rounded border px-2 py-0.5 text-[10px] font-bold tracking-wider uppercase">
+                    {room.type}
+                  </span>
+                  <span class="border-primary text-primary rounded border px-2 py-0.5 text-[10px] font-bold tracking-wider uppercase">
+                    Kap : {room.capacity}
+                  </span>
+                </div>
+                <h3 class="mb-1 text-lg font-bold text-slate-800 dark:text-white">
+                  {room.name}
+                </h3>
+                <p class="text-xl font-bold text-slate-700 dark:text-slate-300">
+                  {formatPrice(room.price)}
+                </p>
+              </div>
+            </a>
+          ))
+        }
+      </div>
 
-            <div class="mt-12 text-center" id="load-more-container">
-                <button
-                    id="load-more-btn"
-                    class="px-8 py-3 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-full font-bold hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors shadow-sm text-slate-700 dark:text-slate-300 cursor-pointer"
-                >
-                    Lihat Semua Kamar
-                </button>
-            </div>
-        </div>
-    </main>
-    <ContactInfo />
-    <Footer />
+      <div class="mt-12 text-center" id="load-more-container">
+        <button
+          id="load-more-btn"
+          class="cursor-pointer rounded-full border border-slate-200 bg-white px-8 py-3 font-bold text-slate-700 shadow-sm transition-colors hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 dark:hover:bg-slate-800"
+        >
+          Lihat Semua Kamar
+        </button>
+      </div>
+    </div>
+  </main>
+  <ContactInfo />
+  <Footer />
 </Layout>
 
 <style>
-    /* FIX: Force display none when hidden class is present */
-    .room-item.hidden {
-        display: none !important;
-    }
+  /* FIX: Force display none when hidden class is present */
+  .room-item.hidden {
+    display: none !important;
+  }
 </style>
 
 <script>
-    const loadMoreBtn = document.getElementById("load-more-btn");
-    const loadMoreContainer = document.getElementById("load-more-container");
-    const BATCH_SIZE = 8; // Load 8 items per click
+  const loadMoreBtn = document.getElementById("load-more-btn");
+  const loadMoreContainer = document.getElementById("load-more-container");
+  const BATCH_SIZE = 8; // Load 8 items per click
 
-    // Function to check and hide button when no more items
-    function updateButtonVisibility() {
-        const hiddenItems = document.querySelectorAll(".room-item.hidden");
+  // Function to check and hide button when no more items
+  function updateButtonVisibility() {
+    const hiddenItems = document.querySelectorAll(".room-item.hidden");
 
-        if (hiddenItems.length === 0 && loadMoreContainer) {
-            loadMoreContainer.style.display = "none";
-        }
+    if (hiddenItems.length === 0 && loadMoreContainer) {
+      loadMoreContainer.style.display = "none";
     }
+  }
 
-    // Check initial state
-    updateButtonVisibility();
+  // Check initial state
+  updateButtonVisibility();
 
-    if (loadMoreBtn) {
-        loadMoreBtn.addEventListener("click", () => {
-            const hiddenItems = document.querySelectorAll(".room-item.hidden");
+  if (loadMoreBtn) {
+    loadMoreBtn.addEventListener("click", () => {
+      const hiddenItems = document.querySelectorAll(".room-item.hidden");
 
-            // Only show next batch (BATCH_SIZE items)
-            const itemsToShow = Array.from(hiddenItems).slice(0, BATCH_SIZE);
+      // Only show next batch (BATCH_SIZE items)
+      const itemsToShow = Array.from(hiddenItems).slice(0, BATCH_SIZE);
 
-            itemsToShow.forEach((item, index) => {
-                // Remove hidden class
-                item.classList.remove("hidden");
+      itemsToShow.forEach((item, index) => {
+        // Remove hidden class
+        item.classList.remove("hidden");
 
-                // Add staggered animation
-                setTimeout(() => {
-                    item.classList.remove("opacity-0", "translate-y-4");
-                    item.classList.add("opacity-100", "translate-y-0");
-                }, index * 50);
-            });
+        // Add staggered animation
+        setTimeout(() => {
+          item.classList.remove("opacity-0", "translate-y-4");
+          item.classList.add("opacity-100", "translate-y-0");
+        }, index * 50);
+      });
 
-            // Update button text after loading batch
-            setTimeout(
-                () => {
-                    updateButtonVisibility();
-                },
-                itemsToShow.length * 50 + 100,
-            );
-        });
-    }
+      // Update button text after loading batch
+      setTimeout(
+        () => {
+          updateButtonVisibility();
+        },
+        itemsToShow.length * 50 + 100
+      );
+    });
+  }
 </script>

@@ -2,55 +2,55 @@
 import { Picture } from "astro:assets";
 
 interface Props {
-    images?: string[];
+  images?: string[];
 }
 const { images } = Astro.props;
 ---
 
-<section class="embla-hero relative h-[500px] overflow-hidden group">
-    <div class="embla__viewport h-full w-full">
-        <div class="embla__container h-full">
-            {
-                images?.map((img, index) => (
-                    <div class="embla__slide relative min-w-full h-full">
-                        <Picture
-                            alt={`Hero Image ${index + 1}`}
-                            class="w-full h-full object-cover"
-                            src={img}
-                            formats={["avif", "webp"]}
-                            loading={index === 0 ? "eager" : "lazy"}
-                            fetchpriority={index === 0 ? "high" : "auto"}
-                            inferSize
-                        />
-                        <div class="absolute inset-0 hero-gradient" />
-                    </div>
-                ))
-            }
-        </div>
+<section class="embla-hero group relative h-[500px] overflow-hidden">
+  <div class="embla__viewport h-full w-full">
+    <div class="embla__container h-full">
+      {
+        images?.map((img, index) => (
+          <div class="embla__slide relative h-full min-w-full">
+            <Picture
+              alt={`Hero Image ${index + 1}`}
+              class="h-full w-full object-cover"
+              src={img}
+              formats={["avif", "webp"]}
+              loading={index === 0 ? "eager" : "lazy"}
+              fetchpriority={index === 0 ? "high" : "auto"}
+              inferSize
+            />
+            <div class="hero-gradient absolute inset-0" />
+          </div>
+        ))
+      }
     </div>
+  </div>
 </section>
 
 <style>
-    .embla__viewport {
-        overflow: hidden;
-    }
-    .embla__container {
-        display: flex;
-    }
-    .embla__slide {
-        flex: 0 0 100%;
-        min-width: 0;
-    }
+  .embla__viewport {
+    overflow: hidden;
+  }
+  .embla__container {
+    display: flex;
+  }
+  .embla__slide {
+    flex: 0 0 100%;
+    min-width: 0;
+  }
 </style>
 
 <script>
-    import { initHeroCarousel } from "../../lib/carousel";
+  import { initHeroCarousel } from "../../lib/carousel";
 
-    if (document.readyState === "loading") {
-        document.addEventListener("DOMContentLoaded", () => {
-            initHeroCarousel(".embla-hero", { delay: 10000 });
-        });
-    } else {
-        initHeroCarousel(".embla-hero", { delay: 10000 });
-    }
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", () => {
+      initHeroCarousel(".embla-hero", { delay: 10000 });
+    });
+  } else {
+    initHeroCarousel(".embla-hero", { delay: 10000 });
+  }
 </script>

@@ -5,7 +5,7 @@ import { formatKeWIB } from "@/lib/dateFormateer";
 import type { AgendaEvent } from "@/services/agenda.service";
 
 interface Props {
-    event: AgendaEvent;
+  event: AgendaEvent;
 }
 
 const { event } = Astro.props;
@@ -18,79 +18,79 @@ const isSameDay = eventDate.toDateString() === now.toDateString();
 let statusConfig;
 
 if (isUpcoming) {
-    statusConfig = {
-        label: "Akan Datang",
-        icon: "event",
-        color: "text-emerald-500",
-        bg: "bg-emerald-50 dark:bg-emerald-900/10",
-        border: "border-emerald-100 dark:border-emerald-900/30",
-    };
+  statusConfig = {
+    label: "Akan Datang",
+    icon: "event",
+    color: "text-emerald-500",
+    bg: "bg-emerald-50 dark:bg-emerald-900/10",
+    border: "border-emerald-100 dark:border-emerald-900/30",
+  };
 } else if (isSameDay) {
-    statusConfig = {
-        label: "Sedang Berlangsung",
-        icon: "play_circle",
-        color: "text-blue-500",
-        bg: "bg-blue-50 dark:bg-blue-900/10",
-        border: "border-blue-100 dark:border-blue-900/30",
-    };
+  statusConfig = {
+    label: "Sedang Berlangsung",
+    icon: "play_circle",
+    color: "text-blue-500",
+    bg: "bg-blue-50 dark:bg-blue-900/10",
+    border: "border-blue-100 dark:border-blue-900/30",
+  };
 } else {
-    statusConfig = {
-        label: "Telah Lewat",
-        icon: "history",
-        color: "text-slate-500",
-        bg: "bg-slate-50 dark:bg-slate-900/10",
-        border: "border-slate-100 dark:border-slate-900/30",
-    };
+  statusConfig = {
+    label: "Telah Lewat",
+    icon: "history",
+    color: "text-slate-500",
+    bg: "bg-slate-50 dark:bg-slate-900/10",
+    border: "border-slate-100 dark:border-slate-900/30",
+  };
 }
 ---
 
 <article
-    class="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden group hover:shadow-md transition-shadow h-full flex flex-col"
+  class="group flex h-full flex-col overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm transition-shadow hover:shadow-md dark:border-slate-700 dark:bg-slate-800"
 >
-    <a href={`/agenda/${event.slug}`} class="flex flex-col h-full">
-        <div class="aspect-video overflow-hidden relative">
-            {
-                event.image ? (
-                    <Image
-                        alt={event.title}
-                        class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-                        src={event.image}
-                        width={event.imageWidth!}
-                        height={event.imageHeight!}
-                    />
-                ) : (
-                    <div class="w-full h-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-400">
-                        <span class="material-icons-outlined text-4xl">image</span>
-                    </div>
-                )
-            }
+  <a href={`/agenda/${event.slug}`} class="flex h-full flex-col">
+    <div class="relative aspect-video overflow-hidden">
+      {
+        event.image ? (
+          <Image
+            alt={event.title}
+            class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+            src={event.image}
+            width={event.imageWidth!}
+            height={event.imageHeight!}
+          />
+        ) : (
+          <div class="flex h-full w-full items-center justify-center bg-slate-100 text-slate-400 dark:bg-slate-800">
+            <span class="material-icons-outlined text-4xl">image</span>
+          </div>
+        )
+      }
+    </div>
+    <div class="flex flex-grow flex-col p-5">
+      <div class="mb-4 flex items-start gap-3">
+        <div
+          class={`flex-shrink-0 w-10 h-10 border ${statusConfig.border} rounded flex items-center justify-center ${statusConfig.color} ${statusConfig.bg}`}
+        >
+          <span class="material-icons-outlined text-[20px]">
+            {statusConfig.icon}
+          </span>
         </div>
-        <div class="p-5 flex flex-col flex-grow">
-            <div class="flex items-start gap-3 mb-4">
-                <div
-                    class={`flex-shrink-0 w-10 h-10 border ${statusConfig.border} rounded flex items-center justify-center ${statusConfig.color} ${statusConfig.bg}`}
-                >
-                    <span class="material-icons-outlined text-[20px]">
-                        {statusConfig.icon}
-                    </span>
-                </div>
-                <div>
-                    <p
-                        class={`text-[13px] font-medium ${statusConfig.color} leading-tight`}
-                    >
-                        {statusConfig.label}
-                    </p>
-                    <p class="text-[13px] text-slate-500 dark:text-slate-400">
-                        {formatKeWIB(event.date)}
-                    </p>
-                </div>
-            </div>
-            
-            <h3
-                class="text-lg font-bold text-slate-800 dark:text-slate-100 leading-snug group-hover:text-teal-600 transition-colors"
-            >
-                {event.title}
-            </h3>
+        <div>
+          <p
+            class={`text-[13px] font-medium ${statusConfig.color} leading-tight`}
+          >
+            {statusConfig.label}
+          </p>
+          <p class="text-[13px] text-slate-500 dark:text-slate-400">
+            {formatKeWIB(event.date)}
+          </p>
         </div>
-    </a>
+      </div>
+
+      <h3
+        class="text-lg leading-snug font-bold text-slate-800 transition-colors group-hover:text-teal-600 dark:text-slate-100"
+      >
+        {event.title}
+      </h3>
+    </div>
+  </a>
 </article>

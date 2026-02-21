@@ -6,135 +6,129 @@ const LIMIT = 5;
 
 // Fetch data from API
 const { data: medicalServices, pagination } = await getMedicalServices({
-    pageSize: LIMIT,
+  pageSize: LIMIT,
 });
 
 const totalServices = pagination.total;
 ---
 
-<section class="py-24 bg-background-light dark:bg-background-dark">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-16">
-            <h2 class="text-4xl font-extrabold text-primary mb-6">
-                Layanan Medis
-            </h2>
-            <p
-                class="max-w-2xl mx-auto text-slate-500 dark:text-slate-400 text-sm"
-            >
-                Rumah Sakit ini mempunyai banyak departemen yang terbagi menjadi
-                berbagai poliklinik. Berikut adalah layanan utama kami
-            </p>
-        </div>
-
-        {
-            medicalServices.length === 0 ? (
-                <div class="text-center py-16">
-                    <span class="material-icons-outlined text-slate-300 dark:text-slate-600 text-6xl mb-4">
-                        medical_services
-                    </span>
-                    <p class="text-slate-500 dark:text-slate-400">
-                        Belum ada layanan medis yang tersedia
-                    </p>
-                </div>
-            ) : (
-                <div class="embla-medical">
-                    <div class="embla__viewport">
-                        <div class="embla__container">
-                            {medicalServices.map((service) => (
-                                <div class="embla__slide">
-                                    <div class="group cursor-pointer h-full">
-                                        <div class="relative mb-8 mx-auto w-full aspect-video rounded-3xl overflow-hidden">
-                                            <Image
-                                                src={service.image}
-                                                alt={service.name}
-                                                width={800}
-                                                height={450}
-                                                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                                                fetchpriority={"low"}
-                                            />
-                                        </div>
-                                        <h3 class="text-lg font-bold text-primary mb-4 text-center">
-                                            {service.name}
-                                        </h3>
-                                        <p class="text-slate-500 dark:text-slate-400 text-xs leading-relaxed px-6 text-center">
-                                            {service.description}
-                                        </p>
-                                    </div>
-                                </div>
-                            ))}
-
-                            {/* Kartu "Lihat Semua" di posisi ke-6 */}
-                            <div class="embla__slide">
-                                <a
-                                    href="#"
-                                    class="group relative flex flex-col items-center justify-center h-full min-h-[300px] rounded-3xl bg-primary/10 dark:bg-primary/20 hover:bg-primary hover:text-white transition-all duration-300 border-2 border-dashed border-primary/30 text-primary dark:text-primary-light"
-                                >
-                                    <div class="w-16 h-16 rounded-full bg-white/50 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform shadow-sm">
-                                        <span class="material-icons-outlined text-3xl">
-                                            arrow_forward
-                                        </span>
-                                    </div>
-                                    <h3 class="font-bold text-lg text-center px-4">
-                                        Lihat Semua Layanan
-                                    </h3>
-                                    <p class="text-xs text-center mt-2 opacity-80 group-hover:text-white">
-                                        {totalServices > LIMIT
-                                            ? `${totalServices - LIMIT}+`
-                                            : ""}
-                                        Layanan Lainnya
-                                    </p>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            )
-        }
+<section class="bg-background-light dark:bg-background-dark py-24">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="mb-16 text-center">
+      <h2 class="text-primary mb-6 text-4xl font-extrabold">Layanan Medis</h2>
+      <p class="mx-auto max-w-2xl text-sm text-slate-500 dark:text-slate-400">
+        Rumah Sakit ini mempunyai banyak departemen yang terbagi menjadi
+        berbagai poliklinik. Berikut adalah layanan utama kami
+      </p>
     </div>
+
+    {
+      medicalServices.length === 0 ? (
+        <div class="py-16 text-center">
+          <span class="material-icons-outlined mb-4 text-6xl text-slate-300 dark:text-slate-600">
+            medical_services
+          </span>
+          <p class="text-slate-500 dark:text-slate-400">
+            Belum ada layanan medis yang tersedia
+          </p>
+        </div>
+      ) : (
+        <div class="embla-medical">
+          <div class="embla__viewport">
+            <div class="embla__container">
+              {medicalServices.map((service) => (
+                <div class="embla__slide">
+                  <div class="group h-full cursor-pointer">
+                    <div class="relative mx-auto mb-8 aspect-video w-full overflow-hidden rounded-3xl">
+                      <Image
+                        src={service.image}
+                        alt={service.name}
+                        width={800}
+                        height={450}
+                        class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                        fetchpriority={"low"}
+                      />
+                    </div>
+                    <h3 class="text-primary mb-4 text-center text-lg font-bold">
+                      {service.name}
+                    </h3>
+                    <p class="px-6 text-center text-xs leading-relaxed text-slate-500 dark:text-slate-400">
+                      {service.description}
+                    </p>
+                  </div>
+                </div>
+              ))}
+
+              {/* Kartu "Lihat Semua" di posisi ke-6 */}
+              <div class="embla__slide">
+                <a
+                  href="#"
+                  class="group bg-primary/10 dark:bg-primary/20 hover:bg-primary border-primary/30 text-primary dark:text-primary-light relative flex h-full min-h-[300px] flex-col items-center justify-center rounded-3xl border-2 border-dashed transition-all duration-300 hover:text-white"
+                >
+                  <div class="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-white/50 shadow-sm transition-transform group-hover:scale-110">
+                    <span class="material-icons-outlined text-3xl">
+                      arrow_forward
+                    </span>
+                  </div>
+                  <h3 class="px-4 text-center text-lg font-bold">
+                    Lihat Semua Layanan
+                  </h3>
+                  <p class="mt-2 text-center text-xs opacity-80 group-hover:text-white">
+                    {totalServices > LIMIT ? `${totalServices - LIMIT}+` : ""}
+                    Layanan Lainnya
+                  </p>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      )
+    }
+  </div>
 </section>
 
 <style>
-    .embla {
-        position: relative;
-    }
+  .embla {
+    position: relative;
+  }
 
-    .embla__viewport {
-        overflow: hidden;
-    }
+  .embla__viewport {
+    overflow: hidden;
+  }
 
-    .embla__container {
-        display: flex;
-        touch-action: pan-y pinch-zoom;
-        margin-left: -1rem;
-    }
+  .embla__container {
+    display: flex;
+    touch-action: pan-y pinch-zoom;
+    margin-left: -1rem;
+  }
 
+  .embla__slide {
+    flex: 0 0 100%;
+    min-width: 0;
+    padding-left: 1rem;
+  }
+
+  @media (min-width: 768px) {
     .embla__slide {
-        flex: 0 0 100%;
-        min-width: 0;
-        padding-left: 1rem;
+      flex: 0 0 50%;
     }
+  }
 
-    @media (min-width: 768px) {
-        .embla__slide {
-            flex: 0 0 50%;
-        }
+  @media (min-width: 1024px) {
+    .embla__slide {
+      flex: 0 0 33.333333%;
     }
-
-    @media (min-width: 1024px) {
-        .embla__slide {
-            flex: 0 0 33.333333%;
-        }
-    }
+  }
 </style>
 
 <script>
-    import { initCarousel } from "../../lib/carousel";
+  import { initCarousel } from "../../lib/carousel";
 
-    if (document.readyState === "loading") {
-        document.addEventListener("DOMContentLoaded", () =>
-            initCarousel(".embla-medical"),
-        );
-    } else {
-        initCarousel(".embla-medical");
-    }
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", () =>
+      initCarousel(".embla-medical")
+    );
+  } else {
+    initCarousel(".embla-medical");
+  }
 </script>

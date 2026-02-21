@@ -16,18 +16,18 @@ const currentPage = pageParam ? parseInt(pageParam, 10) : 1;
 
 // Redirect invalid or page 1 to home
 if (!currentPage || isNaN(currentPage) || currentPage <= 1) {
-    return Astro.redirect("/agenda");
+  return Astro.redirect("/agenda");
 }
 
 // Fetch dari Strapi API
 const { data: agendaList, pagination } = await getAgendaEvents({
-    page: currentPage,
-    pageSize: AGENDA_EVENTS_PAGINATE,
+  page: currentPage,
+  pageSize: AGENDA_EVENTS_PAGINATE,
 });
 
 // If page out of range
 if (agendaList.length === 0 && currentPage > 1) {
-    return Astro.redirect("/404");
+  return Astro.redirect("/404");
 }
 
 const baseUrl = "/agenda/page";
@@ -35,62 +35,79 @@ const homeUrl = "/agenda";
 
 // Build page object
 const page = {
-    data: agendaList,
-    start: (pagination.page - 1) * pagination.pageSize,
-    end: (pagination.page - 1) * pagination.pageSize + agendaList.length - 1,
-    currentPage: pagination.page,
-    lastPage: pagination.pageCount,
-    total: pagination.total,
-    size: pagination.pageSize,
-    url: {
-        current: `${baseUrl}/${currentPage}`,
-        prev: currentPage > 1 ? (currentPage === 2 ? homeUrl : `${baseUrl}/${currentPage - 1}`) : undefined,
-        next: currentPage < pagination.pageCount ? `${baseUrl}/${currentPage + 1}` : undefined,
-        first: homeUrl,
-        last: currentPage < pagination.pageCount ? `${baseUrl}/${pagination.pageCount}` : undefined,
-    },
+  data: agendaList,
+  start: (pagination.page - 1) * pagination.pageSize,
+  end: (pagination.page - 1) * pagination.pageSize + agendaList.length - 1,
+  currentPage: pagination.page,
+  lastPage: pagination.pageCount,
+  total: pagination.total,
+  size: pagination.pageSize,
+  url: {
+    current: `${baseUrl}/${currentPage}`,
+    prev:
+      currentPage > 1
+        ? currentPage === 2
+          ? homeUrl
+          : `${baseUrl}/${currentPage - 1}`
+        : undefined,
+    next:
+      currentPage < pagination.pageCount
+        ? `${baseUrl}/${currentPage + 1}`
+        : undefined,
+    first: homeUrl,
+    last:
+      currentPage < pagination.pageCount
+        ? `${baseUrl}/${pagination.pageCount}`
+        : undefined,
+  },
 };
 ---
 
 <Layout
-    title={`Agenda Kegiatan - Halaman ${page.currentPage} - RSU Afdila`}
-    description="Jadwal agenda dan kegiatan kesehatan RSU Afdila Cilacap."
+  title={`Agenda Kegiatan - Halaman ${page.currentPage} - RSU Afdila`}
+  description="Jadwal agenda dan kegiatan kesehatan RSU Afdila Cilacap."
 >
-    <Header />
+  <Header />
 
-    <main
-        class="py-12 md:py-16 bg-slate-50 dark:bg-slate-900 transition-colors duration-200"
-    >
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h1
-                class="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-4"
-            >
-                Agenda Kegiatan
-            </h1>
-            <p class="text-slate-500 dark:text-slate-400 max-w-2xl">
-                Ikuti berbagai agenda dan kegiatan kesehatan menarik yang
-                diselenggarakan oleh RSU Afdila untuk masyarakat.
-            </p>
+  <main
+    class="bg-slate-50 py-12 transition-colors duration-200 md:py-16 dark:bg-slate-900"
+  >
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <h1
+        class="mb-4 text-3xl font-bold text-slate-900 md:text-4xl dark:text-white"
+      >
+        Agenda Kegiatan
+      </h1>
+      <p class="max-w-2xl text-slate-500 dark:text-slate-400">
+        Ikuti berbagai agenda dan kegiatan kesehatan menarik yang
+        diselenggarakan oleh RSU Afdila untuk masyarakat.
+      </p>
+    </div>
+  </main>
+
+  <main
+    class="mx-auto max-w-7xl bg-slate-50 px-4 pb-20 transition-colors duration-200 sm:px-6 lg:px-8 dark:bg-slate-900"
+  >
+    {
+      agendaList.length > 0 ? (
+        <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          {agendaList.map((event: any) => (
+            <AgendaCard event={event} />
+          ))}
         </div>
-    </main>
+      ) : (
+        <div class="py-20 text-center text-slate-500 dark:text-slate-400">
+          <span class="material-icons-outlined mb-4 block text-6xl">
+            event_busy
+          </span>
+          <p class="text-xl font-medium">Belum ada agenda tersedia.</p>
+        </div>
+      )
+    }
 
-    <main
-        class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20 bg-slate-50 dark:bg-slate-900 transition-colors duration-200"
-    >
-        {agendaList.length > 0 ? (
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                {agendaList.map((event: any) => <AgendaCard event={event} />)}
-            </div>
-        ) : (
-            <div class="text-center py-20 text-slate-500 dark:text-slate-400">
-                <span class="material-icons-outlined text-6xl mb-4 block">event_busy</span>
-                <p class="text-xl font-medium">Belum ada agenda tersedia.</p>
-            </div>
-        )}
+    <Pagination page={page} baseUrl={baseUrl} firstPageUrl={homeUrl} />
+  </main>
 
-        <Pagination page={page} baseUrl={baseUrl} firstPageUrl={homeUrl} />
-    </main>
-
-    <ContactInfo />
-    <Footer />
+  <ContactInfo />
+  <Footer />
 </Layout>

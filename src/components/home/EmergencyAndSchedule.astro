@@ -2,217 +2,207 @@
 // Tanggal dinamis (server-side)
 const now = new Date();
 const todayDate = new Intl.DateTimeFormat("id-ID", {
-    weekday: "long",
-    day: "numeric",
-    month: "short",
-    year: "numeric",
+  weekday: "long",
+  day: "numeric",
+  month: "short",
+  year: "numeric",
 }).format(now);
 ---
 
 <section
-    class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-24 relative z-10 pb-16"
+  class="relative z-10 mx-auto -mt-24 max-w-7xl px-4 pb-16 sm:px-6 lg:px-8"
 >
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <!-- Card 1: Dokter Darurat -->
-        <!-- Removed fixed h-[350px]. Added flex-col to handle internal spacing. -->
+  <div class="grid grid-cols-1 gap-6 lg:grid-cols-3">
+    <!-- Card 1: Dokter Darurat -->
+    <!-- Removed fixed h-[350px]. Added flex-col to handle internal spacing. -->
+    <div
+      class="flex flex-col rounded-xl bg-white p-6 shadow-xl dark:bg-slate-800"
+    >
+      <h3
+        class="border-primary mb-4 shrink-0 border-l-4 pl-4 text-lg font-bold"
+      >
+        Dokter Darurat
+      </h3>
+      <!-- Constrained height to approx 2 items (original count) to trigger scroll for extra items -->
+      <!-- Estimated height of one item ~73px (40px img + padding + borders). 2 items ~ 150px-180px. -->
+      <div
+        class="custom-scrollbar max-h-[200px] space-y-4 overflow-y-auto pr-2"
+      >
         <div
-            class="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-xl flex flex-col"
+          class="flex items-center justify-between border-b border-slate-100 pb-4 dark:border-slate-700"
         >
-            <h3
-                class="text-lg font-bold mb-4 border-l-4 border-primary pl-4 shrink-0"
-            >
-                Dokter Darurat
-            </h3>
-            <!-- Constrained height to approx 2 items (original count) to trigger scroll for extra items -->
-            <!-- Estimated height of one item ~73px (40px img + padding + borders). 2 items ~ 150px-180px. -->
-            <div
-                class="space-y-4 overflow-y-auto pr-2 custom-scrollbar max-h-[200px]"
-            >
-                <div
-                    class="flex items-center justify-between pb-4 border-b border-slate-100 dark:border-slate-700"
-                >
-                    <div>
-                        <p class="font-bold text-primary text-sm">
-                            Dr. Syamsul Arifin
-                        </p>
-                        <p class="text-xs text-slate-500">Kulit Dan Kelamin</p>
-                    </div>
-                    <img
-                        alt="Dr. Syamsul Arifin - Kulit Dan Kelamin"
-                        class="w-10 h-10 rounded-full object-cover shrink-0"
-                    />
-                </div>
-                <div
-                    class="flex items-center justify-between pb-4 border-b border-slate-100 dark:border-slate-700"
-                >
-                    <div>
-                        <p class="font-bold text-primary text-sm">
-                            Dr. Intan Ayu Ratnasari Sp.KK
-                        </p>
-                        <p class="text-xs text-slate-500">Kulit Dan Kelamin</p>
-                    </div>
-                    <img
-                        alt="Dr. Intan Ayu Ratnasari Sp.KK - Kulit Dan Kelamin"
-                        class="w-10 h-10 rounded-full object-cover shrink-0"
-                    />
-                </div>
-                <!-- Extra items -->
-                <div
-                    class="flex items-center justify-between pb-4 border-b border-slate-100 dark:border-slate-700"
-                >
-                    <div>
-                        <p class="font-bold text-primary text-sm">
-                            Dr. Budi Santoso
-                        </p>
-                        <p class="text-xs text-slate-500">Umum</p>
-                    </div>
-                    <div class="w-10 h-10 rounded-full bg-slate-200 shrink-0">
-                    </div>
-                </div>
-                <div
-                    class="flex items-center justify-between pb-4 border-b border-slate-100 dark:border-slate-700"
-                >
-                    <div>
-                        <p class="font-bold text-primary text-sm">
-                            Dr. Siti Aminah
-                        </p>
-                        <p class="text-xs text-slate-500">Anak</p>
-                    </div>
-                    <div class="w-10 h-10 rounded-full bg-slate-200 shrink-0">
-                    </div>
-                </div>
-            </div>
+          <div>
+            <p class="text-primary text-sm font-bold">Dr. Syamsul Arifin</p>
+            <p class="text-xs text-slate-500">Kulit Dan Kelamin</p>
+          </div>
+          <img
+            alt="Dr. Syamsul Arifin - Kulit Dan Kelamin"
+            class="h-10 w-10 shrink-0 rounded-full object-cover"
+          />
         </div>
-
-        <!-- Card 2: Dokter Jaga -->
         <div
-            class="bg-primary p-6 rounded-xl shadow-xl text-white flex flex-col"
+          class="flex items-center justify-between border-b border-slate-100 pb-4 dark:border-slate-700"
         >
-            <div class="flex justify-between items-start mb-4 shrink-0">
-                <h3 class="text-lg font-bold">Dokter Jaga</h3>
-                <div class="text-[10px] opacity-80">
-                    Hari ini: {todayDate}
-                </div>
-            </div>
-            <!-- Constrained height. Original had 2 items. Each item ~20px + gap. 
-                 This constraint ensures visual balance with neighbors even with 5 items. -->
-            <div
-                class="space-y-4 mb-4 overflow-y-auto pr-2 custom-scrollbar-white max-h-[140px]"
-            >
-                <div class="flex justify-between text-sm">
-                    <p>Dr. Fira Bella Iskandar Sp.AN</p>
-                    <p class="font-mono">04:00 - 09:00</p>
-                </div>
-                <div class="flex justify-between text-sm">
-                    <p>Dr. Yenny Zen Lana</p>
-                    <p class="font-mono">09:00 - 12:00</p>
-                </div>
-                <div class="flex justify-between text-sm">
-                    <p>Dr. Ahmad Dahlan</p>
-                    <p class="font-mono">12:00 - 16:00</p>
-                </div>
-                <div class="flex justify-between text-sm">
-                    <p>Dr. Rina Wati</p>
-                    <p class="font-mono">16:00 - 20:00</p>
-                </div>
-                <div class="flex justify-between text-sm">
-                    <p>Dr. Joko Susilo</p>
-                    <p class="font-mono">20:00 - 00:00</p>
-                </div>
-            </div>
-            <!-- Buttons aligned to bottom -->
-            <div class="flex gap-2 shrink-0 mt-auto">
-                <a
-                    href="/dokter-hari-ini"
-                    class="bg-white/20 hover:bg-white/30 px-4 py-2 rounded-lg text-xs font-semibold flex-1 text-center flex items-center justify-center transition-colors"
-                    >Lihat Semua</a
-                >
-                <a
-                    href="/jadwal-dokter"
-                    class="bg-white text-primary px-4 py-2 rounded-lg text-xs font-bold flex-1 text-center flex items-center justify-center transition-colors"
-                    >Jadwal Dokter</a
-                >
-            </div>
+          <div>
+            <p class="text-primary text-sm font-bold">
+              Dr. Intan Ayu Ratnasari Sp.KK
+            </p>
+            <p class="text-xs text-slate-500">Kulit Dan Kelamin</p>
+          </div>
+          <img
+            alt="Dr. Intan Ayu Ratnasari Sp.KK - Kulit Dan Kelamin"
+            class="h-10 w-10 shrink-0 rounded-full object-cover"
+          />
         </div>
-
-        <!-- Card 3: Waktu Pelayanan -->
+        <!-- Extra items -->
         <div
-            class="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-xl flex flex-col"
+          class="flex items-center justify-between border-b border-slate-100 pb-4 dark:border-slate-700"
         >
-            <h3
-                class="text-lg font-bold mb-4 border-l-4 border-primary pl-4 shrink-0"
-            >
-                Waktu Pelayanan
-            </h3>
-            <!-- Original had 6 items. 7 items now. Constrain to approx 6 items. 
-                 One item ~20px + 8px gap = 28px. 6 * 28 = ~168px. -->
-            <div
-                class="space-y-2 text-sm text-slate-600 dark:text-slate-400 overflow-y-auto pr-2 custom-scrollbar max-h-[200px]"
-            >
-                <div class="flex justify-between">
-                    <span>Senin</span><span
-                        class="flex-1 border-b border-dotted border-slate-300 mx-2 mb-1"
-                    ></span><span>08:00 - 22:00</span>
-                </div>
-                <div class="flex justify-between">
-                    <span>Selasa</span><span
-                        class="flex-1 border-b border-dotted border-slate-300 mx-2 mb-1"
-                    ></span><span>08:00 - 22:00</span>
-                </div>
-                <div class="flex justify-between">
-                    <span>Rabu</span><span
-                        class="flex-1 border-b border-dotted border-slate-300 mx-2 mb-1"
-                    ></span><span>08:00 - 22:00</span>
-                </div>
-                <div class="flex justify-between text-primary font-bold">
-                    <span>Kamis</span><span
-                        class="flex-1 border-b border-dotted border-primary/30 mx-2 mb-1"
-                    ></span><span>08:00 - 22:00</span>
-                </div>
-                <div class="flex justify-between">
-                    <span>Jumat</span><span
-                        class="flex-1 border-b border-dotted border-slate-300 mx-2 mb-1"
-                    ></span><span>08:00 - 22:00</span>
-                </div>
-                <div class="flex justify-between">
-                    <span>Sabtu</span><span
-                        class="flex-1 border-b border-dotted border-slate-300 mx-2 mb-1"
-                    ></span><span>08:00 - 22:00</span>
-                </div>
-                <div class="flex justify-between text-red-500">
-                    <span>Minggu</span><span
-                        class="flex-1 border-b border-dotted border-red-300 mx-2 mb-1"
-                    ></span><span>Tutup</span>
-                </div>
-            </div>
+          <div>
+            <p class="text-primary text-sm font-bold">Dr. Budi Santoso</p>
+            <p class="text-xs text-slate-500">Umum</p>
+          </div>
+          <div class="h-10 w-10 shrink-0 rounded-full bg-slate-200"></div>
         </div>
+        <div
+          class="flex items-center justify-between border-b border-slate-100 pb-4 dark:border-slate-700"
+        >
+          <div>
+            <p class="text-primary text-sm font-bold">Dr. Siti Aminah</p>
+            <p class="text-xs text-slate-500">Anak</p>
+          </div>
+          <div class="h-10 w-10 shrink-0 rounded-full bg-slate-200"></div>
+        </div>
+      </div>
     </div>
+
+    <!-- Card 2: Dokter Jaga -->
+    <div class="bg-primary flex flex-col rounded-xl p-6 text-white shadow-xl">
+      <div class="mb-4 flex shrink-0 items-start justify-between">
+        <h3 class="text-lg font-bold">Dokter Jaga</h3>
+        <div class="text-[10px] opacity-80">
+          Hari ini: {todayDate}
+        </div>
+      </div>
+      <!-- Constrained height. Original had 2 items. Each item ~20px + gap. 
+                 This constraint ensures visual balance with neighbors even with 5 items. -->
+      <div
+        class="custom-scrollbar-white mb-4 max-h-[140px] space-y-4 overflow-y-auto pr-2"
+      >
+        <div class="flex justify-between text-sm">
+          <p>Dr. Fira Bella Iskandar Sp.AN</p>
+          <p class="font-mono">04:00 - 09:00</p>
+        </div>
+        <div class="flex justify-between text-sm">
+          <p>Dr. Yenny Zen Lana</p>
+          <p class="font-mono">09:00 - 12:00</p>
+        </div>
+        <div class="flex justify-between text-sm">
+          <p>Dr. Ahmad Dahlan</p>
+          <p class="font-mono">12:00 - 16:00</p>
+        </div>
+        <div class="flex justify-between text-sm">
+          <p>Dr. Rina Wati</p>
+          <p class="font-mono">16:00 - 20:00</p>
+        </div>
+        <div class="flex justify-between text-sm">
+          <p>Dr. Joko Susilo</p>
+          <p class="font-mono">20:00 - 00:00</p>
+        </div>
+      </div>
+      <!-- Buttons aligned to bottom -->
+      <div class="mt-auto flex shrink-0 gap-2">
+        <a
+          href="/dokter-hari-ini"
+          class="flex flex-1 items-center justify-center rounded-lg bg-white/20 px-4 py-2 text-center text-xs font-semibold transition-colors hover:bg-white/30"
+          >Lihat Semua</a
+        >
+        <a
+          href="/jadwal-dokter"
+          class="text-primary flex flex-1 items-center justify-center rounded-lg bg-white px-4 py-2 text-center text-xs font-bold transition-colors"
+          >Jadwal Dokter</a
+        >
+      </div>
+    </div>
+
+    <!-- Card 3: Waktu Pelayanan -->
+    <div
+      class="flex flex-col rounded-xl bg-white p-6 shadow-xl dark:bg-slate-800"
+    >
+      <h3
+        class="border-primary mb-4 shrink-0 border-l-4 pl-4 text-lg font-bold"
+      >
+        Waktu Pelayanan
+      </h3>
+      <!-- Original had 6 items. 7 items now. Constrain to approx 6 items. 
+                 One item ~20px + 8px gap = 28px. 6 * 28 = ~168px. -->
+      <div
+        class="custom-scrollbar max-h-[200px] space-y-2 overflow-y-auto pr-2 text-sm text-slate-600 dark:text-slate-400"
+      >
+        <div class="flex justify-between">
+          <span>Senin</span><span
+            class="mx-2 mb-1 flex-1 border-b border-dotted border-slate-300"
+          ></span><span>08:00 - 22:00</span>
+        </div>
+        <div class="flex justify-between">
+          <span>Selasa</span><span
+            class="mx-2 mb-1 flex-1 border-b border-dotted border-slate-300"
+          ></span><span>08:00 - 22:00</span>
+        </div>
+        <div class="flex justify-between">
+          <span>Rabu</span><span
+            class="mx-2 mb-1 flex-1 border-b border-dotted border-slate-300"
+          ></span><span>08:00 - 22:00</span>
+        </div>
+        <div class="text-primary flex justify-between font-bold">
+          <span>Kamis</span><span
+            class="border-primary/30 mx-2 mb-1 flex-1 border-b border-dotted"
+          ></span><span>08:00 - 22:00</span>
+        </div>
+        <div class="flex justify-between">
+          <span>Jumat</span><span
+            class="mx-2 mb-1 flex-1 border-b border-dotted border-slate-300"
+          ></span><span>08:00 - 22:00</span>
+        </div>
+        <div class="flex justify-between">
+          <span>Sabtu</span><span
+            class="mx-2 mb-1 flex-1 border-b border-dotted border-slate-300"
+          ></span><span>08:00 - 22:00</span>
+        </div>
+        <div class="flex justify-between text-red-500">
+          <span>Minggu</span><span
+            class="mx-2 mb-1 flex-1 border-b border-dotted border-red-300"
+          ></span><span>Tutup</span>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
 
 <style>
-    /* Custom Scrollbar for Webkit */
-    .custom-scrollbar::-webkit-scrollbar {
-        width: 4px;
-    }
-    .custom-scrollbar::-webkit-scrollbar-track {
-        background: transparent;
-    }
-    .custom-scrollbar::-webkit-scrollbar-thumb {
-        background-color: #cbd5e1;
-        border-radius: 20px;
-    }
-    .dark .custom-scrollbar::-webkit-scrollbar-thumb {
-        background-color: #475569;
-    }
+  /* Custom Scrollbar for Webkit */
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 4px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background-color: #cbd5e1;
+    border-radius: 20px;
+  }
+  .dark .custom-scrollbar::-webkit-scrollbar-thumb {
+    background-color: #475569;
+  }
 
-    .custom-scrollbar-white::-webkit-scrollbar {
-        width: 4px;
-    }
-    .custom-scrollbar-white::-webkit-scrollbar-track {
-        background: transparent;
-    }
-    .custom-scrollbar-white::-webkit-scrollbar-thumb {
-        background-color: rgba(255, 255, 255, 0.3);
-        border-radius: 20px;
-    }
+  .custom-scrollbar-white::-webkit-scrollbar {
+    width: 4px;
+  }
+  .custom-scrollbar-white::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .custom-scrollbar-white::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: 20px;
+  }
 </style>

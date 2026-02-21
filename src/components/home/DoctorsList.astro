@@ -10,134 +10,132 @@ const shuffledDoctors = [...doctors].sort(() => 0.5 - Math.random());
 const featuredDoctors = shuffledDoctors.slice(0, LIMIT);
 ---
 
-<section class="py-20 bg-white dark:bg-slate-900">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex items-center justify-between mb-12">
-            <h2 class="text-4xl font-extrabold">Daftar Dokter</h2>
-            <div class="flex space-x-2">
-                <button
-                    class="embla__prev w-10 h-10 rounded-full bg-primary/20 text-primary flex items-center justify-center hover:bg-primary hover:text-white transition-all"
-                    aria-label="Previous doctor"
-                >
-                    <span class="material-icons-outlined">chevron_left</span>
-                </button>
-                <button
-                    class="embla__next w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center hover:bg-primary/80 transition-all"
-                    aria-label="Next doctor"
-                >
-                    <span class="material-icons-outlined">chevron_right</span>
-                </button>
-            </div>
-        </div>
-
-        {
-            featuredDoctors.length === 0 ? (
-                <div class="text-center py-16">
-                    <span class="material-icons-outlined text-slate-300 dark:text-slate-600 text-6xl mb-4">
-                        person
-                    </span>
-                    <p class="text-slate-500 dark:text-slate-400">
-                        Belum ada data dokter yang tersedia
-                    </p>
-                </div>
-            ) : (
-                <div class="embla-doctors">
-                    <div class="embla__viewport">
-                        <div class="embla__container">
-                            {featuredDoctors.map((doctor) => (
-                                <div class="embla__slide">
-                                    <div class="group relative overflow-hidden rounded-2xl aspect-[3/4]">
-                                        <Image
-                                            src={doctor.image}
-                                            alt={doctor.name}
-                                            width={300}
-                                            height={400}
-                                            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                                            fetchpriority={"low"}
-                                        />
-                                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
-                                            <div>
-                                                <p class="text-white text-sm font-bold">
-                                                    {doctor.name}
-                                                </p>
-                                                <p class="text-white/80 text-xs">
-                                                    {doctor.specialist}
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            ))}
-
-                            {/* Kartu "Lihat Semua" di posisi ke-9 */}
-                            <div class="embla__slide">
-                                <a
-                                    href="/jadwal-dokter"
-                                    class="group relative flex flex-col items-center justify-center rounded-2xl aspect-[3/4] bg-primary/10 dark:bg-primary/20 hover:bg-primary hover:text-white transition-all duration-300 border-2 border-dashed border-primary/30 text-primary dark:text-primary-light"
-                                >
-                                    <div class="w-16 h-16 rounded-full bg-white/50 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform shadow-sm">
-                                        <span class="material-icons-outlined text-3xl">
-                                            arrow_forward
-                                        </span>
-                                    </div>
-                                    <h3 class="font-bold text-lg text-center px-4">
-                                        Lihat Semua Dokter
-                                    </h3>
-                                    <p class="text-xs text-center mt-2 opacity-80 group-hover:text-white">
-                                        {doctors.length - LIMIT}+ Dokter Lainnya
-                                    </p>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            )
-        }
+<section class="bg-white py-20 dark:bg-slate-900">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="mb-12 flex items-center justify-between">
+      <h2 class="text-4xl font-extrabold">Daftar Dokter</h2>
+      <div class="flex space-x-2">
+        <button
+          class="embla__prev bg-primary/20 text-primary hover:bg-primary flex h-10 w-10 items-center justify-center rounded-full transition-all hover:text-white"
+          aria-label="Previous doctor"
+        >
+          <span class="material-icons-outlined">chevron_left</span>
+        </button>
+        <button
+          class="embla__next bg-primary hover:bg-primary/80 flex h-10 w-10 items-center justify-center rounded-full text-white transition-all"
+          aria-label="Next doctor"
+        >
+          <span class="material-icons-outlined">chevron_right</span>
+        </button>
+      </div>
     </div>
+
+    {
+      featuredDoctors.length === 0 ? (
+        <div class="py-16 text-center">
+          <span class="material-icons-outlined mb-4 text-6xl text-slate-300 dark:text-slate-600">
+            person
+          </span>
+          <p class="text-slate-500 dark:text-slate-400">
+            Belum ada data dokter yang tersedia
+          </p>
+        </div>
+      ) : (
+        <div class="embla-doctors">
+          <div class="embla__viewport">
+            <div class="embla__container">
+              {featuredDoctors.map((doctor) => (
+                <div class="embla__slide">
+                  <div class="group relative aspect-[3/4] overflow-hidden rounded-2xl">
+                    <Image
+                      src={doctor.image}
+                      alt={doctor.name}
+                      width={300}
+                      height={400}
+                      class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+                      fetchpriority={"low"}
+                    />
+                    <div class="absolute inset-0 flex items-end bg-gradient-to-t from-black/80 via-transparent to-transparent p-4 opacity-0 transition-opacity group-hover:opacity-100">
+                      <div>
+                        <p class="text-sm font-bold text-white">
+                          {doctor.name}
+                        </p>
+                        <p class="text-xs text-white/80">{doctor.specialist}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+
+              {/* Kartu "Lihat Semua" di posisi ke-9 */}
+              <div class="embla__slide">
+                <a
+                  href="/jadwal-dokter"
+                  class="group bg-primary/10 dark:bg-primary/20 hover:bg-primary border-primary/30 text-primary dark:text-primary-light relative flex aspect-[3/4] flex-col items-center justify-center rounded-2xl border-2 border-dashed transition-all duration-300 hover:text-white"
+                >
+                  <div class="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-white/50 shadow-sm transition-transform group-hover:scale-110">
+                    <span class="material-icons-outlined text-3xl">
+                      arrow_forward
+                    </span>
+                  </div>
+                  <h3 class="px-4 text-center text-lg font-bold">
+                    Lihat Semua Dokter
+                  </h3>
+                  <p class="mt-2 text-center text-xs opacity-80 group-hover:text-white">
+                    {doctors.length - LIMIT}+ Dokter Lainnya
+                  </p>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      )
+    }
+  </div>
 </section>
 
 <style>
-    .embla-doctors {
-        position: relative;
-    }
+  .embla-doctors {
+    position: relative;
+  }
 
-    .embla__viewport {
-        overflow: hidden;
-    }
+  .embla__viewport {
+    overflow: hidden;
+  }
 
-    .embla__container {
-        display: flex;
-        touch-action: pan-y pinch-zoom;
-        margin-left: -1rem;
-    }
+  .embla__container {
+    display: flex;
+    touch-action: pan-y pinch-zoom;
+    margin-left: -1rem;
+  }
 
+  .embla__slide {
+    flex: 0 0 50%;
+    min-width: 0;
+    padding-left: 1rem;
+  }
+
+  @media (min-width: 768px) {
     .embla__slide {
-        flex: 0 0 50%;
-        min-width: 0;
-        padding-left: 1rem;
+      flex: 0 0 33.333333%;
     }
+  }
 
-    @media (min-width: 768px) {
-        .embla__slide {
-            flex: 0 0 33.333333%;
-        }
+  @media (min-width: 1024px) {
+    .embla__slide {
+      flex: 0 0 20%;
     }
-
-    @media (min-width: 1024px) {
-        .embla__slide {
-            flex: 0 0 20%;
-        }
-    }
+  }
 </style>
 
 <script>
-    import { initCarousel } from "../../lib/carousel";
+  import { initCarousel } from "../../lib/carousel";
 
-    if (document.readyState === "loading") {
-        document.addEventListener("DOMContentLoaded", () =>
-            initCarousel(".embla-doctors"),
-        );
-    } else {
-        initCarousel(".embla-doctors");
-    }
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", () =>
+      initCarousel(".embla-doctors")
+    );
+  } else {
+    initCarousel(".embla-doctors");
+  }
 </script>

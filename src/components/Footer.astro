@@ -3,43 +3,36 @@ import { COPYRIGHT } from "@/consts";
 ---
 
 <footer class="bg-primary py-4 text-white">
-	<div
-		class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:row-reverse md:flex-row justify-between items-center text-white text-sm"
-	>
-		<p>Copyright © {COPYRIGHT}</p>
-		<div class="flex space-x-6 mt-4 md:mt-0">
-			<a class="hover:underline" href="/about">Profile RS</a>
-			<a class="hover:underline" href="/jadwal-dokter">Daftar Nakes</a>
-			<a class="hover:underline" href="/agenda">Latest News</a>
-			<a class="hover:underline" href="/article">Artikel</a>
-		</div>
-	</div>
+  <div
+    class="md:row-reverse mx-auto flex max-w-7xl flex-col items-center justify-between px-4 text-sm text-white sm:px-6 md:flex-row lg:px-8"
+  >
+    <p>Copyright © {COPYRIGHT}</p>
+    <div class="mt-4 flex space-x-6 md:mt-0">
+      <a class="hover:underline" href="/about">Profile RS</a>
+      <a class="hover:underline" href="/jadwal-dokter">Daftar Nakes</a>
+      <a class="hover:underline" href="/agenda">Latest News</a>
+      <a class="hover:underline" href="/article">Artikel</a>
+    </div>
+  </div>
 </footer>
 
 <button
-	class="fixed bottom-8 right-8
-         w-12 h-12
-         flex items-center justify-center
-         bg-white dark:bg-slate-800
-         rounded-full shadow-2xl
-         border border-slate-200 dark:border-slate-700
-         z-[100] text-primary
-         transition-transform active:scale-95"
-	onclick="toggleTheme()"
-	aria-label="Toggle dark mode"
+  class="text-primary fixed right-8 bottom-8 z-[100] flex h-12 w-12 items-center justify-center rounded-full border border-slate-200 bg-white shadow-2xl transition-transform active:scale-95 dark:border-slate-700 dark:bg-slate-800"
+  onclick="toggleTheme()"
+  aria-label="Toggle dark mode"
 >
-	<span
-		id="icon"
-		class="material-icons-outlined text-2xl leading-none text-yellow-400"
-		>dark_mode</span
-	>
+  <span
+    id="icon"
+    class="material-icons-outlined text-2xl leading-none text-yellow-400"
+    >dark_mode</span
+  >
 </button>
 
 <script is:inline>
-	function toggleTheme() {
-		document.documentElement.classList.toggle("dark");
-		icon.textContent = document.documentElement.classList.contains("dark")
-			? "light_mode"
-			: "dark_mode";
-	}
+  function toggleTheme() {
+    document.documentElement.classList.toggle("dark");
+    icon.textContent = document.documentElement.classList.contains("dark")
+      ? "light_mode"
+      : "dark_mode";
+  }
 </script>

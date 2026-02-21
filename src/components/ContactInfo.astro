@@ -6,13 +6,13 @@ import { logo } from "@/assets";
 ---
 
 <section
-    class="py-12 bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 transition-colors duration-300"
+  class="border-t border-slate-200 bg-white py-12 transition-colors duration-300 dark:border-slate-800 dark:bg-slate-900"
 >
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-12">
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-12">
-            <div class="col-span-1 md:col-span-1">
-                <Image src={logo} alt="Logo" class="h-14 w-auto mb-6 block" />
-                <!-- <div class="flex items-center gap-2 mb-6">
+  <div class="mx-auto mb-12 max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-1 gap-12 md:grid-cols-4">
+      <div class="col-span-1 md:col-span-1">
+        <Image src={logo} alt="Logo" class="mb-6 block h-14 w-auto" />
+        <!-- <div class="flex items-center gap-2 mb-6">
                     <div
                         class="w-8 h-8 bg-primary rounded-full flex items-center justify-center"
                     >
@@ -25,128 +25,108 @@ import { logo } from "@/assets";
                         >RSU <span class="text-primary">Afdila</span></span
                     >
                 </div> -->
-                <p
-                    class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mb-6"
-                >
-                    Memberikan pelayanan kesehatan terbaik dengan standar
-                    internasional dan didukung oleh tim medis profesional.
-                </p>
-                <div class="flex gap-4">
-                    <a
-                        href={SOCIALS.facebook.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        class="flex items-center justify-center w-10 h-10"
-                        aria-label={SOCIALS.facebook.name}
-                    >
-                        <LogosFacebook class="w-8 h-8" />
-                    </a>
-                    <a
-                        href={SOCIALS.instagram.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        class="flex items-center justify-center w-10 h-10"
-                        aria-label={SOCIALS.instagram.name}
-                    >
-                        <LogosInstagramIcon class="w-8 h-8" />
-                    </a>
-                    <a
-                        href={SOCIALS.youtube.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        class="flex items-center justify-center w-10 h-10"
-                        aria-label={SOCIALS.youtube.name}
-                    >
-                        <LogosYoutubeIcon class="w-8 h-8" />
-                    </a>
-                </div>
-            </div>
-            <div class="grid grid-cols-2 gap-8 md:col-span-2">
-                <div>
-                    <h4 class="font-bold mb-6 text-slate-800 dark:text-white">
-                        Layanan Kami
-                    </h4>
-                    <ul
-                        class="space-y-4 text-sm text-slate-600 dark:text-slate-400"
-                    >
-                        <li>
-                            <a class="hover:text-primary" href="#"
-                                >Instalasi Gawat Darurat</a
-                            >
-                        </li>
-                        <li>
-                            <a class="hover:text-primary" href="#"
-                                >Poliklinik Rawat Jalan</a
-                            >
-                        </li>
-                        <li>
-                            <a class="hover:text-primary" href="#"
-                                >Medical Check Up</a
-                            >
-                        </li>
-                        <li>
-                            <a class="hover:text-primary" href="#"
-                                >Layanan Farmasi</a
-                            >
-                        </li>
-                    </ul>
-                </div>
-                <div>
-                    <h4 class="font-bold mb-6 text-slate-800 dark:text-white">
-                        Hubungi Kami
-                    </h4>
-                    <div class="space-y-4">
-                        <div class="flex items-center gap-3">
-                            <span class="material-icons text-primary text-lg"
-                                >call</span
-                            >
-                            <div class="text-xs">
-                                <p class="text-slate-500">Hubungi Darurat</p>
-                                <p
-                                    class="font-bold text-slate-800 dark:text-slate-200"
-                                >
-                                    {CONTACTS.igd}
-                                </p>
-                            </div>
-                        </div>
-                        <div class="flex items-center gap-3">
-                            <span class="material-icons text-primary text-lg"
-                                >mail</span
-                            >
-                            <div class="text-xs">
-                                <p class="text-slate-500">Email Kami</p>
-                                <p
-                                    class="font-bold text-slate-800 dark:text-slate-200"
-                                >
-                                    {CONTACTS.email}
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-span-1">
-                <h4 class="font-bold mb-6 text-slate-800 dark:text-white">
-                    Newsletter
-                </h4>
-                <p class="text-sm text-slate-600 dark:text-slate-400 mb-4">
-                    Dapatkan info kesehatan terbaru dari kami.
-                </p>
-                <div class="flex">
-                    <input
-                        class="h-10 px-4 bg-slate-100 dark:bg-slate-800 border-none rounded-l-lg text-sm w-full focus:ring-1 focus:ring-primary text-slate-800 dark:text-slate-200 placeholder:text-slate-400"
-                        placeholder="Email Anda"
-                        type="email"
-                    />
-                    <button
-                        class="h-10 bg-primary px-4 py-2 rounded-r-lg hover:bg-opacity-90 transition-all text-white flex items-center justify-center"
-                    >
-                        <span class="material-icons text-sm leading-none"
-                            >send</span
-                        >
-                    </button>
-                </div>
-            </div>
+        <p
+          class="mb-6 text-sm leading-relaxed text-slate-600 dark:text-slate-400"
+        >
+          Memberikan pelayanan kesehatan terbaik dengan standar internasional
+          dan didukung oleh tim medis profesional.
+        </p>
+        <div class="flex gap-4">
+          <a
+            href={SOCIALS.facebook.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="flex h-10 w-10 items-center justify-center"
+            aria-label={SOCIALS.facebook.name}
+          >
+            <LogosFacebook class="h-8 w-8" />
+          </a>
+          <a
+            href={SOCIALS.instagram.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="flex h-10 w-10 items-center justify-center"
+            aria-label={SOCIALS.instagram.name}
+          >
+            <LogosInstagramIcon class="h-8 w-8" />
+          </a>
+          <a
+            href={SOCIALS.youtube.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="flex h-10 w-10 items-center justify-center"
+            aria-label={SOCIALS.youtube.name}
+          >
+            <LogosYoutubeIcon class="h-8 w-8" />
+          </a>
         </div>
+      </div>
+      <div class="grid grid-cols-2 gap-8 md:col-span-2">
+        <div>
+          <h4 class="mb-6 font-bold text-slate-800 dark:text-white">
+            Layanan Kami
+          </h4>
+          <ul class="space-y-4 text-sm text-slate-600 dark:text-slate-400">
+            <li>
+              <a class="hover:text-primary" href="#">Instalasi Gawat Darurat</a>
+            </li>
+            <li>
+              <a class="hover:text-primary" href="#">Poliklinik Rawat Jalan</a>
+            </li>
+            <li>
+              <a class="hover:text-primary" href="#">Medical Check Up</a>
+            </li>
+            <li>
+              <a class="hover:text-primary" href="#">Layanan Farmasi</a>
+            </li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="mb-6 font-bold text-slate-800 dark:text-white">
+            Hubungi Kami
+          </h4>
+          <div class="space-y-4">
+            <div class="flex items-center gap-3">
+              <span class="material-icons text-primary text-lg">call</span>
+              <div class="text-xs">
+                <p class="text-slate-500">Hubungi Darurat</p>
+                <p class="font-bold text-slate-800 dark:text-slate-200">
+                  {CONTACTS.igd}
+                </p>
+              </div>
+            </div>
+            <div class="flex items-center gap-3">
+              <span class="material-icons text-primary text-lg">mail</span>
+              <div class="text-xs">
+                <p class="text-slate-500">Email Kami</p>
+                <p class="font-bold text-slate-800 dark:text-slate-200">
+                  {CONTACTS.email}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-span-1">
+        <h4 class="mb-6 font-bold text-slate-800 dark:text-white">
+          Newsletter
+        </h4>
+        <p class="mb-4 text-sm text-slate-600 dark:text-slate-400">
+          Dapatkan info kesehatan terbaru dari kami.
+        </p>
+        <div class="flex">
+          <input
+            class="focus:ring-primary h-10 w-full rounded-l-lg border-none bg-slate-100 px-4 text-sm text-slate-800 placeholder:text-slate-400 focus:ring-1 dark:bg-slate-800 dark:text-slate-200"
+            placeholder="Email Anda"
+            type="email"
+          />
+          <button
+            class="bg-primary hover:bg-opacity-90 flex h-10 items-center justify-center rounded-r-lg px-4 py-2 text-white transition-all"
+          >
+            <span class="material-icons text-sm leading-none">send</span>
+          </button>
+        </div>
+      </div>
     </div>
+  </div>
 </section>
