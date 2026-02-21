@@ -1,8 +1,6 @@
 ---
 import Layout from "@/layouts/Layout.astro";
-import Header from "@/components/Header.astro";
-import Footer from "@/components/Footer.astro";
-import ContactInfo from "@/components/ContactInfo.astro";
+import {Header,Footer, ContactInfo} from "@/components";
 import { getPartners } from "@/services/partners.service";
 import { Picture } from "astro:assets";
 
@@ -35,14 +33,14 @@ const BATCH_SIZE = 8;
                 {
                     partners.map((partner, index) => (
                         <div
-                            class={`relative group bg-white dark:bg-slate-800 border-2 border-slate-100 dark:border-slate-700 rounded-2xl overflow-hidden h-32 transition-all duration-200 hover:border-teal-500/50 hover:shadow-lg partner-card-shadow partner-item ${index >= BATCH_SIZE ? "hidden opacity-0 translate-y-4" : "opacity-100 translate-y-0"}`}
+                            class={`relative group bg-white dark:bg-slate-800 border-2 border-slate-100 dark:border-slate-700 rounded-2xl overflow-hidden h-32 transition-all duration-200 hover:border-teal-500/50 hover:shadow-lg partner-card-shadow partner-item ${index >= BATCH_SIZE ? "hidden opacity-0 translate-y-4" : "opacity-100 translate-y-0"} flex items-center justify-center p-4`}
                             aria-label={partner.name}
                             title={partner.description}
                         >
                             <Picture
                                 src={partner.image}
                                 alt={partner.name}
-                                class="w-full h-full object-cover"
+                                class="max-w-full max-h-full w-auto h-auto object-contain transition-transform duration-300 group-hover:scale-110"
                                 loading={index >= BATCH_SIZE ? "lazy" : "eager"}
                                 decoding={index >= BATCH_SIZE ? "async" : "auto"}
                                 format={"avif"}
