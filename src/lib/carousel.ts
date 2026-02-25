@@ -1,9 +1,19 @@
 import EmblaCarousel from "embla-carousel";
 import Autoplay from "embla-carousel-autoplay";
 
-export function initCarousel(containerClass: string) {
-  const emblaNode = document.querySelector(containerClass);
+// export function initCarousel(containerClass: string) {
+export function initCarousel(containerClass: string | HTMLElement) {
+  // const emblaNode = document.querySelector(containerClass);
+  // Dukung string selector maupun element langsung
+  const emblaNode =
+    typeof containerClass === "string"
+      ? document.querySelector(containerClass)
+      : containerClass;
+
   if (!emblaNode) return;
+
+  // 2. Cegah inisialisasi ganda (Double Init)
+  if (emblaNode.hasAttribute("data-initialized")) return;
 
   const viewportNode = emblaNode.querySelector(
     ".embla__viewport"
@@ -30,15 +40,28 @@ export function initCarousel(containerClass: string) {
 
   emblaApi.plugins().autoplay?.play();
 
+  // 3. Beri stempel kalau carousel ini sudah jalan
+  emblaNode.setAttribute("data-initialized", "true");
+
   return emblaApi;
 }
 
 export function initHeroCarousel(
-  containerClass: string,
+  // containerClass: string,
+  containerClass: string | HTMLElement,
   options: { delay?: number } = {}
 ) {
-  const emblaNode = document.querySelector(containerClass);
+  // const emblaNode = document.querySelector(containerClass);
+  // Dukung string selector maupun element langsung
+  const emblaNode =
+    typeof containerClass === "string"
+      ? document.querySelector(containerClass)
+      : containerClass;
+
   if (!emblaNode) return;
+
+  // 2. Cegah inisialisasi ganda (Double Init)
+  if (emblaNode.hasAttribute("data-initialized")) return;
 
   const viewportNode = emblaNode.querySelector(
     ".embla__viewport"

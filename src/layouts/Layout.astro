@@ -171,10 +171,12 @@ const hospitalSchema = {
     <!-- Theme: Prevent FOUC (Flash of Unstyled Content) -->
     <script is:inline>
       const theme = localStorage.getItem("theme");
-      if (
-        theme === "dark" ||
-        (!theme && window.matchMedia("(prefers-color-scheme: dark)").matches)
-      ) {
+      const systemPrefersDark = window.matchMedia(
+        "(prefers-color-scheme: dark)"
+      ).matches;
+
+      // Langsung tembak class 'dark' ke elemen <html> sebelum body di-render
+      if (theme === "dark" || (!theme && systemPrefersDark)) {
         document.documentElement.classList.add("dark");
       } else {
         document.documentElement.classList.remove("dark");

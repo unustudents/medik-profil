@@ -1,13 +1,19 @@
 ---
-import { doctors } from "@/data/doctors";
+import { getDoctors } from "@/services/doctors.service";
 import { Image } from "astro:assets";
+import { BATCH_SIZE } from "@/consts";
 
-const LIMIT = 8; // Jumlah dokter yang ingin ditampilkan
+// Ambil data dokter dari API via service
+const { data: allDoctors, pagination } = await getDoctors();
+
 // Acak urutan dokter
-const shuffledDoctors = [...doctors].sort(() => 0.5 - Math.random());
+const shuffledDoctors = [...allDoctors].sort(() => 0.5 - Math.random());
 
 // Ambil 8 dokter saja
-const featuredDoctors = shuffledDoctors.slice(0, LIMIT);
+const featuredDoctors = shuffledDoctors.slice(0, BATCH_SIZE);
+
+// Total dokter untuk label "Lihat Semua"
+const totalDoctors = pagination.total;
 ---
 
 <section class="bg-white py-20 dark:bg-slate-900">
@@ -50,8 +56,8 @@ const featuredDoctors = shuffledDoctors.slice(0, LIMIT);
                     <Image
                       src={doctor.image}
                       alt={doctor.name}
-                      width={300}
-                      height={400}
+                      width={doctor.imageWidth}
+                      height={doctor.imageHeight}
                       class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
                       fetchpriority={"low"}
                     />
@@ -82,7 +88,10 @@ const featuredDoctors = shuffledDoctors.slice(0, LIMIT);
                     Lihat Semua Dokter
                   </h3>
                   <p class="mt-2 text-center text-xs opacity-80 group-hover:text-white">
-                    {doctors.length - LIMIT}+ Dokter Lainnya
+                    {totalDoctors > BATCH_SIZE
+                      ? `${totalDoctors - BATCH_SIZE}+`
+                      : ""}
+                    Dokter Lainnya
                   </p>
                 </a>
               </div>
@@ -128,8 +137,8 @@ const featuredDoctors = shuffledDoctors.slice(0, LIMIT);
   }
 </style>
 
-<script>
-  import { initCarousel } from "../../lib/carousel";
+<!-- <script>
+  import { initCarousel } from "@/lib/carousel";
 
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", () =>
@@ -138,4 +147,4 @@ const featuredDoctors = shuffledDoctors.slice(0, LIMIT);
   } else {
     initCarousel(".embla-doctors");
   }
-</script>
+</script> -->

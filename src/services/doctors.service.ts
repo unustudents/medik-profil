@@ -25,7 +25,7 @@ export interface DoctorAttributes {
  * Ambil daftar dokter (collection) dengan pagination.
  */
 export async function getDoctors(opts?: { page?: number; pageSize?: number }) {
-  const res = await strapi.find<DoctorAttributes>("doctors", {
+  const res = await strapi.find<DoctorAttributes>("dokters", {
     populate: "*",
     sort: ["name:asc"],
     pagination: {
@@ -37,7 +37,12 @@ export async function getDoctors(opts?: { page?: number; pageSize?: number }) {
   return {
     data: res.data.map((doc) => ({
       ...doc,
-      image: strapi.mediaUrl(doc.image?.url),
+      specialist: (doc as any).spesialisasi?.name ?? "",
+      image: strapi.mediaUrl(
+        (doc as any).image?.formats?.small?.url ?? (doc as any).image?.url
+      ),
+      imageWidth: (doc as any).image?.formats?.small?.width ?? 500,
+      imageHeight: (doc as any).image?.formats?.small?.height ?? 333,
     })),
     pagination: res.meta.pagination!,
   };

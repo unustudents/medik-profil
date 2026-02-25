@@ -29,10 +29,20 @@ import { COPYRIGHT } from "@/consts";
 </button>
 
 <script is:inline>
+  // 1. Ambil elemen icon
+  const themeIcon = document.getElementById("icon");
+
+  // 2. Sesuaikan icon saat halaman pertama kali selesai diload
+  if (document.documentElement.classList.contains("dark")) {
+    themeIcon.textContent = "light_mode";
+  } else {
+    themeIcon.textContent = "dark_mode";
+  }
+
+  // 3. Fungsi saat tombol diklik
   function toggleTheme() {
-    document.documentElement.classList.toggle("dark");
-    icon.textContent = document.documentElement.classList.contains("dark")
-      ? "light_mode"
-      : "dark_mode";
+    const isDark = document.documentElement.classList.toggle("dark");
+    localStorage.setItem("theme", isDark ? "dark" : "light");
+    themeIcon.textContent = isDark ? "light_mode" : "dark_mode";
   }
 </script>

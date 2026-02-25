@@ -35,6 +35,11 @@ export default defineConfig({
     },
   },
 
+  prefetch: {
+    prefetchAll: true,
+    defaultStrategy: "hover",
+  },
+
   // === Site URL (untuk sitemap & canonical URLs) ===
   // https://docs.astro.build/en/reference/configuration-reference/#site
   site: SITE_URL || "http://localhost:4321",

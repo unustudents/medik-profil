@@ -3,9 +3,7 @@
 // (output: "server" → SSR by default, tidak perlu prerender = false)
 
 import Layout from "@/layouts/Layout.astro";
-import Header from "@/components/Header.astro";
-import ContactInfo from "@/components/ContactInfo.astro";
-import Footer from "@/components/Footer.astro";
+import { Header, ContactInfo, Footer } from "@/components";
 import { SITE_TITLE, SITE_DESCRIPTION } from "@/consts";
 import {
   Hero,
@@ -48,3 +46,42 @@ const homePage = await getHomePage();
   </main>
   <Footer />
 </Layout>
+
+<script>
+  import { initHeroCarousel, initCarousel } from "@/lib/carousel";
+  const initHomeCarousels = () => {
+    // 1. Inisialisasi Hero
+    const heroEl = document.querySelector(".embla-hero");
+    if (heroEl) initHeroCarousel(heroEl as HTMLElement, { delay: 10000 });
+    // if (heroEl) initHeroCarousel(".embla-hero", { delay: 10000 });
+
+    // 2. Inisialisasi Daftar Dokter
+    const doctorsEl = document.querySelector(".embla-doctors");
+    if (doctorsEl) initCarousel(doctorsEl as HTMLElement);
+    // if (doctorsEl) {
+    //   initCarousel(".embla-doctors");
+    // }
+
+    // 3. Inisialisasi Layanan Medis
+    const medicalEl = document.querySelector(".embla-medical");
+    if (medicalEl) initCarousel(medicalEl as HTMLElement);
+    // if (medicalEl) {
+    //   initCarousel(".embla-medical");
+    // }
+
+    // // 4. Inisialisasi Gallery (Jika Gallery pakai carousel juga)
+    // const galleryEl = document.querySelector(".embla-gallery");
+    // if (galleryEl) {
+    //   initCarousel(".embla-gallery"); // Sesuaikan nama class-nya
+    // }
+  };
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", () => initHomeCarousels());
+  } else {
+    initHomeCarousels();
+  }
+
+  // Event "Sakti" Astro: Jalan saat pertama kali buka web & saat balik lagi ke Home
+  // document.addEventListener("astro:page-load", initHomeCarousels);
+</script>
